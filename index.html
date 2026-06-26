@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MOTIVASIKU - AI Cinematic Motivation Generator</title>
+    <!-- Google Fonts: Poppins & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SweetAlert2 for notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkGlossy: '#0A0A0A',
+                        neonGreen: '#39FF14',
+                        softGray: '#1C1C1C',
+                        glassBg: 'rgba(18, 18, 18, 0.8)',
+                        glassBorder: 'rgba(57, 255, 20, 0.15)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Poppins', 'sans-serif'],
+                        title: ['Poppins', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        neonGlow: '0 0 15px rgba(57, 255, 20, 0.25)',
+                        neonGlowBright: '0 0 25px rgba(57, 255, 20, 0.45)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0A0A0A;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(57, 255, 20, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(57, 255, 20, 0.03) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: #FFFFFF;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1C1C1C;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #39FF14;
+        }
+        .glassmorphism {
+            background: rgba(18, 18, 18, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(57, 255, 20, 0.12);
+        }
+        .neon-glow-btn:hover {
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col pb-24 md:pb-6 selection:bg-neonGreen selection:text-black">
+
+    <header class="w-full border-b border-glassBorder glassmorphism sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-black to-neutral-900 border border-neonGreen flex items-center justify-center shadow-neonGlow">
+                    <span class="text-neonGreen text-xl font-black tracking-wider"><i class="fa-solid fa-clapperboard"></i></span>
+                </div>
+                <div>
+                    <h1 class="font-title text-xl md:text-2xl font-black tracking-widest text-white flex items-center gap-1.5">
+                        MOTIVASI<span class="text-neonGreen">KU</span>
+                    </h1>
+                    <p class="text-[9px] md:text-xs text-neutral-400 font-medium tracking-wide uppercase">AI Cinematic Motivation Generator</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <div class="hidden sm:flex flex-col items-end mr-2 text-right">
+                    <span class="text-[10px] text-neutral-400">Database Engine</span>
+                    <span class="text-xs font-semibold text-neonGreen flex items-center gap-1">
+                        <span class="h-1.5 w-1.5 rounded-full bg-neonGreen animate-pulse"></span>
+                        GAS Cloud / Local Active
+                    </span>
+                </div>
+                <div class="text-neutral-400 text-xs px-2 py-1 rounded-md bg-softGray/50 border border-neutral-800">
+                    <i class="fa-solid fa-cloud-arrow-up mr-1 text-neonGreen"></i> v1.7.0
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 md:py-8">
+        
+        <div class="mb-8 p-6 rounded-2xl glassmorphism relative overflow-hidden shadow-neonGlow">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-neonGreen/10 rounded-full filter blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="max-w-2xl">
+                    <span class="text-xs font-bold text-neonGreen uppercase tracking-widest px-2.5 py-1 rounded-full bg-neonGreen/10 border border-neonGreen/30 inline-block mb-3">
+                        <i class="fa-solid fa-star mr-1"></i> Islamic & General Wisdom Generator
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">Buat Konten Video Motivasi Viral Dalam Hitungan Detik</h2>
+                    <p class="text-sm text-neutral-300 leading-relaxed">
+                        Sistem kecerdasan buatan terintegrasi untuk menyusun naskah spiritual/umum yang diucapkan langsung oleh aktor, visual sinematik terperinci, deskripsi pergerakan kamera dinamis per scene, audio voiceover uji coba kustom sesuai karakter aktor, serta optimasi negative prompt. Siap ekspor ke TikTok, Instagram Reels, dan YouTube Shorts.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+                    <button type="button" onclick="quickFillDemo('islami')" class="px-4 py-2.5 text-xs font-bold rounded-xl bg-neutral-950 border border-neonGreen/30 hover:border-neonGreen hover:text-neonGreen text-neutral-300 flex items-center justify-center gap-2 transition duration-300">
+                        <i class="fa-solid fa-mosque text-neonGreen"></i> Demo Islami
+                    </button>
+                    <button type="button" onclick="quickFillDemo('umum')" class="px-4 py-2.5 text-xs font-bold rounded-xl bg-neutral-950 border border-neonGreen/30 hover:border-neonGreen hover:text-neonGreen text-neutral-300 flex items-center justify-center gap-2 transition duration-300">
+                        <i class="fa-solid fa-brain text-neonGreen"></i> Demo Umum
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs (Desktop view) -->
+        <div class="hidden md:flex items-center space-x-2 mb-8 bg-softGray/60 p-1.5 rounded-xl border border-neutral-800/80 max-w-lg">
+            <button onclick="switchTab('video-tab')" id="btn-video-tab" class="tab-btn flex-1 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-neonGreen bg-neutral-950/80 border border-neonGreen/30 shadow-neonGlow">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Video Engine
+            </button>
+            <button onclick="switchTab('image-tab')" id="btn-image-tab" class="tab-btn flex-1 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-neutral-400 hover:text-white hover:bg-neutral-900/40">
+                <i class="fa-solid fa-image"></i> Image Prompt
+            </button>
+            <button onclick="switchTab('history-tab')" id="btn-history-tab" class="tab-btn flex-1 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-neutral-400 hover:text-white hover:bg-neutral-900/40">
+                <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Proyek
+            </button>
+        </div>
+
+        <div id="tab-video-tab" class="tab-content block space-y-8 animate-fadeIn">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INPUT COLUMN -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="p-6 rounded-2xl glassmorphism relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-5 border-b border-neutral-800 pb-3">
+                            <h3 class="font-title text-base font-bold text-white flex items-center gap-2">
+                                <span class="h-2 w-2 rounded-full bg-neonGreen shadow-neonGlow"></span>
+                                Konfigurasi Kreator Video AI
+                            </h3>
+                            <i class="fa-solid fa-film text-neonGreen/70"></i>
+                        </div>
+
+                        <form id="videoEngineForm" onsubmit="handleGenerateVideo(event)" class="space-y-4">
+                            <!-- Judul Video -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider">Judul / Tema Motivasi</label>
+                                    <button type="button" onclick="selectTitleText()" class="text-[10px] text-neonGreen hover:text-white font-bold transition duration-300 flex items-center gap-1.5 bg-neutral-900 px-2.5 py-1 rounded border border-neutral-800/80 hover:border-neonGreen">
+                                        <i class="fa-solid fa-expand"></i> Blok Semua
+                                    </button>
+                                </div>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-neutral-500 text-sm">
+                                        <i class="fa-solid fa-heading"></i>
+                                    </span>
+                                    <input type="text" id="vidTitle" required placeholder="Contoh: Keutamaan Istighfar di Sepertiga Malam" 
+                                        onclick="this.select()"
+                                        class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-neutral-600 focus:outline-none transition duration-300">
+                                </div>
+                            </div>
+
+                            <!-- Tema Kategori (Islami / Umum) -->
+                            <div>
+                                <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Kategori Konten</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="relative flex items-center justify-center py-2.5 px-4 bg-neutral-950/60 border border-neutral-800 rounded-xl cursor-pointer hover:border-neutral-700 select-none">
+                                        <input type="radio" name="vidCategory" value="islami" checked class="sr-only peer">
+                                        <span class="text-xs font-medium text-neutral-400 peer-checked:text-neonGreen peer-checked:font-bold">
+                                            <i class="fa-solid fa-mosque mr-1.5"></i> Islami
+                                        </span>
+                                        <span class="absolute inset-0 rounded-xl border border-transparent peer-checked:border-neonGreen pointer-events-none transition duration-300"></span>
+                                    </label>
+                                    <label class="relative flex items-center justify-center py-2.5 px-4 bg-neutral-950/60 border border-neutral-800 rounded-xl cursor-pointer hover:border-neutral-700 select-none">
+                                        <input type="radio" name="vidCategory" value="umum" class="sr-only peer">
+                                        <span class="text-xs font-medium text-neutral-400 peer-checked:text-neonGreen peer-checked:font-bold">
+                                            <i class="fa-solid fa-globe mr-1.5"></i> Umum / Filosofi
+                                        </span>
+                                        <span class="absolute inset-0 rounded-xl border border-transparent peer-checked:border-neonGreen pointer-events-none transition duration-300"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Gender & Usia Grid -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Aktor Gender</label>
+                                    <select id="vidGender" onchange="toggleCustomField(this, 'vidGenderCustomContainer')" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-3.5 text-sm text-white focus:outline-none transition duration-300">
+                                        <option value="Pria">Pria (Indonesian Male)</option>
+                                        <option value="Wanita Hijab">Wanita Hijab (Indonesian Hijabi)</option>
+                                        <option value="Wanita Non-Hijab">Wanita Non-Hijab (Indonesian Female)</option>
+                                        <option value="custom">Kustom (Isi Manual)...</option>
+                                    </select>
+                                    <div id="vidGenderCustomContainer" class="hidden mt-2">
+                                        <input type="text" id="vidGenderCustom" placeholder="Isi gender (e.g. Anak Laki-laki)" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-2 px-3 text-xs text-white focus:outline-none transition duration-300">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Usia Karakter</label>
+                                    <select id="vidAge" onchange="toggleCustomField(this, 'vidAgeCustomContainer')" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-3.5 text-sm text-white focus:outline-none transition duration-300">
+                                        <option value="20-25 tahun">Muda (20-25 tahun)</option>
+                                        <option value="28-35 tahun" selected>Dewasa (28-35 tahun)</option>
+                                        <option value="40+ tahun">Paruh Baya (40+ tahun)</option>
+                                        <option value="custom">Kustom (Isi Manual)...</option>
+                                    </select>
+                                    <div id="vidAgeCustomContainer" class="hidden mt-2">
+                                        <input type="text" id="vidAgeCustom" placeholder="Isi usia (e.g. 60 tahun keatas)" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-2 px-3 text-xs text-white focus:outline-none transition duration-300">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lokasi & Pakaian Manual Input -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Lokasi / Setting</label>
+                                    <input type="text" id="vidLocation" required placeholder="Contoh: Di dalam kabin mobil sport merah" 
+                                        class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-4 text-sm text-white placeholder-neutral-600 focus:outline-none transition duration-300">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Pakaian / Kostum</label>
+                                    <input type="text" id="vidOutfit" required placeholder="Contoh: Jubah sutra berbordir emas" 
+                                        class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-4 text-sm text-white placeholder-neutral-600 focus:outline-none transition duration-300">
+                                </div>
+                            </div>
+                            <!-- Camera Movements Options per Scene (Stacked 1 to 5) -->
+                            <div class="space-y-3">
+                                <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-1">Pergerakan Kamera per Scene (1 - 5)</label>
+                                <div class="space-y-2.5 bg-neutral-950/50 p-3 rounded-xl border border-neutral-800">
+                                    <!-- Scene 1 -->
+                                    <div class="flex items-center space-x-3">
+                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">1</span>
+                                        <select id="vidCameraOpt1" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
+                                            <option value="dynamic_cinematic">Dynamic Cinematic Mix (Front Wide → Zoom In)</option>
+                                            <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
+                                            <option value="side_dolly">Side left shot (perlahan bergerak melingkar menjauh)</option>
+                                            <option value="fast_cuts">Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="top_slow">Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
+                                            <option value="tracking_walk">Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
+                                        </select>
+                                    </div>
+                                    <!-- Scene 2 -->
+                                    <div class="flex items-center space-x-3">
+                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                                        <select id="vidCameraOpt2" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
+                                            <option value="dynamic_cinematic">Dynamic Cinematic Mix (Left Side Reflection)</option>
+                                            <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
+                                            <option value="side_dolly" selected>Side left shot (perlahan bergerak melingkar menjauh)</option>
+                                            <option value="fast_cuts">Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="top_slow">Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
+                                            <option value="tracking_walk">Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
+                                        </select>
+                                    </div>
+                                    <!-- Scene 3 -->
+                                    <div class="flex items-center space-x-3">
+                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                                        <select id="vidCameraOpt3" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
+                                            <option value="dynamic_cinematic">Dynamic Cinematic Mix (Fast Cut Front & Side)</option>
+                                            <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
+                                            <option value="side_dolly">Side left shot (perlahan bergerak melingkar menjauh)</option>
+                                            <option value="fast_cuts" selected>Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="top_slow">Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
+                                            <option value="tracking_walk">Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
+                                        </select>
+                                    </div>
+                                    <!-- Scene 4 -->
+                                    <div class="flex items-center space-x-3">
+                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">4</span>
+                                        <select id="vidCameraOpt4" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
+                                            <option value="dynamic_cinematic">Dynamic Cinematic Mix (Spiritual High-Angle)</option>
+                                            <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
+                                            <option value="side_dolly">Side left shot (perlahan bergerak melingkar menjauh)</option>
+                                            <option value="fast_cuts">Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="top_slow" selected>Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
+                                            <option value="tracking_walk">Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
+                                        </select>
+                                    </div>
+                                    <!-- Scene 5 -->
+                                    <div class="flex items-center space-x-3">
+                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">5</span>
+                                        <select id="vidCameraOpt5" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
+                                            <option value="dynamic_cinematic">Dynamic Cinematic Mix (Side Tracking Walk)</option>
+                                            <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
+                                            <option value="side_dolly">Side left shot (perlahan bergerak melingkar menjauh)</option>
+                                            <option value="fast_cuts">Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="top_slow">Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
+                                            <option value="tracking_walk" selected>Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Optional Reference Image -->
+                            <div>
+                                <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Gambar Referensi (Opsional)</label>
+                                <div class="relative flex items-center justify-center border-2 border-dashed border-neutral-800 hover:border-neonGreen/50 rounded-xl p-4 transition duration-300 bg-neutral-950/40">
+                                    <input type="file" id="vidRefImage" accept="image/*" onchange="previewRefImage(event)" class="absolute inset-0 opacity-0 cursor-pointer">
+                                    <div class="text-center" id="imgUploadPrompt">
+                                        <i class="fa-solid fa-cloud-arrow-up text-neutral-500 text-lg mb-1 block"></i>
+                                        <span class="text-xs text-neutral-400">Klik atau seret file gambar referensi disini</span>
+                                    </div>
+                                    <div class="hidden flex-row items-center space-x-3 w-full" id="imgUploadPreviewContainer">
+                                        <img id="imgUploadPreview" src="#" alt="Preview" class="w-12 h-12 rounded object-cover border border-neutral-800">
+                                        <div class="text-left overflow-hidden flex-1">
+                                            <p id="imgUploadName" class="text-xs text-white truncate font-medium">nama-file.jpg</p>
+                                            <button type="button" onclick="clearRefImage(event)" class="text-[10px] text-red-500 hover:text-red-400 font-bold">Hapus Gambar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Generate Button -->
+                            <button type="submit" class="w-full py-4 px-6 rounded-xl bg-neonGreen text-black font-extrabold text-sm uppercase tracking-widest flex items-center justify-center gap-2 shadow-neonGlow hover:shadow-neonGlowBright hover:bg-white transition duration-300 cursor-pointer">
+                                <i class="fa-solid fa-wand-magic-sparkles text-black"></i> Hubungkan AI & Generate Motivasi
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="p-6 rounded-2xl glassmorphism relative overflow-hidden flex flex-col min-h-[500px]">
+                        
+                        <!-- Panel Header Status -->
+                        <div class="flex items-center justify-between border-b border-neutral-800 pb-4 mb-4">
+                            <h3 class="font-title text-base font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-film text-neonGreen"></i> Pratinjau Naskah & Visual Storyboard
+                            </h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-neutral-400">Status:</span>
+                                <span id="generationStatus" class="px-2.5 py-0.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 text-[10px] font-bold uppercase tracking-wider">Menunggu Input</span>
+                            </div>
+                        </div>
+
+                        <!-- EMPTY STATE (Waiting Generator) -->
+                        <div id="videoEmptyState" class="flex-grow flex flex-col items-center justify-center text-center p-8">
+                            <div class="w-20 h-20 rounded-2xl bg-neutral-950/60 border border-neutral-800 flex items-center justify-center text-neutral-500 mb-4 animate-bounce">
+                                <i class="fa-solid fa-cube text-3xl"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-neutral-300 mb-1">Data Belum Di-generate</h4>
+                            <p class="text-xs text-neutral-500 max-w-sm">
+                                Isikan formulir konfigurasi di sebelah kiri, lalu klik tombol "Generate Motivasi" untuk membangun visual, naskah suara secara instan.
+                            </p>
+                        </div>
+
+                        <!-- GENERATOR LOADING STATE -->
+                        <div id="videoLoadingState" class="hidden flex-grow flex flex-col items-center justify-center text-center p-8">
+                            <div class="relative w-16 h-16 mb-6">
+                                <div class="absolute inset-0 rounded-full border-4 border-neutral-800"></div>
+                                <div class="absolute inset-0 rounded-full border-4 border-t-neonGreen animate-spin"></div>
+                            </div>
+                            <h4 class="text-base font-bold text-neonGreen mb-1 animate-pulse">Menghubungkan Core AI Engine...</h4>
+                            <p id="loadingPhase" class="text-xs text-neutral-400 max-w-sm">Menganalisis tema dan menghasilkan 5-Scene visual storyboard...</p>
+                        </div>
+
+                        <!-- ACTUAL GENERATION DATA DISPLAY -->
+                        <div id="videoOutputContainer" class="hidden flex-grow space-y-6">
+                            
+                            <!-- Master Header Info -->
+                            <div class="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                <div>
+                                    <p class="text-[10px] text-neonGreen font-extrabold uppercase tracking-widest mb-0.5">Judul Hasil Optimal</p>
+                                    <h4 id="outTitle" class="text-sm font-bold text-white">"Keutamaan Istighfar di Sepertiga Malam"</h4>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="copyFullProject()" class="px-3 py-1.5 rounded bg-neutral-900 border border-neutral-800 hover:border-neonGreen hover:text-neonGreen text-neutral-300 text-xs font-bold transition flex items-center gap-1.5">
+                                        <i class="fa-solid fa-copy"></i> Salin Semua
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- VOICE OVER SPEAKER CONTROL (Adapted for Actor Matching) -->
+                            <div class="p-4 rounded-xl bg-neonGreen/5 border border-neonGreen/20 flex flex-col md:flex-row items-center justify-between gap-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-full bg-neonGreen/10 border border-neonGreen/40 flex items-center justify-center text-neonGreen">
+                                        <i class="fa-solid fa-volume-high animate-pulse"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-xs font-bold text-white">Voice Over Engine (Uji Suara Karakter)</h5>
+                                        <p class="text-[10px] text-neutral-400">Dengarkan simulasi dialog yang diucapkan langsung menggunakan modul penyesuai gender/usia.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <select id="voSpeed" class="bg-neutral-950 text-xs text-neutral-300 border border-neutral-800 rounded px-2 py-1">
+                                        <option value="0.85">Sangat Tenang (0.85x)</option>
+                                        <option value="0.95" selected>Tenang Nasihat (0.95x)</option>
+                                        <option value="1.0">Normal (1.0x)</option>
+                                    </select>
+                                    <button onclick="playAllVoiceovers()" class="px-3 py-1.5 rounded-lg bg-neonGreen text-black hover:bg-white text-xs font-bold transition-all flex items-center gap-1">
+                                        <i class="fa-solid fa-circle-play"></i> Putar Suara
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- THE 5 SCENE TAB/COLLAPSE ACCORDION -->
+                            <div class="space-y-3">
+                                <h5 class="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">5-Scene Cinematic Storyboard</h5>
+                                <div class="space-y-2" id="sceneAccordionContainer">
+                                    <!-- Embedded Dynamically with JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- ACTOR PROMPT SYSTEM CONFIG -->
+                            <div class="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800 space-y-3">
+                                <div class="flex items-center justify-between border-b border-neutral-900 pb-2">
+                                    <h5 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-user-gear text-neonGreen"></i> Core Actor System Prompt
+                                    </h5>
+                                    <button onclick="copyTextById('outActorPrompt')" class="text-neutral-500 hover:text-neonGreen text-xs transition"><i class="fa-solid fa-copy"></i> Salin</button>
+                                </div>
+                                <div class="p-2.5 rounded bg-neutral-900/40 border border-neutral-800/60">
+                                    <p id="outActorPrompt" class="text-xs text-neutral-300 font-mono leading-relaxed select-all">Loading...</p>
+                                </div>
+                            </div>
+
+                            <!-- NEGATIVE PROMPT -->
+                            <div class="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800 space-y-3">
+                                <div class="flex items-center justify-between border-b border-neutral-900 pb-2">
+                                    <h5 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-circle-minus text-red-500"></i> Negative Prompt (Full Protection)
+                                    </h5>
+                                    <button onclick="copyTextById('outNegativePrompt')" class="text-neutral-500 hover:text-neonGreen text-xs transition"><i class="fa-solid fa-copy"></i> Salin</button>
+                                </div>
+                                <div class="p-2.5 rounded bg-neutral-900/40 border border-neutral-800/60">
+                                    <p id="outNegativePrompt" class="text-xs text-red-200/80 font-mono leading-relaxed select-all">Loading...</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab-image-tab" class="tab-content hidden space-y-8 animate-fadeIn">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INPUT COLUMN -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="p-6 rounded-2xl glassmorphism relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-5 border-b border-neutral-800 pb-3">
+                            <h3 class="font-title text-base font-bold text-white flex items-center gap-2">
+                                <span class="h-2 w-2 rounded-full bg-neonGreen shadow-neonGlow"></span>
+                                AI Image Prompt Generator
+                            </h3>
+                            <i class="fa-solid fa-image text-neonGreen/70"></i>
+                        </div>
+
+                        <form id="imageEngineForm" onsubmit="handleGenerateImage(event)" class="space-y-4">
+                            <!-- Image Reference Upload (Optional Face Lock) -->
+                            <div>
+                                <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Gambar Referensi Wajah (Opsional)</label>
+                                <div class="relative flex items-center justify-center border-2 border-dashed border-neutral-800 hover:border-neonGreen/50 rounded-xl p-4 transition duration-300 bg-neutral-950/40">
+                                    <input type="file" id="imgTabRefImage" accept="image/*" onchange="previewImgTabRefImage(event)" class="absolute inset-0 opacity-0 cursor-pointer">
+                                    <div class="text-center" id="imgTabUploadPrompt">
+                                        <i class="fa-solid fa-camera text-neutral-500 text-lg mb-1 block"></i>
+                                        <span class="text-xs text-neutral-400">Klik atau seret gambar referensi wajah disini (image_3dd68a.png)</span>
+                                    </div>
+                                    <div class="hidden flex-row items-center space-x-3 w-full" id="imgTabUploadPreviewContainer">
+                                        <img id="imgTabUploadPreview" src="#" alt="Preview" class="w-12 h-12 rounded object-cover border border-neutral-800">
+                                        <div class="text-left overflow-hidden flex-1">
+                                            <p id="imgTabUploadName" class="text-xs text-white truncate font-medium">nama-file.jpg</p>
+                                            <button type="button" onclick="clearImgTabRefImage(event)" class="text-[10px] text-red-500 hover:text-red-400 font-bold">Hapus Gambar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-[9px] text-neutral-500 mt-1 block">Saat diunggah, AI wajib mengunci struktur wajah & warna kulit dari gambar ini 100% sama persis. Detail lokasi dan pakaian tetap mengikuti input manual.</span>
+                            </div>
+
+                            <!-- Idea / Prompt input -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider">Konsep / Deskripsi Gambar</label>
+                                    <button type="button" onclick="selectAllPromptText()" class="text-[10px] text-neonGreen hover:text-white font-bold transition duration-300 flex items-center gap-1.5 bg-neutral-900 px-2.5 py-1 rounded border border-neutral-800/80 hover:border-neonGreen">
+                                        <i class="fa-solid fa-expand"></i> Blok Semua
+                                    </button>
+                                </div>
+                                <textarea id="imgPromptText" required rows="3" placeholder="Contoh: Seorang pria paruh baya menengadahkan kedua tangannya dengan berlinang air mata di dalam masjid kuno saat sepertiga malam terakhir..." 
+                                    onclick="this.select()"
+                                    class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-4 text-sm text-white placeholder-neutral-600 focus:outline-none transition duration-300 resize-none"></textarea>
+                            </div>
+
+                            <!-- Aspect Ratio -->
+                            <div>
+                                <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Aspect Ratio (Format Gambar)</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="relative flex items-center justify-center py-2.5 px-4 bg-neutral-950/60 border border-neutral-800 rounded-xl cursor-pointer hover:border-neutral-700 select-none">
+                                        <input type="radio" name="imgRatio" value="9:16" checked class="sr-only peer">
+                                        <span class="text-xs font-medium text-neutral-400 peer-checked:text-neonGreen peer-checked:font-bold flex items-center gap-1.5">
+                                            <i class="fa-solid fa-mobile-screen"></i> 9:16 (Vertical)
+                                        </span>
+                                        <span class="absolute inset-0 rounded-xl border border-transparent peer-checked:border-neonGreen pointer-events-none transition duration-300"></span>
+                                    </label>
+                                    <label class="relative flex items-center justify-center py-2.5 px-4 bg-neutral-950/60 border border-neutral-800 rounded-xl cursor-pointer hover:border-neutral-700 select-none">
+                                        <input type="radio" name="imgRatio" value="16:9" class="sr-only peer">
+                                        <span class="text-xs font-medium text-neutral-400 peer-checked:text-neonGreen peer-checked:font-bold flex items-center gap-1.5">
+                                            <i class="fa-solid fa-display"></i> 16:9 (Landscape)
+                                        </span>
+                                        <span class="absolute inset-0 rounded-xl border border-transparent peer-checked:border-neonGreen pointer-events-none transition duration-300"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Styling Preset -->
+                            <div>
+                                <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Cinematic Styling</label>
+                                <select id="imgStylePreset" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-3.5 text-sm text-white focus:outline-none transition duration-300">
+                                    <option value="documentary_cinematic">Documentary Cinematic Lighting (Sangat Realistis)</option>
+                                    <option value="warm_gold">Warm Golden Hour Glow (Syahdu & Lembut)</option>
+                                    <option value="dark_moody">Dark Moody Atmosphere (Khusyuk & Mendalam)</option>
+                                    <option value="soft_mist">Soft Morning Mist (Pagi Berkabut Teduh)</option>
+                                </select>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="w-full py-4 px-6 rounded-xl bg-neonGreen text-black font-extrabold text-sm uppercase tracking-widest flex items-center justify-center gap-2 shadow-neonGlow hover:shadow-neonGlowBright hover:bg-white transition duration-300 cursor-pointer">
+                                <i class="fa-solid fa-wand-magic-sparkles text-black"></i> Optimalkan Prompt Gambar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="p-6 rounded-2xl glassmorphism relative overflow-hidden flex flex-col min-h-[500px]">
+                        
+                        <!-- Panel Header Status -->
+                        <div class="flex items-center justify-between border-b border-neutral-800 pb-4 mb-4">
+                            <h3 class="font-title text-base font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-image text-neonGreen"></i> Hasil Optimasi Prompt Gambar
+                            </h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-neutral-400">Status:</span>
+                                <span id="imgGenerationStatus" class="px-2.5 py-0.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 text-[10px] font-bold uppercase tracking-wider">Menunggu Input</span>
+                            </div>
+                        </div>
+
+                        <!-- EMPTY STATE -->
+                        <div id="imageEmptyState" class="flex-grow flex flex-col items-center justify-center text-center p-8">
+                            <div class="w-20 h-20 rounded-2xl bg-neutral-950/60 border border-neutral-800 flex items-center justify-center text-neutral-500 mb-4 animate-bounce">
+                                <i class="fa-solid fa-images text-3xl"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-neutral-300 mb-1">Data Belum Di-generate</h4>
+                            <p class="text-xs text-neutral-500 max-w-sm">
+                                Isikan deskripsi gambar di sebelah kiri, lalu klik tombol "Optimalkan Prompt Gambar" untuk membangun instruksi generator visual tingkat lanjut.
+                            </p>
+                        </div>
+
+                        <!-- LOADING STATE -->
+                        <div id="imageLoadingState" class="hidden flex-grow flex flex-col items-center justify-center text-center p-8">
+                            <div class="relative w-16 h-16 mb-6">
+                                <div class="absolute inset-0 rounded-full border-4 border-neutral-800"></div>
+                                <div class="absolute inset-0 rounded-full border-4 border-t-neonGreen animate-spin"></div>
+                            </div>
+                            <h4 class="text-base font-bold text-neonGreen mb-1 animate-pulse">Menghubungkan Core AI Engine...</h4>
+                            <p class="text-xs text-neutral-400 max-w-sm">Merekayasa prompt visual berkualitas tinggi dengan parameter anti-distorsi...</p>
+                        </div>
+
+                        <!-- IMAGE OUTPUT RESULT -->
+                        <div id="imageOutputContainer" class="hidden flex-grow space-y-6">
+                            
+                            <!-- Mock Visualization Display Card -->
+                            <div class="relative rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950/90 flex flex-col items-center justify-center p-2">
+                                <span class="absolute top-4 left-4 z-10 bg-black/80 border border-neonGreen/30 text-neonGreen text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider flex items-center gap-1">
+                                    <span class="h-1.5 w-1.5 bg-neonGreen rounded-full animate-ping"></span> Visual Simulation
+                                </span>
+                                <img id="simulatedImage" src="" alt="Simulated Vision" class="w-full max-h-72 object-cover rounded-lg border border-neutral-800">
+                                <div class="mt-2 w-full text-center py-1">
+                                    <p class="text-[10px] text-neutral-400 font-medium">Visualisasi di atas menggunakan preset ratio <span id="simulatedRatio" class="text-neonGreen">9:16</span></p>
+                                </div>
+                            </div>
+
+                            <!-- OPTIMIZED PROMPT FOR GENERATOR -->
+                            <div class="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800 space-y-3">
+                                <div class="flex items-center justify-between border-b border-neutral-900 pb-2">
+                                    <h5 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-wand-magic text-neonGreen"></i> Optimized Image Prompt
+                                    </h5>
+                                    <button onclick="copyTextById('outImgOptimizedPrompt')" class="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 hover:border-neonGreen hover:text-neonGreen text-neutral-400 text-xs transition flex items-center gap-1">
+                                        <i class="fa-solid fa-copy"></i> Copy Prompt
+                                    </button>
+                                </div>
+                                <div class="p-2.5 rounded bg-neutral-900/40 border border-neutral-800/60">
+                                    <p id="outImgOptimizedPrompt" class="text-xs text-neutral-300 font-mono leading-relaxed select-all">Loading...</p>
+                                </div>
+                            </div>
+
+                            <!-- OPTIMIZED NEGATIVE PROMPT -->
+                            <div class="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800 space-y-3">
+                                <div class="flex items-center justify-between border-b border-neutral-900 pb-2">
+                                    <h5 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-circle-minus text-red-500"></i> Negative Prompt Protection
+                                    </h5>
+                                    <button onclick="copyTextById('outImgNegativePrompt')" class="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 hover:border-neonGreen hover:text-neonGreen text-neutral-400 text-xs transition flex items-center gap-1">
+                                        <i class="fa-solid fa-copy"></i> Copy Negative
+                                    </button>
+                                </div>
+                                <div class="p-2.5 rounded bg-neutral-900/40 border border-neutral-800/60">
+                                    <p id="outImgNegativePrompt" class="text-xs text-red-200/80 font-mono leading-relaxed select-all">Loading...</p>
+                                </div>
+                            </div>
+
+                            <!-- Save Image Configuration -->
+                            <div class="flex justify-end pt-2">
+                                <button onclick="saveImagePromptToHistory()" class="px-5 py-2.5 rounded-xl bg-neutral-950 border border-neonGreen hover:bg-neonGreen hover:text-black text-neonGreen font-bold text-xs transition duration-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-bookmark"></i> Simpan Konfigurasi Prompt ke Riwayat
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab-history-tab" class="tab-content hidden space-y-6 animate-fadeIn">
+            <div class="p-6 rounded-2xl glassmorphism relative overflow-hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-4 mb-6">
+                    <div>
+                        <h3 class="font-title text-base font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-neonGreen"></i> Riwayat Proyek Ter-generate
+                        </h3>
+                        <p class="text-xs text-neutral-400">Riwayat otomatis tersimpan pada Spreadsheet Google (Google Apps Script) dan Local Storage Anda.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="clearAllHistory()" class="px-3 py-1.5 rounded-lg bg-red-950/40 border border-red-800 hover:bg-red-900 text-red-400 text-xs font-bold transition flex items-center gap-1">
+                            <i class="fa-solid fa-trash-can"></i> Hapus Semua Riwayat
+                        </button>
+                        <button onclick="syncWithGAS()" class="px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-neonGreen hover:border-neonGreen text-xs font-bold transition flex items-center gap-1">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Sinkron Cloud
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Database Content Grid -->
+                <div id="historyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Loaded dynamically via JS -->
+                </div>
+
+                <!-- Empty state history -->
+                <div id="historyEmptyState" class="hidden text-center py-16">
+                    <div class="w-16 h-16 rounded-full bg-neutral-950 border border-neutral-800 flex items-center justify-center text-neutral-600 mx-auto mb-4">
+                        <i class="fa-solid fa-clock text-2xl"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-neutral-400">Belum ada riwayat pengerjaan</h4>
+                    <p class="text-xs text-neutral-500 max-w-xs mx-auto mt-1">Gunakan tab Video Engine atau Image Prompt untuk membuat konten baru.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MOBILE NAVIGATION (Fixed bottom toolbar) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-t border-glassBorder px-6 py-2.5 flex items-center justify-around">
+        <button onclick="switchTab('video-tab')" id="mob-video-tab" class="mobile-nav-btn flex flex-col items-center justify-center space-y-1 text-neonGreen">
+            <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+            <span class="text-[10px] font-bold">Video Engine</span>
+        </button>
+        <button onclick="switchTab('image-tab')" id="mob-image-tab" class="mobile-nav-btn flex flex-col items-center justify-center space-y-1 text-neutral-400">
+            <i class="fa-solid fa-image text-lg"></i>
+            <span class="text-[10px] font-bold">Image Prompt</span>
+        </button>
+        <button onclick="switchTab('history-tab')" id="mob-history-tab" class="mobile-nav-btn flex flex-col items-center justify-center space-y-1 text-neutral-400">
+            <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+            <span class="text-[10px] font-bold">Riwayat</span>
+        </button>
+    </nav>
+
+    <!-- JAVASCRIPT LOGIC CONTROLLER -->
+    <script>
+        let dbHistory = [];
+        let currentlyPlayingSpeech = null;
+        let currentProjectVoiceParams = { rate: 0.95, pitch: 1.0 }; // Holds matched audio details
+
+        // Helper to select all text in the video title field
+        function selectTitleText() {
+            const input = document.getElementById('vidTitle');
+            input.focus();
+            input.select();
+        }
+
+        // Helper to select all text in the image prompt textarea
+        function selectAllPromptText() {
+            const textarea = document.getElementById('imgPromptText');
+            textarea.focus();
+            textarea.select();
+            textarea.setSelectionRange(0, textarea.value.length);
+        }
+
+        const DEMO_DATABASE = {
+            islami: {
+                title: "Keutamaan Istighfar di Sepertiga Malam",
+                category: "islami",
+                gender: "Pria",
+                age: "28-35 tahun",
+                location: "Masjid kuno bertabur pancaran cahaya matahari pagi keemasan",
+                outfit: "Busana muslim kasual minimalis warna hitam elegan",
+                promptText: "Seorang pria Muslim berparas teduh khusyuk di sudut ruangan masjid tua beralas sajadah tradisional, menatap ke arah cahaya rembulan pagi dari jendela.",
+                presetStyle: "dark_moody"
+            },
+            umum: {
+                title: "Seni Menghargai Waktu Menuju Keberhasilan Hidup",
+                category: "umum",
+                gender: "Wanita Non-Hijab",
+                age: "20-25 tahun",
+                location: "Tepi danau tenang berkabut pada waktu fajar menyingsing",
+                outfit: "Pakaian rajutan (knitwear) tebal berwarna krem lembut",
+                promptText: "Seorang wanita modern mengenakan pakaian hangat rajutan krem berdiri di tepi tebing danau berkabut dingin fajar.",
+                presetStyle: "warm_gold"
+            }
+        };
+
+        // Highly targeted spiritual and psychological segment combinations aimed DIRECTLY at the listener ("Kamu", "Dirimu")
+        const ISLAMI_MATRIX = {
+            hooks: [
+                "Kamu yang hari ini merasa lelah memikul kerasnya hidup, sadarilah bahwa Allah tidak pernah salah meletakkan takdir bagimu.",
+                "Ketika matamu mulai berkaca-kaca menatap impianmu yang tertunda, ketahuilah pintu langit sedang dipersiapkan untuk diketuk kembali.",
+                "Kamu sering kali terlalu sibuk mencemaskan hari esok yang belum pasti, sampai lupa seluruh hidupmu aman di tangan-Nya.",
+                "If saat ini jiwamu terasa begitu sempit dan sesak, bersabarlah karena pertolongan Allah selalu sedekat hembusan napasmu.",
+                "Mungkin kamu lelah berpura-pura kuat di hadapan semua manusia, padahal jiwamu sangat merindukan ketenangan sujud yang panjang.",
+                "Saat sekelilingmu terasa gelap gulita tanpa arah, ingatlah bahwa cahaya hidayah-Nya selalu bersinar untuk menuntun kembali langkahmu.",
+                "Kamu yang sedang terluka oleh penilaian buruk sesama manusia, cukuplah rida Allah yang menjadi tujuan utama di hidupmu.",
+                "Ketika kamu merasa sendirian berjuang di kesunyian fajar, para malaikat sebenarnya sedang menyaksikan perjuangan hebatmu malam ini.",
+                "Jangan biarkan keputusasaan mengikis keimananmu, sebab rencana Allah untuk masa depanmu jauh lebih indah dari mimpimu.",
+                "Kamu yang merasa telah terlampau jauh tersesat, jalan pulang menuju ampunan-Nya selalu terbuka lebar tanpa pernah terkunci.",
+                "Saat beban yang kamu pikul terasa kian memberat, ingatlah Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya."
+            ],
+            bridges: [
+                "Setiap tetes air mata kelelahanmu yang luruh di atas sajadah subuh akan menjadi saksi kemuliaan abadi di sisi-Nya.",
+                "Jangan biarkan hatimu membenci takdir buruk ini, karena terkadang musibah adalah cara terbaik Allah membersihkan noda dosamu.",
+                "Zikir yang kamu bisikkan dalam kesunyian malam terdengar bergemuruh indah di langit, menembus hijab-hijab penenang kegelisahan jiwamu.",
+                "Sujudmu yang panjang di kala manusia lain terlelap adalah bukti bahwa cintamu kepada Sang Pencipta mengalahkan segalanya.",
+                "Kesabaranmu melewati badai ujian berat ini sedang menempa jiwamu menjadi jauh lebih tangguh, bersih, dan penuh kemuliaan.",
+                "Jangan pernah mengira langkah kakimu yang gontai tak diperhatikan-Nya, Dia mendengar detak jantungmu yang dipenuhi rasa berserah.",
+                "Ketika usahamu patah di tengah jalan, itu adalah isyarat lembut agar kamu bersandar penuh pada kebesaran takdir-Nya.",
+                "Setiap rintangan yang membuatmu terjatuh sebenarnya adalah tangga rahasia yang sedang menaikkan derajat kesalehanmu di akhirat.",
+                "Luka batin yang kamu sembunyikan dengan senyuman tulus akan dibalut Allah dengan kebahagiaan luar biasa yang tak terduga.",
+                "Kamu tidak diciptakan untuk kalah oleh keadaan, melainkan dididik untuk menang lewat ketundukan jiwa yang tulus berdoa."
+            ],
+            peaks: [
+                "Basuhlah wajahmu dengan air wudu, lalu pasrahkan segala ketakutanmu dalam keheningan sujud sepertiga malam terakhir yang syahdu.",
+                "Mulailah melatih lisanmu untuk senantiasa melantunkan istighfar yang tulus, ia adalah kunci pembuka jalan keluar paling ajaib.",
+                "Ketuklah pintu langit dengan untaian doa penuh air mata penyesalan, karena tobat yang jujur disukai oleh seluruh penghuni langit.",
+                "Serahkan seluruh urusan hidupmu hari ini kepada Allah, biarkan keajaiban takdir menuntunmu menuju kebahagiaan hakiki selamanya.",
+                "Berdamailah dengan kegagalanmu masa lalu, lalu tataplah masa depanmu dengan keyakinan penuh akan pertolongan-Nya yang mahaluas.",
+                "Dekatkan kembali jiwamu yang sunyi ke dalam bait-bait suci Al-Qur'an, temukan ketenangan sejati yang selama ini kamu cari.",
+                "Jangan menunda untuk bersujud memohon petunjuk-Nya, sebab kelengangan fajar adalah waktu terbaik bagi terkabulnya seluruh impianmu.",
+                "Kuatkan hatimu dengan memperbanyak selawat, biarkan pancaran keteduhan spiritual menyelimuti seluruh raga serta pikiranmu yang penat.",
+                "Hadapi hari esok tanpa rasa cemas, sebab rida Allah adalah perisai paling kokoh dari segala marabahaya duniawi."
+            ],
+            actions: [
+                "Hapus air matamu, kini saatnya kamu melangkah kembali dengan keteguhan iman yang kokoh menyongsong takdir indah-Nya.",
+                "Sembunyikan keluh kesahmu dari telinga manusia, lalu tumpahkanlah semuanya di hadapan Rabb yang Maha Mendengar kegundahanmu.",
+                "Jadikan sabar dan salat sebagai penolong utamamu, biarkan kedamaian batin memandu setiap keputusan penting dalam hidupmu.",
+                "Kini bangkitlah, basuh sisa kesedihan di matamu, dan buktikan pada dirimu sendiri bahwa kamu mampu melewatinya.",
+                "Ambil wudu sekarang, hampiri sajadahmu, dan mulailah berbisik lirih mengadukan segala kepedihan batinmu dengan penuh keikhlasan.",
+                "Tinggalkan semua keraguan yang membelenggumu, mulailah melangkah di atas jalan kebaikan dengan senyum penuh ketulusan jiwa.",
+                "Buka lembaran baru hari ini dengan niat yang bersih, biarkan kebaikan batinmu memancar indah ke sekeliling lingkunganmu.",
+                "Kendalikan emosimu dengan zikir yang mendalam, rasakan bagaimana pelukan rahmat Allah menenangkan detak jantungmu yang gelisah."
+            ],
+            closings: [
+                "Sebab janji pertolongan Allah tidak pernah mengecewakan hamba-Nya yang berserah diri sepenuhnya di kesunyian malam.",
+                "Kemenangan besarmu sudah dipersiapkan di langit, tetaplah tegar berjalan di jalan-Nya yang lurus dan penuh keberkahan.",
+                "Percayalah, fajar kemudahan akan segera menyingsing mengusir gulita kesedihan yang selama ini menyelimuti lembaran hidupmu.",
+                "Tuhanmu tidak pernah tidur, Dia sedang merajut kebahagiaan luar biasa di balik tabir kesabaran yang kamu rawat.",
+                "Sebab pada akhirnya, keikhlasanmu berserah diri akan dibayar lunas dengan takdir terbaik yang tak pernah kamu bayangkan.",
+                "Tetaplah melangkah dalam keteduhan iman, karena akhir yang indah selalu dipersiapkan bagi jiwa-jiwa yang ikhlas bersabar.",
+                "Sebab di setiap kesulitan yang kamu lalui dengan rida, Allah telah menjanjikan kemudahan ganda yang menakjubkan.",
+                "Pelukan rahmat-Nya senantiasa menjagamu, berjalanlah terus dengan kepala tegak dan hati yang dipenuhi cahaya kedamaian abadi."
+            ]
+        };
+
+        const UMUM_MATRIX = {
+            hooks: [
+                "Kamu yang sedang berdiri di persimpangan jalan penuh keraguan, ketahuilah bahwa setiap keputusan besar membutuhkan keberanian batin.",
+                "Saat duniamu terasa begitu bising oleh kritik orang lain, carilah keheningan untuk mendengarkan kembali suara hatimu sendiri.",
+                "Kamu sering kali merasa tertinggal jauh dari pencapaian sesamamu, hingga melupakan bahwa setiap manusia memiliki musim mekar berbeda.",
+                "Mungkin saat ini jiwamu merasa sangat lelah berjuang sendirian, menghadapi rintangan bertubi-tubi yang seolah tanpa akhir.",
+                "Jangan biarkan kegagalan hari ini membuatmu percaya bahwa dirimu tidak berharga, kamu jauh lebih tangguh dari masalahmu.",
+                "Kamu yang sedang menyembunyikan rasa takut di balik tawa palsu, berhentilah sejenak dan akuilah bahwa kamu butuh istirahat.",
+                "Ketika semua pintu peluang seakan tertutup rapat di hadapanmu, ingatlah bahwa kreativitasmu mampu menciptakan pintu baru.",
+                "Kamu tidak diciptakan untuk menyenangkan semua orang di dunia ini, fokuslah menjaga integritas dan kedamaian pikiranmu.",
+                "Saat langkah kakimu terasa berat menghadapi hari esok, ingatlah seberapa jauh kamu telah bertahan melewati badai lalu.",
+                "Kamu yang sedang berjuang membangun mimpi dari nol, setiap tetes keringatmu adalah investasi berharga bagi masa depan."
+            ],
+            bridges: [
+                "Setiap rasa sakit yang kamu rasakan saat ini sebenarnya sedang mengikis ego dan memperkuat mentalitas pemenangmu.",
+                "Jangan biarkan penolakan dunia luar membuatmu menyerah, ia hanyalah bagian kecil dari seleksi alam menuju kesuksesan.",
+                "Ketenangan batin yang kamu rawat di tengah kekacauan hidup adalah modal terkuat untuk memenangkan pertempuran esok hari.",
+                "Perjuangan yang kamu jalani dalam kesunyian tanpa tepuk tangan adalah pembentuk karakter sejati yang paling kokoh.",
+                "Luka masa lalu yang berhasil kamu sembuhkan dengan keikhlasan akan menjadi sumber kebijaksanaan terbesar dalam hidupmu.",
+                "Ketika kamu merasa kehilangan segalanya, kamu sebenarnya sedang diberi ruang kosong untuk menulis ulang takdir terbaikmu.",
+                "Disiplin yang kamu pertahankan di saat-saat malas adalah jembatan emas yang menghubungkan mimpimu dengan kenyataan.",
+                "Jangan meremehkan progres kecilmu hari ini, akumulasi konsistensi adalah kekuatan raksasa yang tak tertandingi dunia.",
+                "Setiap air mata kekecewaan yang runtuh sedang membersihkan sudut pandangmu agar mampu melihat peluang baru yang jernih.",
+                "Kepedihan ini bersifat sementara, namun kekuatan mental yang lahir darinya akan melekat bersamamu seumur hidup."
+            ],
+            peaks: [
+                "Ambil napas dalam-dalam, lepaskan semua beban pikiranmu, dan mulailah memaafkan dirimu atas semua kesalahan masa lalu.",
+                "Fokuskan kembali seluruh energi terbaikmu pada hal-hal produktif yang berada di bawah kendali penuh tanganmu sendiri.",
+                "Kini saatnya kamu menetapkan batasan yang tegas dari hal-hal negatif yang merusak kesehatan mental dan fisikmu.",
+                "Berdamailah dengan ketidakpastian hidup, lalu teruslah melangkah maju dengan keyakinan penuh akan kemampuan hebatmu.",
+                "Investasikan waktumu untuk belajar meningkatkan kualitas diri, karena nilai dirimu ditentukan oleh kapasitas pikiranmu.",
+                "Sederhanakan ekspektasimu terhadap manusia lain, agar hidupmu terbebas dari jerat kekecewaan yang tidak perlu.",
+                "Kuatkan tekadmu hari ini, buat keputusan berani untuk meninggalkan zona nyaman yang selama ini membelenggumu.",
+                "Hargai setiap pencapaian kecil yang kamu raih dengan bersyukur, karena kebahagiaan sejati dimulai dari rasa cukup."
+            ],
+            actions: [
+                "Tegakkan kepalamu, tatap cermin di hadapanmu, dan katakan bahwa kamu siap menghadapi tantangan apa pun hari ini.",
+                "Hapus keraguan dari benakmu, mulailah bertindak nyata tanpa menunggu motivasi atau momen sempurna tiba.",
+                "Tinggalkan lingkungan beracun yang menguras energimu, lalu carilah lingkaran pendukung yang membantumu bertumbuh.",
+                "Kini bangkitlah with semangat baru, rapikan penampilanmu, dan mulailah melangkah ke depan dengan penuh percaya diri.",
+                "Selesaikan tugas pertamamu hari ini dengan fokus penuh, rasakan bagaimana momentum disiplin mulai terbangun kembali.",
+                "Jangan takut untuk memulai kembali dari awal, karena pengalaman masa lalu membuat langkah barumu jauh lebih cerdas.",
+                "Kendalikan pikiran liar yang mencemaskan masa depan, pusatkan fokusmu murni pada tindakan terbaik detik ini.",
+                "Tuliskan impian besarmu di atas kertas, lalu breakdown menjadi aksi konkret yang bisa kamu kerjakan sekarang juga."
+            ],
+            closings: [
+                "Sebab akhir yang gemilang selalu menanti mereka yang menolak menyerah di tengah badai kehidupan.",
+                "Percayalah pada proses yang sedang kamu jalani, kesuksesan sejati tidak pernah datang secara instan.",
+                "Sebab kekuatan terbesar dalam hidupmu ada pada keputusanmu untuk bangkit kembali setiap kali terjatuh.",
+                "Dunia sedang menantikan karya terbaikmu, tetaplah konsisten melangkah demi masa depan yang lebih cerah.",
+                "Sebab pada akhirnya, hasil akhir tidak pernah mengkhianati kesungguhan usaha yang kamu lakukan dengan tekun.",
+                "Berjalanlah terus dengan penuh keyakinan diri, karena masa depan yang indah dirancang khusus untuk jiwamu.",
+                "Sebab setiap lelah yang kamu rasakan hari ini akan terbayar lunas dengan manisnya kemenangan esok hari.",
+                "Kedamaian dan kesuksesan hakiki kini sedang menantimu di ujung jalan perjuangan yang kamu pilih."
+            ]
+        };
+
+        // Dynamic Field Utility (Handles "Kustom" Select Fields)
+        function toggleCustomField(selectElement, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const input = container.querySelector('input');
+            if (selectElement.value === 'custom') {
+                container.classList.remove('hidden');
+                input.setAttribute('required', 'true');
+                input.focus();
+            } else {
+                container.classList.add('hidden');
+                input.removeAttribute('required');
+                input.value = '';
+            }
+        }
+
+        // Helper to populate custom parameters dynamically
+        function setSelectValueOrCustom(selectId, value, customInputId, customContainerId) {
+            const selectEl = document.getElementById(selectId);
+            const customInput = document.getElementById(customInputId);
+            const customContainer = document.getElementById(customContainerId);
+            
+            if (!selectEl) return;
+            
+            let found = false;
+            for (let i = 0; i < selectEl.options.length; i++) {
+                if (selectEl.options[i].value === value) {
+                    selectEl.value = value;
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found && value) {
+                selectEl.value = 'custom';
+                if (customInput) customInput.value = value;
+                if (customContainer) {
+                    customContainer.classList.remove('hidden');
+                    customInput.setAttribute('required', 'true');
+                }
+            } else {
+                selectEl.value = value || selectEl.options[0].value;
+                if (customInput) customInput.value = '';
+                if (customContainer) {
+                    customContainer.classList.add('hidden');
+                    customInput.removeAttribute('required');
+                }
+            }
+        }
+
+        window.onload = function() {
+            loadHistoryFromStorage();
+            document.getElementById('simulatedImage').src = `https://placehold.co/400x711/0A0A0A/39FF14?text=PREVIEW+CINEMATIC+POSTER`;
+            quickFillDemo('islami');
+        };
+
+        // Tab Switcher Routine
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.add('hidden'));
+            
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            const desktopButtons = document.querySelectorAll('.tab-btn');
+            desktopButtons.forEach(btn => {
+                btn.className = "tab-btn flex-1 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-neutral-400 hover:text-white hover:bg-neutral-900/40";
+            });
+            const activeDesktopBtn = document.getElementById(`btn-${tabId}`);
+            if (activeDesktopBtn) {
+                activeDesktopBtn.className = "tab-btn flex-1 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-neonGreen bg-neutral-950/80 border border-neonGreen/30 shadow-neonGlow";
+            }
+
+            const mobileButtons = document.querySelectorAll('.mobile-nav-btn');
+            mobileButtons.forEach(btn => {
+                btn.className = "mobile-nav-btn flex flex-col items-center justify-center space-y-1 text-neutral-400";
+            });
+            const activeMobileBtn = document.getElementById(`mob-${tabId}`);
+            if (activeMobileBtn) {
+                activeMobileBtn.className = "mobile-nav-btn flex flex-col items-center justify-center space-y-1 text-neonGreen";
+            }
+        }
+
+        // Quick Fill Demo Button Action
+        function quickFillDemo(type) {
+            const data = DEMO_DATABASE[type];
+            if (!data) return;
+
+            document.getElementById('vidTitle').value = data.title;
+            const radios = document.getElementsByName('vidCategory');
+            radios.forEach(radio => {
+                if (radio.value === data.category) radio.checked = true;
+            });
+            
+            // Reset all custom dynamic fields when demo is triggered
+            const customContainers = ['vidGenderCustomContainer', 'vidAgeCustomContainer'];
+            customContainers.forEach(id => {
+                const container = document.getElementById(id);
+                if (container) {
+                    container.classList.add('hidden');
+                    const input = container.querySelector('input');
+                    if (input) {
+                        input.value = '';
+                        input.removeAttribute('required');
+                    }
+                }
+            });
+
+            document.getElementById('vidGender').value = data.gender;
+            document.getElementById('vidAge').value = data.age;
+            document.getElementById('vidLocation').value = data.location;
+            document.getElementById('vidOutfit').value = data.outfit;
+            
+            if (type === 'islami') {
+                document.getElementById('vidCameraOpt1').value = 'dynamic_cinematic';
+                document.getElementById('vidCameraOpt2').value = 'side_dolly';
+                document.getElementById('vidCameraOpt3').value = 'fast_cuts';
+                document.getElementById('vidCameraOpt4').value = 'top_slow';
+                document.getElementById('vidCameraOpt5').value = 'tracking_walk';
+            } else {
+                document.getElementById('vidCameraOpt1').value = 'tracking_walk';
+                document.getElementById('vidCameraOpt2').value = 'front_zoom';
+                document.getElementById('vidCameraOpt3').value = 'side_dolly';
+                document.getElementById('vidCameraOpt4').value = 'fast_cuts';
+                document.getElementById('vidCameraOpt5').value = 'top_slow';
+            }
+
+            document.getElementById('imgPromptText').value = data.promptText;
+            document.getElementById('imgStylePreset').value = data.presetStyle;
+
+            Swal.fire({
+                title: 'Data Demo Terisi!',
+                text: `Berhasil memuat preset data demo motivasi: ${type.toUpperCase()}`,
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                background: '#0A0A0A',
+                color: '#FFF',
+                confirmButtonColor: '#39FF14'
+            });
+        }
+
+        // Reference Image Handlers
+        function previewRefImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imgUploadPreview').src = e.target.result;
+                    document.getElementById('imgUploadName').textContent = file.name;
+                    document.getElementById('imgUploadPrompt').classList.add('hidden');
+                    document.getElementById('imgUploadPreviewContainer').classList.remove('hidden');
+                    document.getElementById('imgUploadPreviewContainer').classList.add('flex');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function clearRefImage(event) {
+            if(event) event.preventDefault();
+            document.getElementById('vidRefImage').value = '';
+            document.getElementById('imgUploadPrompt').classList.remove('hidden');
+            document.getElementById('imgUploadPreviewContainer').classList.add('hidden');
+            document.getElementById('imgUploadPreviewContainer').classList.remove('flex');
+        }
+
+        // Image Tab Reference Image Upload Handlers
+        function previewImgTabRefImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imgTabUploadPreview').src = e.target.result;
+                    document.getElementById('imgTabUploadName').textContent = file.name;
+                    document.getElementById('imgTabUploadPrompt').classList.add('hidden');
+                    document.getElementById('imgTabUploadPreviewContainer').classList.remove('hidden');
+                    document.getElementById('imgTabUploadPreviewContainer').classList.add('flex');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function clearImgTabRefImage(event) {
+            if(event) event.preventDefault();
+            document.getElementById('imgTabRefImage').value = '';
+            const prompt = document.getElementById('imgTabUploadPrompt');
+            if (prompt) prompt.classList.remove('hidden');
+            const previewCont = document.getElementById('imgTabUploadPreviewContainer');
+            if (previewCont) {
+                previewCont.classList.add('hidden');
+                previewCont.classList.remove('flex');
+            }
+        }
+
+        // WEB SPEECH INTELLIGENT MATCHING PROFILE
+        function calculateVoiceProfile(gender, age) {
+            let pitch = 1.0;
+            let rate = 0.95;
+            
+            const g = gender.toLowerCase();
+            const a = age.toLowerCase();
+            
+            // Adjust pitch according to Gender (Direct Actor Address)
+            if (g.includes('wanita') || g.includes('hijab') || g.includes('perempuan') || g.includes('gadis')) {
+                pitch = 1.25;
+            } else if (g.includes('pria') || g.includes('laki') || g.includes('cowok') || g.includes('bapak')) {
+                pitch = 0.82;
+            } else {
+                pitch = 1.0;
+            }
+            
+            // Adjust speed & pitch multiplier based on Age group
+            if (a.includes('anak') || g.includes('anak') || a.includes('10-15') || a.includes('muda') || a.includes('20-25')) {
+                rate = 1.08;
+                if (a.includes('anak') || g.includes('anak')) {
+                    pitch += 0.2;
+                }
+            } else if (a.includes('paruh baya') || a.includes('tua') || a.includes('40+') || a.includes('60')) {
+                rate = 0.78;
+            }
+            
+            return { pitch, rate };
+        }
+
+        // CORE GENERATION LOGIC: GENERATING VIDEO SYSTEM SCENES
+        function generateCinematicScenes(title, category, gender, age, location, outfit, cameraOpts) {
+            const matrix = category === 'islami' ? ISLAMI_MATRIX : UMUM_MATRIX;
+            
+            // Helper function to pick a random item from an array
+            const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+            
+            // Generate a dialogue flow with exact constraints of 20-25 words per sentence
+            const constructSentence = (seg1, seg2) => {
+                // Combine and refine length to fit exactly 20-25 words
+                let sentence = `${seg1} ${seg2}`;
+                let words = sentence.split(" ");
+                
+                // If it's too short, append reassuring fillers
+                if (words.length < 20) {
+                    const fillers = [
+                        "percayalah pada kekuatan doa yang tulus malam ini.",
+                        "hadapi rintangan hidup dengan hati lapang dan damai.",
+                        "jangan pernah biarkan keputusasaan menghentikan langkah muliamu.",
+                        "ingatlah kekuatan tekadmu mengalahkan segala rintangan besar.",
+                        "sambut fajar kemudahan dengan senyuman penuh optimisme tinggi.",
+                        "jalan kesuksesan terbuka lebar bagi jiwa yang sabar."
+                    ];
+                    while (words.length < 20) {
+                        sentence += " " + pickRandom(fillers);
+                        words = sentence.split(" ");
+                    }
+                }
+                
+                // If it's too long, truncate gracefully to 25 words max
+                if (words.length > 25) {
+                    words = words.slice(0, 24);
+                    sentence = words.join(" ") + ".";
+                }
+                
+                return sentence;
+            };
+
+            // Generate 5 custom direct-address scenes using unique combinatorial segments
+            const generatedDialogues = [
+                constructSentence(pickRandom(matrix.hooks), "Maka renungkanlah kembali."),
+                constructSentence("Jangan pernah menyerah,", pickRandom(matrix.bridges)),
+                constructSentence(pickRandom(matrix.peaks), "Itulah jalan terbaik."),
+                constructSentence(pickRandom(matrix.actions), "Semua pasti berlalu."),
+                constructSentence("Tegarkan langkah kaki jiwamu,", pickRandom(matrix.closings))
+            ];
+
+            const actions = [
+                "looking down peacefully, slowly raising head to look forward with deep serenity and a calm gaze.",
+                "reflecting calmly in a close-up profile view, showcasing a subtle, warm, and hopeful facial expression.",
+                "looking forward with gentle focus, showing a peaceful emotional expression of gratitude and absolute calm.",
+                "tilting head slightly upward towards a soft natural light source, eyes filled with soft emotion and peaceful contemplation.",
+                "looking directly into the lens, smiling warmly with a calm, assured, and welcoming demeanor."
+            ];
+
+            // Setup camera descriptions dictionary
+            const descriptions = {
+                dynamic_cinematic_default: [
+                    "Front wide static shot then cinematic slow zoom in to actor facial expression",
+                    "Left dynamic side angle dolly movement highlighting atmospheric environment",
+                    "Fast rhythmic alternate cuts, tight telephoto lens capturing emotional details",
+                    "Top angle high shot slow circular rotation with high dramatic depth of field",
+                    "Side tracking shot following actor walking slowly with soft majestic backlight"
+                ],
+                front_zoom: "Front vertical shot, slow zoom-in to focus on eyes and posture",
+                side_dolly: "Left-to-right slow dolly movement capturing profile and background details",
+                fast_cuts: "Alternating quick telephoto lenses focusing on extreme micro facial textures",
+                top_slow: "Top-down high angle camera shot starting from a far distance, slowly tracking downwards and zooming in closer until exactly 100 cm in front of the actor's face, matching the high-angle perspective and framing style of image_babd88.jpg",
+                tracking_walk: "Tracking horizontal shot keeping matching pace with character walking"
+            };
+
+            // Map each of the 5 custom inputs
+            let cameraSequence = [];
+            for (let i = 0; i < 5; i++) {
+                const opt = cameraOpts[i] || 'dynamic_cinematic';
+                if (opt === 'dynamic_cinematic') {
+                    cameraSequence.push(descriptions.dynamic_cinematic_default[i]);
+                } else {
+                    cameraSequence.push(descriptions[opt]);
+                }
+            }
+
+            // Generate 5 structured scenes with high consistency and behavioral action framing
+            const listScenes = [];
+            const stages = ["INTRO", "SIDE MERENUNG", "PEAK EMOTIONAL", "SPIRITUAL REFLECTION", "WALKING CLOSING"];
+
+            for (let idx = 0; idx < 5; idx++) {
+                const actionText = actions[idx];
+                listScenes.push({
+                    number: idx + 1,
+                    stage: stages[idx],
+                    camera: cameraSequence[idx],
+                    prompt: `Cinematic vertical shot, [CAMERA MOVEMENT: ${cameraSequence[idx]}]. [CHARACTER PERSISTENCE: same face, identical facial structure, Indonesian ${gender} aged ${age}], [OUTFIT PERSISTENCE: wearing the exact same outfit: ${outfit} throughout all scenes with absolutely no clothing changes], [ENVIRONMENT PERSISTENCE: situated strictly and only in the exact same static setting of: ${location} with absolutely no environmental changes, transitions, cuts to different places, or jumps. The background environment must remain 100% constant, identical, and physically stable across all frames]. [PROP PERSISTENCE: any handheld items, microphones, pointers, or props must remain physically stable, solid, and constant across frames, with absolutely no morphing, flickering, or sudden disappearance]. [AUDIENCE DEMOGRAPHIC: if any audience, crowd, listeners, or background people are visible, they must all strictly have authentic local Indonesian and Southeast Asian facial features, matching warm skin tones, and realistic ethnic representation, with absolutely no Caucasian, Western, or Middle Eastern faces in the crowd]. The actor is ${actionText} Extreme hyper-realistic 8k photography details, documentary style cinematic lighting, shallow depth of field, natural real-life texture.`,
+                    voice: generatedDialogues[idx]
+                });
+            }
+
+            return listScenes;
+        }
+
+        // VIDEO ENGINE ACTION HANDLER
+        function handleGenerateVideo(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('vidTitle').value;
+            const category = document.querySelector('input[name="vidCategory"]:checked').value;
+            
+            let gender = document.getElementById('vidGender').value;
+            if (gender === 'custom') {
+                gender = document.getElementById('vidGenderCustom').value;
+            }
+            
+            let age = document.getElementById('vidAge').value;
+            if (age === 'custom') {
+                age = document.getElementById('vidAgeCustom').value;
+            }
+            
+            const location = document.getElementById('vidLocation').value;
+            const outfit = document.getElementById('vidOutfit').value;
+
+            const cameraOpts = [
+                document.getElementById('vidCameraOpt1').value,
+                document.getElementById('vidCameraOpt2').value,
+                document.getElementById('vidCameraOpt3').value,
+                document.getElementById('vidCameraOpt4').value,
+                document.getElementById('vidCameraOpt5').value
+            ];
+
+            document.getElementById('videoEmptyState').classList.add('hidden');
+            document.getElementById('videoOutputContainer').classList.add('hidden');
+            document.getElementById('videoLoadingState').classList.remove('hidden');
+            document.getElementById('generationStatus').className = "px-2.5 py-0.5 rounded-full bg-yellow-950/40 border border-yellow-800 text-yellow-400 text-[10px] font-bold uppercase tracking-wider";
+            document.getElementById('generationStatus').textContent = "Memproses...";
+
+            const phases = [
+                "Menyelaraskan tema spiritual dengan opsi pergerakan kamera...",
+                "Merumuskan 5 alur visual kamera sinematik kustom...",
+                "Menyusun skrip dialog langsung diucapkan aktor...",
+                "Memetakan frekuensi audio pengisi suara kustom...",
+                "Menyelesaikan kompilasi berkas storyboard..."
+            ];
+
+            let curPhase = 0;
+            const interval = setInterval(() => {
+                if (curPhase < phases.length) {
+                    document.getElementById('loadingPhase').textContent = phases[curPhase];
+                    curPhase++;
+                } else {
+                    clearInterval(interval);
+                    completeVideoGeneration(title, category, gender, age, location, outfit, cameraOpts);
+                }
+            }, 500);
+        }
+
+        function completeVideoGeneration(title, category, gender, age, location, outfit, cameraOpts) {
+            // Update Voice Profile
+            currentProjectVoiceParams = calculateVoiceProfile(gender, age);
+
+            // Generate Data
+            const scenes = generateCinematicScenes(title, category, gender, age, location, outfit, cameraOpts);
+            
+            // Render basic values
+            document.getElementById('outTitle').textContent = `"${title}"`;
+            
+            // Render Actor System Prompt
+            const actorPrompt = `Ultra realistic cinematic human actor, Indonesian appearance, gender: ${gender}, age: ${age}, natural skin texture, soft lighting, emotional expression, wearing ${outfit}, consistent identity across scenes, high detail face, shallow depth of field, 4K vertical composition, documentary style cinematic lighting. Props and handheld objects (such as microphones, books, prayer beads) must maintain total physical stability and absolute permanence without morphing, vanishing, or flickering. Any surrounding crowd, listeners, or audience must strictly feature authentic local Indonesian/Southeast Asian appearances (strictly no Caucasian, Western, or Middle Eastern demographics in the crowd)`;
+            document.getElementById('outActorPrompt').textContent = actorPrompt;
+
+            // Render Negative Actor Prompt
+            const negPrompt = `anime, cartoon, CGI, face distortion, inconsistent identity, flickering face, extra limbs, deformed hands, unnatural expression, robotic motion, oversharpening, low quality, watermarks, bad anatomy, deformed eyes, extra fingers, vanishing objects, disappearing props, morphing microphone, flickering handheld items, sudden prop disappearance, Caucasian crowd, white audience, European listeners, Middle Eastern background characters, demographic mismatch`;
+            document.getElementById('outNegativePrompt').textContent = negPrompt;
+
+            // Populate accordion scenes
+            const accordionContainer = document.getElementById('sceneAccordionContainer');
+            accordionContainer.innerHTML = '';
+
+            scenes.forEach((scene) => {
+                const accordionItem = `
+                    <div class="border border-neutral-800/80 rounded-xl overflow-hidden bg-neutral-950/40 hover:border-neonGreen/30 transition duration-300">
+                        <button onclick="toggleAccordion('scene-${scene.number}')" class="w-full py-3.5 px-4 text-left flex items-center justify-between bg-neutral-950/80 font-bold text-xs select-none">
+                            <span class="flex items-center space-x-2">
+                                <span class="w-5 h-5 rounded bg-neonGreen/10 border border-neonGreen/30 text-neonGreen flex items-center justify-center text-[10px] font-black">${scene.number}</span>
+                                <span class="text-white">SCENE ${scene.number} - ${scene.stage}</span>
+                            </span>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neonGreen font-mono">VOICE READY</span>
+                        </button>
+                        <div id="scene-${scene.number}" class="hidden p-4 space-y-4 border-t border-neutral-900/60 bg-neutral-950/20">
+                            <div>
+                                <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider block mb-1">Kamera / Sudut Pandang</span>
+                                <p class="text-xs text-neutral-300 font-medium">${scene.camera}</p>
+                            </div>
+                            <div>
+                                <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider block mb-1">Prompt Visual AI</span>
+                                <p class="text-xs text-neutral-400 leading-relaxed font-mono bg-black/50 p-2.5 rounded border border-neutral-900">${scene.prompt}</p>
+                            </div>
+                            <div class="p-3 rounded-lg bg-neonGreen/5 border border-neonGreen/20">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <i class="fa-solid fa-comment-dots text-neonGreen"></i> Voice Over Narasi (Naskah)
+                                    </span>
+                                    <button onclick="speakDirectly(\`${scene.voice.replace(/'/g, "\\'")}\`)" class="text-[10px] text-neonGreen hover:text-white flex items-center gap-1 font-bold"><i class="fa-solid fa-play"></i> Putar Kalimat</button>
+                                </div>
+                                <p class="text-xs text-white italic font-medium">"${scene.voice}"</p>
+                                <div class="flex justify-between items-center mt-1 text-[9px] text-neutral-500 border-t border-neutral-900/60 pt-1">
+                                    <span>Jumlah kata: ${scene.voice.split(" ").length} kata (Tone Nasihat Lembut)</span>
+                                    <span class="text-neonGreen/80 font-semibold flex items-center gap-1">
+                                        <span class="h-1.5 w-1.5 bg-neonGreen rounded-full animate-ping"></span>
+                                        Selesai 1.5s sebelum scene berakhir (Transisi Realistis)
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Unified Copy Button for Visual Prompt & Dialogue with Built-in Buffer Instructions -->
+                            <button onclick="copySceneBoth('${scene.number}', \`${scene.prompt.replace(/`/g, "\\`").replace(/'/g, "\\'")}\`, \`${scene.voice.replace(/`/g, "\\`").replace(/'/g, "\\'")}\`)" class="w-full py-2.5 px-4 rounded-xl bg-neonGreen text-black hover:bg-white font-extrabold text-xs uppercase tracking-wider transition duration-300 flex items-center justify-center gap-2 shadow-neonGlow">
+                                <i class="fa-solid fa-copy"></i> Salin Prompt Visual & Dialog Scene ${scene.number}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                accordionContainer.insertAdjacentHTML('beforeend', accordionItem);
+            });
+
+            // Automatically open scene 1
+            toggleAccordion('scene-1');
+
+            document.getElementById('videoLoadingState').classList.add('hidden');
+            document.getElementById('videoOutputContainer').classList.remove('hidden');
+            document.getElementById('generationStatus').className = "px-2.5 py-0.5 rounded-full bg-neonGreen/10 border border-neonGreen/40 text-neonGreen text-[10px] font-bold uppercase tracking-wider shadow-neonGlow";
+            document.getElementById('generationStatus').textContent = "Siap Digunakan";
+
+            // Push to Local Storage / Project Item Memory
+            const projItem = {
+                id: Date.now(),
+                type: 'video',
+                title: title,
+                timestamp: new Date().toLocaleString('id-ID'),
+                details: {
+                    category, gender, age, location, outfit, actorPrompt, negPrompt, scenes,
+                    cameraOpts: cameraOpts
+                }
+            };
+            dbHistory.unshift(projItem);
+            saveHistoryToStorage();
+            renderHistoryGrid();
+
+            Swal.fire({
+                title: 'Naskah & Storyboard Sukses!',
+                text: '5-Scene Dialog Aktor telah berhasil dibuat sesuai kriteria pengisi suara kustom.',
+                icon: 'success',
+                background: '#0A0A0A',
+                color: '#FFF',
+                confirmButtonColor: '#39FF14'
+            });
+        }
+
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+
+        // DYNAMIC AUDIO SPEAKER GENERATOR
+        function speakDirectly(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                
+                // Match the configured dynamic actor parameters computed on generation
+                utterance.pitch = currentProjectVoiceParams.pitch;
+                
+                // Incorporate rate slider speed with character-based rate
+                const speedEl = document.getElementById('voSpeed');
+                const speedMultiplier = speedEl ? parseFloat(speedEl.value) : 0.95;
+                utterance.rate = currentProjectVoiceParams.rate * (speedMultiplier / 0.95);
+
+                const voices = window.speechSynthesis.getVoices();
+                const idVoice = voices.find(v => v.lang.includes('id') || v.lang.includes('ID'));
+                if (idVoice) utterance.voice = idVoice;
+
+                window.speechSynthesis.speak(utterance);
+                currentlyPlayingSpeech = utterance;
+            } else {
+                Swal.fire({
+                    title: 'Web Speech API Tidak Didukung',
+                    text: 'Peramban Anda tidak mendukung penyuaraan otomatis.',
+                    icon: 'warning',
+                    background: '#0A0A0A',
+                    color: '#FFF',
+                    confirmButtonColor: '#39FF14'
+                });
+            }
+        }
+
+        function playAllVoiceovers() {
+            let fullCombined = "";
+            const accordionElements = document.querySelectorAll('#sceneAccordionContainer .p-3');
+            accordionElements.forEach((sc, i) => {
+                const textVal = sc.querySelector('p.text-xs').textContent;
+                fullCombined += ` Scene ${i+1}. ${textVal}. `;
+            });
+
+            if (!fullCombined) {
+                Swal.fire('Data Tidak Ditemukan', 'Harap lakukan generator terlebih dahulu.', 'error');
+                return;
+            }
+
+            speakDirectly(fullCombined);
+        }
+
+        // COPY UTILITIES
+        function copyTextDirectly(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            Swal.fire({
+                title: 'Disalin!',
+                text: 'Teks prompt berhasil disalin ke papan klip.',
+                icon: 'success',
+                timer: 1000,
+                showConfirmButton: false,
+                background: '#0A0A0A',
+                color: '#FFF'
+            });
+        }
+
+        // Unified Copy Function for both Visual Prompt and Actor Dialogue with Pacing metadata
+        function copySceneBoth(sceneNum, promptText, voiceText) {
+            const combinedText = `=== SCENE ${sceneNum} ===\n[PROMPT VISUAL AI]\n${promptText}\n\n[NASKAH DIALOG AKTOR]\n"${voiceText}"\n\n[TIMING INSTRUCTION]\nDialogue duration: ~6s. Ensure voiceover speech concludes exactly 1.5 seconds before the video scene clip ends to allow a natural cinematic pause and smooth seamless transition.`;
+            
+            const el = document.createElement('textarea');
+            el.value = combinedText;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            Swal.fire({
+                title: `Scene ${sceneNum} Disalin!`,
+                text: 'Prompt Visual, Dialog, dan Aturan Jeda Transisi berhasil disalin.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                background: '#0A0A0A',
+                color: '#FFF'
+            });
+        }
+
+        function copyTextById(id) {
+            const text = document.getElementById(id).textContent;
+            copyTextDirectly(text);
+        }
+
+        function copyFullProject() {
+            const title = document.getElementById('outTitle').textContent;
+            const actor = document.getElementById('outActorPrompt').textContent;
+            const negative = document.getElementById('outNegativePrompt').textContent;
+            
+            let sceneBreakdowns = `=== ${title.toUpperCase()} ===\n\n[ACTOR PROMPT]\n${actor}\n\n[NEGATIVE PROMPT]\n${negative}\n\n[TIMING RULE]\nAll scene dialogues are structured to finish exactly 1.5 seconds before their respective video transitions to guarantee professional-grade cinematic flow.\n\n`;
+            
+            const scenes = document.querySelectorAll('#sceneAccordionContainer .p-3');
+            scenes.forEach((sc, idx) => {
+                const textVal = sc.querySelector('p.text-xs').textContent;
+                sceneBreakdowns += `Scene ${idx+1}: "${textVal}" (Ends 1.5s early for cinematic transition)\n`;
+            });
+
+            copyTextDirectly(sceneBreakdowns);
+            Swal.fire('Seluruh Proyek Disalin!', 'Storyboards, Actor, Dialog, & Aturan Transisi digabungkan ke clipboard.', 'success');
+        }
+
+        // IMAGE GENERATOR OPTIMIZATION FORM HANDLER
+        function handleGenerateImage(event) {
+            event.preventDefault();
+
+            const promptText = document.getElementById('imgPromptText').value;
+            const ratio = document.querySelector('input[name="imgRatio"]:checked').value;
+            const stylePreset = document.getElementById('imgStylePreset').value;
+            
+            // Verify if reference image is selected
+            const hasRefImage = document.getElementById('imgTabRefImage').files.length > 0;
+
+            document.getElementById('imageEmptyState').classList.add('hidden');
+            document.getElementById('imageOutputContainer').classList.add('hidden');
+            document.getElementById('imageLoadingState').classList.remove('hidden');
+            document.getElementById('imgGenerationStatus').className = "px-2.5 py-0.5 rounded-full bg-yellow-950/40 border border-yellow-800 text-yellow-400 text-[10px] font-bold uppercase tracking-wider";
+            document.getElementById('imgGenerationStatus').textContent = "Mengolah...";
+
+            setTimeout(() => {
+                completeImageGeneration(promptText, ratio, stylePreset, hasRefImage);
+            }, 1800);
+        }
+
+        function completeImageGeneration(promptText, ratio, stylePreset, hasRefImage) {
+            let stylesString = "exceptionally bright and crystal clear studio lighting, razor-sharp focus, shot on Leica SL2, 50mm lens at f/1.8, incredibly clear 8k resolution, authentic documentary photography style";
+            
+            if (stylePreset === 'warm_gold') {
+                stylesString = "vibrant golden hour sunshine, direct bright afternoon light rays, highly detailed atmosphere, razor-sharp focus, shot on Hasselblad, crystal clear 8k details, warm cinematic realism";
+            } else if (stylePreset === 'dark_moody') {
+                stylesString = "clear dramatic chiaroscuro illumination with sharp contrast, well-lit subject facial details, shot on Sony A7R V with 85mm lens at f/1.4, rich textures, lifelike clarity, realistic professional shot";
+            } else if (stylePreset === 'soft_mist') {
+                stylesString = "bright and clear fawning mist, crisp daylight filtering through fog, extremely sharp subject definition, shot on Canon EOS R5, beautiful raw natural colors, high fidelity 8k details";
+            }
+
+            // Strict facial locking clause
+            let facialReferenceClause = "";
+            if (hasRefImage) {
+                facialReferenceClause = ` [FACE REFERENCE: The actor's face, precise facial features, bone structure, and exact skin tone MUST be 100% identical and copied directly from the uploaded reference image. Maintain absolute facial matching persistence]. [OUTFIT AND LOCATION ISOLATION: Do not copy any clothing, garments, or background elements from the reference image (image_3dd68a.png); instead, the outfit MUST be exactly as described in the prompt below, and the environment/location MUST be exactly as described in the prompt below].`;
+            }
+
+            const optimizedPrompt = `A genuine, highly-detailed realistic photograph.${facialReferenceClause} ${promptText}. Extremely bright and clear natural lighting, authentic skin texture with visible fine pores and natural imperfections, no makeup airbrushing, highly detailed fabric weaves, background showing authentic and realistic location depth. ${stylesString}, natural human expression, composition ratio ${ratio}, award-winning documentary photo, strictly non-CGI and hyper-realistic.`;
+            const negativePrompt = `ai-generated look, plasticky skin, airbrushed face, digital painting, CGI, 3D render, smooth artificial skin, conceptual art, drawing, cartoon, anime, illustration, bad anatomy, deformed eyes, extra fingers, low resolution, blurry, oversaturated colors, high-pass filter glow, plastic doll texture, unrealistic reflection, fake dramatic lighting, duplicate face, low-quality scan`;
+
+            document.getElementById('outImgOptimizedPrompt').textContent = optimizedPrompt;
+            document.getElementById('outImgNegativePrompt').textContent = negativePrompt;
+            document.getElementById('simulatedRatio').textContent = ratio;
+
+            let themeQuery = "mosque";
+            if (promptText.toLowerCase().includes("danau") || promptText.toLowerCase().includes("lake")) themeQuery = "lake,mist";
+            else if (promptText.toLowerCase().includes("bukit") || promptText.toLowerCase().includes("mountain")) themeQuery = "misty,mountain";
+            else if (promptText.toLowerCase().includes("jalan") || promptText.toLowerCase().includes("street")) themeQuery = "rainy,city";
+            else if (promptText.toLowerCase().includes("perpustakaan") || promptText.toLowerCase().includes("library")) themeQuery = "library,classic";
+            
+            const randomID = Math.floor(Math.random() * 100);
+            const w = ratio === "9:16" ? 400 : 700;
+            const h = ratio === "9:16" ? 711 : 394;
+            document.getElementById('simulatedImage').src = `https://images.unsplash.com/photo-${randomID === 0 ? '1507525428034-b723cf961d3e' : '1518495973542-4542c06a5843'}?auto=format&fit=crop&q=80&w=${w}&h=${h}`;
+
+            document.getElementById('simulatedImage').onerror = function() {
+                this.src = `https://placehold.co/${w}x${h}/0A0A0A/39FF14?text=PREVIEW+RATIO+${ratio}`;
+            };
+
+            document.getElementById('imageLoadingState').classList.add('hidden');
+            document.getElementById('imageOutputContainer').classList.remove('hidden');
+            document.getElementById('imgGenerationStatus').className = "px-2.5 py-0.5 rounded-full bg-neonGreen/10 border border-neonGreen/40 text-neonGreen text-[10px] font-bold uppercase tracking-wider shadow-neonGlow";
+            document.getElementById('imgGenerationStatus').textContent = "Kompilasi Siap";
+
+            Swal.fire({
+                title: 'Optimasi Selesai!',
+                text: 'Kombinasi prompt gambar dan negative prompt anti-distorsi berhasil disusun.',
+                icon: 'success',
+                background: '#0A0A0A',
+                color: '#FFF',
+                confirmButtonColor: '#39FF14'
+            });
+        }
+
+        function saveImagePromptToHistory() {
+            const promptText = document.getElementById('imgPromptText').value;
+            const ratio = document.querySelector('input[name="imgRatio"]:checked').value;
+            const stylePreset = document.getElementById('imgStylePreset').value;
+            const optimized = document.getElementById('outImgOptimizedPrompt').textContent;
+            const negative = document.getElementById('outImgNegativePrompt').textContent;
+
+            const projItem = {
+                id: Date.now(),
+                type: 'image',
+                title: promptText.substring(0, 45) + '...',
+                timestamp: new Date().toLocaleString('id-ID'),
+                details: {
+                    ratio, stylePreset, optimized, negative
+                }
+            };
+
+            dbHistory.unshift(projItem);
+            saveHistoryToStorage();
+            renderHistoryGrid();
+
+            Swal.fire({
+                title: 'Disimpan!',
+                text: 'Konfigurasi prompt gambar berhasil dimasukkan ke Riwayat Proyek.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                background: '#0A0A0A',
+                color: '#FFF'
+            });
+        }
+
+        // STORAGE MANAGEMENT
+        function saveHistoryToStorage() {
+            localStorage.setItem('motivasiku_projects', JSON.stringify(dbHistory));
+        }
+
+        function loadHistoryFromStorage() {
+            const saved = localStorage.getItem('motivasiku_projects');
+            if (saved) {
+                try {
+                    dbHistory = JSON.parse(saved);
+                } catch(e) {
+                    dbHistory = [];
+                }
+            }
+            renderHistoryGrid();
+        }
+
+        function renderHistoryGrid() {
+            const container = document.getElementById('historyGrid');
+            const emptyState = document.getElementById('historyEmptyState');
+            if (container) {
+                container.innerHTML = '';
+
+                if (dbHistory.length === 0) {
+                    if (emptyState) emptyState.classList.remove('hidden');
+                    return;
+                } else {
+                    if (emptyState) emptyState.classList.add('hidden');
+                }
+
+                dbHistory.forEach(item => {
+                    const card = `
+                        <div class="p-5 rounded-xl bg-neutral-950/80 border border-neutral-800/80 hover:border-neonGreen/40 transition duration-300 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wide bg-neutral-900 border border-neutral-800 text-neonGreen">
+                                        <i class="${item.type === 'video' ? 'fa-solid fa-video' : 'fa-solid fa-image'} mr-1"></i> ${item.type.toUpperCase()}
+                                    </span>
+                                    <span class="text-[10px] text-neutral-500">${item.timestamp}</span>
+                                </div>
+                                <h4 class="text-sm font-bold text-white mb-2 truncate">${item.title}</h4>
+                                <p class="text-xs text-neutral-400 line-clamp-3 mb-4">
+                                    ${item.type === 'video' ? `Aktor: ${item.details.gender} (${item.details.age}). Berlokasi di ${item.details.location}.` : item.details.optimized}
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-neutral-900">
+                                <button onclick="restoreProject(${item.id})" class="text-xs text-neonGreen hover:text-white font-bold transition flex items-center gap-1">
+                                    <i class="fa-solid fa-folder-open"></i> Buka Ulang
+                                </button>
+                                <button onclick="deleteProject(${item.id})" class="text-xs text-red-500 hover:text-red-400 transition">
+                                    <i class="fa-solid fa-trash-can"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', card);
+                });
+            }
+        }
+
+        function restoreProject(id) {
+            const item = dbHistory.find(x => x.id === id);
+            if (!item) return;
+
+            if (item.type === 'video') {
+                switchTab('video-tab');
+                document.getElementById('vidTitle').value = item.title;
+                
+                setSelectValueOrCustom('vidGender', item.details.gender, 'vidGenderCustom', 'vidGenderCustomContainer');
+                setSelectValueOrCustom('vidAge', item.details.age, 'vidAgeCustom', 'vidAgeCustomContainer');
+                
+                // Directly set text input values for location and outfit (no longer custom dropdown select containers)
+                document.getElementById('vidLocation').value = item.details.location || '';
+                document.getElementById('vidOutfit').value = item.details.outfit || '';
+                
+                const opts = item.details.cameraOpts || [
+                    item.details.cameraOption || 'dynamic_cinematic',
+                    item.details.cameraOption || 'dynamic_cinematic',
+                    item.details.cameraOption || 'dynamic_cinematic',
+                    item.details.cameraOption || 'dynamic_cinematic',
+                    item.details.cameraOption || 'dynamic_cinematic'
+                ];
+                
+                document.getElementById('vidCameraOpt1').value = opts[0];
+                document.getElementById('vidCameraOpt2').value = opts[1];
+                document.getElementById('vidCameraOpt3').value = opts[2];
+                document.getElementById('vidCameraOpt4').value = opts[3];
+                document.getElementById('vidCameraOpt5').value = opts[4];
+                
+                completeVideoGeneration(item.title, item.details.category, item.details.gender, item.details.age, item.details.location, item.details.outfit, opts);
+            } else {
+                switchTab('image-tab');
+                document.getElementById('imgPromptText').value = item.title;
+                
+                // Reset any uploaded reference images in the UI during direct project load
+                clearImgTabRefImage();
+                completeImageGeneration(item.title, item.details.ratio, item.details.stylePreset, false);
+            }
+
+            Swal.fire({
+                title: 'Proyek Dipulihkan!',
+                text: `Berhasil memuat ulang data untuk proyek: "${item.title.substring(0, 30)}..."`,
+                icon: 'success',
+                background: '#0A0A0A',
+                color: '#FFF',
+                confirmButtonColor: '#39FF14'
+            });
+        }
+
+        function deleteProject(id) {
+            dbHistory = dbHistory.filter(x => x.id !== id);
+            saveHistoryToStorage();
+            renderHistoryGrid();
+            
+            Swal.fire({
+                title: 'Proyek Dihapus',
+                text: 'Item berhasil dieliminasi dari database lokal.',
+                icon: 'success',
+                timer: 1000,
+                showConfirmButton: false,
+                background: '#0A0A0A',
+                color: '#FFF'
+            });
+        }
+
+        function clearAllHistory() {
+            Swal.fire({
+                title: 'Hapus Semua Riwayat?',
+                text: "Langkah ini akan menghapus riwayat proyek secara permanen dari penyimpanan browser.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#1C1C1C',
+                confirmButtonText: 'Ya, Hapus Semua',
+                cancelButtonText: 'Batal',
+                background: '#0A0A0A',
+                color: '#FFF'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dbHistory = [];
+                    saveHistoryToStorage();
+                    renderHistoryGrid();
+                    Swal.fire({
+                        title: 'Dibersihkan!',
+                        text: 'Riwayat proyek telah kosong.',
+                        icon: 'success',
+                        background: '#0A0A0A',
+                        color: '#FFF'
+                    });
+                }
+            });
+        }
+
+        function syncWithGAS() {
+            Swal.fire({
+                title: 'Menghubungkan ke Cloud...',
+                text: 'Membaca antrean dan mensinkronisasikan riwayat pengerjaan dengan Google Sheets Spreadsheet...',
+                allowOutsideClick: false,
+                background: '#0A0A0A',
+                color: '#FFF',
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withSuccessHandler(function(response) {
+                        Swal.fire({
+                            title: 'Sinkronisasi Berhasil!',
+                            text: 'Seluruh riwayat lokal telah diselaraskan dengan Google Apps Script secara aman.',
+                            icon: 'success',
+                            background: '#0A0A0A',
+                            color: '#FFF',
+                            confirmButtonColor: '#39FF14'
+                        });
+                    })
+                    .withFailureHandler(function(err) {
+                        Swal.fire({
+                            title: 'Kegagalan Sinkronisasi',
+                            text: `Detail Error: ${err.message || err}. Data tetap tersimpan aman secara lokal.`,
+                            icon: 'error',
+                            background: '#0A0A0A',
+                            color: '#FFF',
+                            confirmButtonColor: '#39FF14'
+                        });
+                    })
+                    .saveProjectsToSheets(JSON.stringify(dbHistory));
+            } else {
+                setTimeout(() => {
+                    Swal.fire({
+                        title: 'Tersinkronisasi Secara Lokal',
+                        text: 'Cloud fallback aktif. Seluruh data disimpan rapi dalam LocalStorage. Hubungkan Google Apps Script untuk sinkronisasi Google Sheets.',
+                        icon: 'info',
+                        background: '#0A0A0A',
+                        color: '#FFF',
+                        confirmButtonColor: '#39FF14'
+                    });
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+</html>
