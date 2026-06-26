@@ -232,13 +232,25 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Lokasi / Setting</label>
-                                    <input type="text" id="vidLocation" required placeholder="Contoh: Di dalam kabin mobil sport merah" 
-                                        class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-4 text-sm text-white placeholder-neutral-600 focus:outline-none transition duration-300">
+                                    <select id="vidLocationMode" onchange="toggleRefField(this, 'vidLocationManualContainer')" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-3.5 text-sm text-white focus:outline-none transition duration-300">
+                                        <option value="ref">Ikuti Gambar Referensi</option>
+                                        <option value="manual">Kustom (Isi Manual)</option>
+                                    </select>
+                                    <div id="vidLocationManualContainer" class="hidden mt-2">
+                                        <input type="text" id="vidLocationManual" placeholder="Contoh: Di sudut kafe klasik pencahayaan hangat" 
+                                            class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-2 px-3 text-xs text-white focus:outline-none transition duration-300">
+                                    </div>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Pakaian / Kostum</label>
-                                    <input type="text" id="vidOutfit" required placeholder="Contoh: Jubah sutra berbordir emas" 
-                                        class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-4 text-sm text-white placeholder-neutral-600 focus:outline-none transition duration-300">
+                                    <select id="vidOutfitMode" onchange="toggleRefField(this, 'vidOutfitManualContainer')" class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-3.5 text-sm text-white focus:outline-none transition duration-300">
+                                        <option value="ref">Ikuti Gambar Referensi</option>
+                                        <option value="manual">Kustom (Isi Manual)</option>
+                                    </select>
+                                    <div id="vidOutfitManualContainer" class="hidden mt-2">
+                                        <input type="text" id="vidOutfitManual" placeholder="Contoh: Jaket kulit hitam kasual" 
+                                            class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-2 px-3 text-xs text-white focus:outline-none transition duration-300">
+                                    </div>
                                 </div>
                             </div>
                             <!-- Camera Movements Options per Scene (Stacked 1 to 5) -->
@@ -247,60 +259,60 @@
                                 <div class="space-y-2.5 bg-neutral-950/50 p-3 rounded-xl border border-neutral-800">
                                     <!-- Scene 1 -->
                                     <div class="flex items-center space-x-3">
-                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">1</span>
+                                        <span class="w-20 rounded bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs py-1.5 font-bold shrink-0">Scene 1</span>
                                         <select id="vidCameraOpt1" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
                                             <option value="dynamic_cinematic">Dynamic Cinematic Mix (Front Wide → Zoom In)</option>
                                             <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
                                             <option value="side_dolly">Side left shot (perlahan bergerak melingkar menjauh)</option>
-                                            <option value="fast_cuts">Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="fast_cuts">Fast alternating 3-axis shot (Sisi kiri depan 3s → Sisi kanan depan 3s → Depan 1 meter 4s)</option>
                                             <option value="top_slow">Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
                                             <option value="tracking_walk">Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
                                         </select>
                                     </div>
                                     <!-- Scene 2 -->
                                     <div class="flex items-center space-x-3">
-                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                                        <span class="w-20 rounded bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs py-1.5 font-bold shrink-0">Scene 2</span>
                                         <select id="vidCameraOpt2" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
                                             <option value="dynamic_cinematic">Dynamic Cinematic Mix (Left Side Reflection)</option>
                                             <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
                                             <option value="side_dolly" selected>Side left shot (perlahan bergerak melingkar menjauh)</option>
-                                            <option value="fast_cuts">Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="fast_cuts">Fast alternating 3-axis shot (Sisi kiri depan 3s → Sisi kanan depan 3s → Depan 1 meter 4s)</option>
                                             <option value="top_slow">Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
                                             <option value="tracking_walk">Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
                                         </select>
                                     </div>
                                     <!-- Scene 3 -->
                                     <div class="flex items-center space-x-3">
-                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                                        <span class="w-20 rounded bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs py-1.5 font-bold shrink-0">Scene 3</span>
                                         <select id="vidCameraOpt3" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
                                             <option value="dynamic_cinematic">Dynamic Cinematic Mix (Fast Cut Front & Side)</option>
                                             <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
                                             <option value="side_dolly">Side left shot (perlahan bergerak melingkar menjauh)</option>
-                                            <option value="fast_cuts" selected>Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="fast_cuts" selected>Fast alternating 3-axis shot (Sisi kiri depan 3s → Sisi kanan depan 3s → Depan 1 meter 4s)</option>
                                             <option value="top_slow">Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
                                             <option value="tracking_walk">Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
                                         </select>
                                     </div>
                                     <!-- Scene 4 -->
                                     <div class="flex items-center space-x-3">
-                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">4</span>
+                                        <span class="w-20 rounded bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs py-1.5 font-bold shrink-0">Scene 4</span>
                                         <select id="vidCameraOpt4" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
                                             <option value="dynamic_cinematic">Dynamic Cinematic Mix (Spiritual High-Angle)</option>
                                             <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
                                             <option value="side_dolly">Side left shot (perlahan bergerak melingkar menjauh)</option>
-                                            <option value="fast_cuts">Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="fast_cuts">Fast alternating 3-axis shot (Sisi kiri depan 3s → Sisi kanan depan 3s → Depan 1 meter 4s)</option>
                                             <option value="top_slow" selected>Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
                                             <option value="tracking_walk">Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
                                         </select>
                                     </div>
                                     <!-- Scene 5 -->
                                     <div class="flex items-center space-x-3">
-                                        <span class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs font-bold shrink-0">5</span>
+                                        <span class="w-20 rounded bg-neutral-900 border border-neutral-800 text-neonGreen flex items-center justify-center text-xs py-1.5 font-bold shrink-0">Scene 5</span>
                                         <select id="vidCameraOpt5" class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neonGreen rounded-lg py-2 px-2 text-xs text-white focus:outline-none transition duration-300">
                                             <option value="dynamic_cinematic">Dynamic Cinematic Mix (Side Tracking Walk)</option>
                                             <option value="front_zoom">Front shot (dari jauh → perlahan zoom in ke wajah aktor)</option>
                                             <option value="side_dolly">Side left shot (perlahan bergerak melingkar menjauh)</option>
-                                            <option value="fast_cuts">Fast alternating front & side shots (Sinematik Cepat)</option>
+                                            <option value="fast_cuts">Fast alternating 3-axis shot (Sisi kiri depan 3s → Sisi kanan depan 3s → Depan 1 meter 4s)</option>
                                             <option value="top_slow">Top front shot (Dari kejauhan atas lalu perlahan mendekat zoom in 100 cm depan wajah)</option>
                                             <option value="tracking_walk" selected>Tracking shot samping (Aktor berjalan lambat kontemplatif)</option>
                                         </select>
@@ -473,7 +485,7 @@
                                     <input type="file" id="imgTabRefImage" accept="image/*" onchange="previewImgTabRefImage(event)" class="absolute inset-0 opacity-0 cursor-pointer">
                                     <div class="text-center" id="imgTabUploadPrompt">
                                         <i class="fa-solid fa-camera text-neutral-500 text-lg mb-1 block"></i>
-                                        <span class="text-xs text-neutral-400">Klik atau seret gambar referensi wajah disini (image_3dd68a.png)</span>
+                                        <span class="text-xs text-neutral-400">Klik atau seret gambar referensi wajah disini</span>
                                     </div>
                                     <div class="hidden flex-row items-center space-x-3 w-full" id="imgTabUploadPreviewContainer">
                                         <img id="imgTabUploadPreview" src="#" alt="Preview" class="w-12 h-12 rounded object-cover border border-neutral-800">
@@ -692,19 +704,39 @@
         let currentlyPlayingSpeech = null;
         let currentProjectVoiceParams = { rate: 0.95, pitch: 1.0 }; // Holds matched audio details
 
+        // NEW FEATURE: Toggle input container based on Mode Selection
+        function toggleRefField(selectElement, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const input = container.querySelector('input');
+            if (selectElement.value === 'manual') {
+                container.classList.remove('hidden');
+                input.setAttribute('required', 'true');
+                input.focus();
+            } else {
+                container.classList.add('hidden');
+                input.removeAttribute('required');
+                input.value = '';
+            }
+        }
+
         // Helper to select all text in the video title field
         function selectTitleText() {
             const input = document.getElementById('vidTitle');
-            input.focus();
-            input.select();
+            if (input) {
+                input.focus();
+                input.select();
+            }
         }
 
         // Helper to select all text in the image prompt textarea
         function selectAllPromptText() {
             const textarea = document.getElementById('imgPromptText');
-            textarea.focus();
-            textarea.select();
-            textarea.setSelectionRange(0, textarea.value.length);
+            if (textarea) {
+                textarea.focus();
+                textarea.select();
+                textarea.setSelectionRange(0, textarea.value.length);
+            }
         }
 
         const DEMO_DATABASE = {
@@ -736,7 +768,7 @@
                 "Kamu yang hari ini merasa lelah memikul kerasnya hidup, sadarilah bahwa Allah tidak pernah salah meletakkan takdir bagimu.",
                 "Ketika matamu mulai berkaca-kaca menatap impianmu yang tertunda, ketahuilah pintu langit sedang dipersiapkan untuk diketuk kembali.",
                 "Kamu sering kali terlalu sibuk mencemaskan hari esok yang belum pasti, sampai lupa seluruh hidupmu aman di tangan-Nya.",
-                "If saat ini jiwamu terasa begitu sempit dan sesak, bersabarlah karena pertolongan Allah selalu sedekat hembusan napasmu.",
+                "Jika saat ini jiwamu terasa begitu sempit dan sesak, bersabarlah karena pertolongan Allah selalu sedekat hembusan napasmu.",
                 "Mungkin kamu lelah berpura-pura kuat di hadapan semua manusia, padahal jiwamu sangat merindukan ketenangan sujud yang panjang.",
                 "Saat sekelilingmu terasa gelap gulita tanpa arah, ingatlah bahwa cahaya hidayah-Nya selalu bersinar untuk menuntun kembali langkahmu.",
                 "Kamu yang sedang terluka oleh penilaian buruk sesama manusia, cukuplah rida Allah yang menjadi tujuan utama di hidupmu.",
@@ -746,16 +778,16 @@
                 "Saat beban yang kamu pikul terasa kian memberat, ingatlah Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya."
             ],
             bridges: [
-                "Setiap tetes air mata kelelahanmu yang luruh di atas sajadah subuh akan menjadi saksi kemuliaan abadi di sisi-Nya.",
-                "Jangan biarkan hatimu membenci takdir buruk ini, karena terkadang musibah adalah cara terbaik Allah membersihkan noda dosamu.",
-                "Zikir yang kamu bisikkan dalam kesunyian malam terdengar bergemuruh indah di langit, menembus hijab-hijab penenang kegelisahan jiwamu.",
-                "Sujudmu yang panjang di kala manusia lain terlelap adalah bukti bahwa cintamu kepada Sang Pencipta mengalahkan segalanya.",
-                "Kesabaranmu melewati badai ujian berat ini sedang menempa jiwamu menjadi jauh lebih tangguh, bersih, dan penuh kemuliaan.",
-                "Jangan pernah mengira langkah kakimu yang gontai tak diperhatikan-Nya, Dia mendengar detak jantungmu yang dipenuhi rasa berserah.",
-                "Ketika usahamu patah di tengah jalan, itu adalah isyarat lembut agar kamu bersandar penuh pada kebesaran takdir-Nya.",
-                "Setiap rintangan yang membuatmu terjatuh sebenarnya adalah tangga rahasia yang sedang menaikkan derajat kesalehanmu di akhirat.",
-                "Luka batin yang kamu sembunyikan dengan senyuman tulus akan dibalut Allah dengan kebahagiaan luar biasa yang tak terduga.",
-                "Kamu tidak diciptakan untuk kalah oleh keadaan, melainkan dididik untuk menang lewat ketundukan jiwa yang tulus berdoa."
+                "setiap tetes air mata kelelahanmu yang luruh di atas sajadah subuh akan menjadi saksi kemuliaan abadi di sisi-Nya,",
+                "jangan biarkan hatimu membenci takdir buruk ini, karena terkadang musibah adalah cara terbaik Allah membersihkan noda dosamu,",
+                "zikir yang kamu bisikkan dalam kesunyian malam terdengar bergemuruh indah di langit, menembus hijab-hijab penenang kegelisahan jiwamu,",
+                "sujudmu yang panjang di kala manusia lain terlelap adalah bukti bahwa cintamu kepada Sang Pencipta mengalahkan segalanya,",
+                "kesabaranmu melewati badai ujian berat ini sedang menempa jiwamu menjadi jauh lebih tangguh, bersih, dan penuh kemuliaan,",
+                "jangan pernah mengira langkah kakimu yang gontai tak diperhatikan-Nya, Dia mendengar detak jantungmu yang dipenuhi rasa berserah,",
+                "ketika usahamu patah di tengah jalan, itu adalah isyarat lembut agar kamu bersandar penuh pada kebesaran takdir-Nya,",
+                "setiap rintangan yang membuatmu terjatuh sebenarnya adalah tangga rahasia yang sedang menaikkan derajat kesalehanmu di akhirat,",
+                "luka batin yang kamu sembunyikan dengan senyuman tulus akan dibalut Allah dengan kebahagiaan luar biasa yang tak terduga,",
+                "kamu tidak diciptakan untuk kalah oleh keadaan, melainkan dididik untuk menang lewat ketundukan jiwa yang tulus berdoa,"
             ],
             peaks: [
                 "Basuhlah wajahmu dengan air wudu, lalu pasrahkan segala ketakutanmu dalam keheningan sujud sepertiga malam terakhir yang syahdu.",
@@ -783,7 +815,7 @@
                 "Kemenangan besarmu sudah dipersiapkan di langit, tetaplah tegar berjalan di jalan-Nya yang lurus dan penuh keberkahan.",
                 "Percayalah, fajar kemudahan akan segera menyingsing mengusir gulita kesedihan yang selama ini menyelimuti lembaran hidupmu.",
                 "Tuhanmu tidak pernah tidur, Dia sedang merajut kebahagiaan luar biasa di balik tabir kesabaran yang kamu rawat.",
-                "Sebab pada akhirnya, keikhlasanmu berserah diri akan dibayar lunas dengan takdir terbaik yang tak pernah kamu bayangkan.",
+                "Sebab pada akhir perjuanganmu, keikhlasanmu berserah diri akan dibayar lunas dengan takdir terbaik yang tak pernah kamu bayangkan.",
                 "Tetaplah melangkah dalam keteduhan iman, karena akhir yang indah selalu dipersiapkan bagi jiwa-jiwa yang ikhlas bersabar.",
                 "Sebab di setiap kesulitan yang kamu lalui dengan rida, Allah telah menjanjikan kemudahan ganda yang menakjubkan.",
                 "Pelukan rahmat-Nya senantiasa menjagamu, berjalanlah terus dengan kepala tegak dan hati yang dipenuhi cahaya kedamaian abadi."
@@ -804,16 +836,16 @@
                 "Kamu yang sedang berjuang membangun mimpi dari nol, setiap tetes keringatmu adalah investasi berharga bagi masa depan."
             ],
             bridges: [
-                "Setiap rasa sakit yang kamu rasakan saat ini sebenarnya sedang mengikis ego dan memperkuat mentalitas pemenangmu.",
-                "Jangan biarkan penolakan dunia luar membuatmu menyerah, ia hanyalah bagian kecil dari seleksi alam menuju kesuksesan.",
-                "Ketenangan batin yang kamu rawat di tengah kekacauan hidup adalah modal terkuat untuk memenangkan pertempuran esok hari.",
-                "Perjuangan yang kamu jalani dalam kesunyian tanpa tepuk tangan adalah pembentuk karakter sejati yang paling kokoh.",
-                "Luka masa lalu yang berhasil kamu sembuhkan dengan keikhlasan akan menjadi sumber kebijaksanaan terbesar dalam hidupmu.",
-                "Ketika kamu merasa kehilangan segalanya, kamu sebenarnya sedang diberi ruang kosong untuk menulis ulang takdir terbaikmu.",
-                "Disiplin yang kamu pertahankan di saat-saat malas adalah jembatan emas yang menghubungkan mimpimu dengan kenyataan.",
-                "Jangan meremehkan progres kecilmu hari ini, akumulasi konsistensi adalah kekuatan raksasa yang tak tertandingi dunia.",
-                "Setiap air mata kekecewaan yang runtuh sedang membersihkan sudut pandangmu agar mampu melihat peluang baru yang jernih.",
-                "Kepedihan ini bersifat sementara, namun kekuatan mental yang lahir darinya akan melekat bersamamu seumur hidup."
+                "setiap rasa sakit yang kamu rasakan saat ini sebenarnya sedang mengikis ego dan memperkuat mentalitas pemenangmu,",
+                "jangan biarkan penolakan dunia luar membuatmu menyerah, ia hanyalah bagian kecil dari seleksi alam menuju kesuksesan,",
+                "ketenangan batin yang kamu rawat di tengah kekacauan hidup adalah modal terkuat untuk memenangkan pertempuran esok hari,",
+                "perjuangan yang kamu jalani dalam kesunyian tanpa tepuk tangan adalah pembentuk karakter sejati yang paling kokoh,",
+                "luka masa lalu yang berhasil kamu sembuhkan dengan keikhlasan akan menjadi sumber kebijaksanaan terbesar dalam hidupmu,",
+                "ketika kamu merasa kehilangan segalanya, kamu sebenarnya sedang diberi ruang kosong untuk menulis ulang takdir terbaikmu,",
+                "disiplin yang kamu pertahankan di saat-saat malas adalah jembatan emas yang menghubungkan mimpimu dengan kenyataan,",
+                "jangan meremehkan progres kecilmu hari ini, akumulasi konsistensi adalah kekuatan raksasa yang tak tertandingi dunia,",
+                "setiap air mata kekecewaan yang runtuh sedang membersihkan sudut pandangmu agar mampu melihat peluang baru yang jernih,",
+                "kepedihan ini bersifat sementara, namun kekuatan mental yang lahir darinya akan melekat bersamamu seumur hidup,"
             ],
             peaks: [
                 "Ambil napas dalam-dalam, lepaskan semua beban pikiranmu, dan mulailah memaafkan dirimu atas semua kesalahan masa lalu.",
@@ -829,7 +861,7 @@
                 "Tegakkan kepalamu, tatap cermin di hadapanmu, dan katakan bahwa kamu siap menghadapi tantangan apa pun hari ini.",
                 "Hapus keraguan dari benakmu, mulailah bertindak nyata tanpa menunggu motivasi atau momen sempurna tiba.",
                 "Tinggalkan lingkungan beracun yang menguras energimu, lalu carilah lingkaran pendukung yang membantumu bertumbuh.",
-                "Kini bangkitlah with semangat baru, rapikan penampilanmu, dan mulailah melangkah ke depan dengan penuh percaya diri.",
+                "Kini bangkitlah dengan semangat baru, rapikan penampilanmu, dan mulailah melangkah ke depan dengan penuh percaya diri.",
                 "Selesaikan tugas pertamamu hari ini dengan fokus penuh, rasakan bagaimana momentum disiplin mulai terbangun kembali.",
                 "Jangan takut untuk memulai kembali dari awal, karena pengalaman masa lalu membuat langkah barumu jauh lebih cerdas.",
                 "Kendalikan pikiran liar yang mencemaskan masa depan, pusatkan fokusmu murni pada tindakan terbaik detik ini.",
@@ -899,7 +931,10 @@
 
         window.onload = function() {
             loadHistoryFromStorage();
-            document.getElementById('simulatedImage').src = `https://placehold.co/400x711/0A0A0A/39FF14?text=PREVIEW+CINEMATIC+POSTER`;
+            const simulatedImg = document.getElementById('simulatedImage');
+            if (simulatedImg) {
+                simulatedImg.src = `https://placehold.co/400x711/0A0A0A/39FF14?text=PREVIEW+CINEMATIC+POSTER`;
+            }
             quickFillDemo('islami');
         };
 
@@ -941,6 +976,17 @@
                 if (radio.value === data.category) radio.checked = true;
             });
             
+            // Reset and configure Location / Outfit Modes for Demo
+            document.getElementById('vidLocationMode').value = 'manual';
+            document.getElementById('vidLocationManualContainer').classList.remove('hidden');
+            document.getElementById('vidLocationManual').value = data.location;
+            document.getElementById('vidLocationManual').setAttribute('required', 'true');
+
+            document.getElementById('vidOutfitMode').value = 'manual';
+            document.getElementById('vidOutfitManualContainer').classList.remove('hidden');
+            document.getElementById('vidOutfitManual').value = data.outfit;
+            document.getElementById('vidOutfitManual').setAttribute('required', 'true');
+
             // Reset all custom dynamic fields when demo is triggered
             const customContainers = ['vidGenderCustomContainer', 'vidAgeCustomContainer'];
             customContainers.forEach(id => {
@@ -957,8 +1003,6 @@
 
             document.getElementById('vidGender').value = data.gender;
             document.getElementById('vidAge').value = data.age;
-            document.getElementById('vidLocation').value = data.location;
-            document.getElementById('vidOutfit').value = data.outfit;
             
             if (type === 'islami') {
                 document.getElementById('vidCameraOpt1').value = 'dynamic_cinematic';
@@ -1078,32 +1122,33 @@
             // Helper function to pick a random item from an array
             const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
             
-            // Generate a dialogue flow with exact constraints of 20-25 words per sentence
+            // Generate a dialogue flow with strict constraints of 15-20 words (Strictly NOT exceeding 21 words!)
             const constructSentence = (seg1, seg2) => {
-                // Combine and refine length to fit exactly 20-25 words
                 let sentence = `${seg1} ${seg2}`;
-                let words = sentence.split(" ");
+                let words = sentence.split(" ").filter(w => w.trim() !== "");
                 
-                // If it's too short, append reassuring fillers
-                if (words.length < 20) {
-                    const fillers = [
-                        "percayalah pada kekuatan doa yang tulus malam ini.",
-                        "hadapi rintangan hidup dengan hati lapang dan damai.",
-                        "jangan pernah biarkan keputusasaan menghentikan langkah muliamu.",
-                        "ingatlah kekuatan tekadmu mengalahkan segala rintangan besar.",
-                        "sambut fajar kemudahan dengan senyuman penuh optimisme tinggi.",
-                        "jalan kesuksesan terbuka lebar bagi jiwa yang sabar."
-                    ];
-                    while (words.length < 20) {
-                        sentence += " " + pickRandom(fillers);
-                        words = sentence.split(" ");
-                    }
+                // If it is too short (under 15 words), append short reassuring fillers
+                const fillers = [
+                    "percayalah takdir indah-Nya.",
+                    "yakinlah ada jalan keluar.",
+                    "tetaplah tegar hadapi rintangan.",
+                    "jangan pernah menyerah sekarang.",
+                    "fokuslah pada langkah baikmu.",
+                    "sambutlah esok dengan optimisme."
+                ];
+                while (words.length < 15) {
+                    sentence += " " + pickRandom(fillers);
+                    words = sentence.split(" ").filter(w => w.trim() !== "");
                 }
                 
-                // If it's too long, truncate gracefully to 25 words max
-                if (words.length > 25) {
-                    words = words.slice(0, 24);
-                    sentence = words.join(" ") + ".";
+                // If it is too long (over 20 words), truncate gracefully to exactly 20 words
+                if (words.length > 20) {
+                    words = words.slice(0, 20);
+                    sentence = words.join(" ");
+                    // Ensure proper punctuation
+                    if (!sentence.endsWith(".") && !sentence.endsWith("?")) {
+                        sentence += ".";
+                    }
                 }
                 
                 return sentence;
@@ -1118,12 +1163,13 @@
                 constructSentence("Tegarkan langkah kaki jiwamu,", pickRandom(matrix.closings))
             ];
 
+            // Set up direct speaking actions to force the AI to show the actor actively presenting the speech
             const actions = [
-                "looking down peacefully, slowly raising head to look forward with deep serenity and a calm gaze.",
-                "reflecting calmly in a close-up profile view, showcasing a subtle, warm, and hopeful facial expression.",
-                "looking forward with gentle focus, showing a peaceful emotional expression of gratitude and absolute calm.",
-                "tilting head slightly upward towards a soft natural light source, eyes filled with soft emotion and peaceful contemplation.",
-                "looking directly into the lens, smiling warmly with a calm, assured, and welcoming demeanor."
+                "looking directly at the camera, actively speaking the dialogue below with deep emotional warmth and an authentic, confident Indonesian smile.",
+                "reflecting calmly in a medium close-up, actively speaking the dialogue below with sincere, helpful facial gestures and engaging eye contact.",
+                "actively speaking to the camera with gentle focus and serene passion, matching every spoken word with realistic lip movements and friendly expressions.",
+                "speaking directly and comfortably, looking warmly into the lens with a calm, reassuring, and extremely realistic presentation style.",
+                "smiling beautifully, actively speaking the final empowering words directly to the viewer with absolute clarity and complete sincerity."
             ];
 
             // Setup camera descriptions dictionary
@@ -1131,13 +1177,13 @@
                 dynamic_cinematic_default: [
                     "Front wide static shot then cinematic slow zoom in to actor facial expression",
                     "Left dynamic side angle dolly movement highlighting atmospheric environment",
-                    "Fast rhythmic alternate cuts, tight telephoto lens capturing emotional details",
+                    "Cinematic multi-angle sequence: starting with a front-left side angle for exactly 3 seconds, transitioning seamlessly to a front-right side angle for 3 seconds, and concluding with a front-center shot at a distance of exactly 1 meter for the remaining 4 seconds, matching the realistic multi-perspective framing style of image_e6e19e.jpg",
                     "Top angle high shot slow circular rotation with high dramatic depth of field",
                     "Side tracking shot following actor walking slowly with soft majestic backlight"
                 ],
                 front_zoom: "Front vertical shot, slow zoom-in to focus on eyes and posture",
                 side_dolly: "Left-to-right slow dolly movement capturing profile and background details",
-                fast_cuts: "Alternating quick telephoto lenses focusing on extreme micro facial textures",
+                fast_cuts: "Cinematic multi-angle sequence shot: starting with a front-left side angle for exactly 3 seconds, transitioning smoothly and realistically to a front-right side angle for 3 seconds, and concluding with a front-center shot at a distance of exactly 1 meter for the remaining 4 seconds, matching the realistic multi-perspective framing style of image_e6e19e.jpg. The angle changes must feel seamless, smooth, and physically stable with no sudden jump-cuts or visual distortions",
                 top_slow: "Top-down high angle camera shot starting from a far distance, slowly tracking downwards and zooming in closer until exactly 100 cm in front of the actor's face, matching the high-angle perspective and framing style of image_babd88.jpg",
                 tracking_walk: "Tracking horizontal shot keeping matching pace with character walking"
             };
@@ -1163,7 +1209,7 @@
                     number: idx + 1,
                     stage: stages[idx],
                     camera: cameraSequence[idx],
-                    prompt: `Cinematic vertical shot, [CAMERA MOVEMENT: ${cameraSequence[idx]}]. [CHARACTER PERSISTENCE: same face, identical facial structure, Indonesian ${gender} aged ${age}], [OUTFIT PERSISTENCE: wearing the exact same outfit: ${outfit} throughout all scenes with absolutely no clothing changes], [ENVIRONMENT PERSISTENCE: situated strictly and only in the exact same static setting of: ${location} with absolutely no environmental changes, transitions, cuts to different places, or jumps. The background environment must remain 100% constant, identical, and physically stable across all frames]. [PROP PERSISTENCE: any handheld items, microphones, pointers, or props must remain physically stable, solid, and constant across frames, with absolutely no morphing, flickering, or sudden disappearance]. [AUDIENCE DEMOGRAPHIC: if any audience, crowd, listeners, or background people are visible, they must all strictly have authentic local Indonesian and Southeast Asian facial features, matching warm skin tones, and realistic ethnic representation, with absolutely no Caucasian, Western, or Middle Eastern faces in the crowd]. The actor is ${actionText} Extreme hyper-realistic 8k photography details, documentary style cinematic lighting, shallow depth of field, natural real-life texture.`,
+                    prompt: `Cinematic vertical shot, [CAMERA MOVEMENT: ${cameraSequence[idx]}]. [CHARACTER PERSISTENCE: same face, identical facial structure, Indonesian ${gender} aged ${age}], [OUTFIT PERSISTENCE: wearing the exact same outfit: ${outfit} throughout all scenes with absolutely no clothing changes], [ENVIRONMENT PERSISTENCE: situated strictly and only in the exact same static setting of: ${location} with absolutely no environmental changes, transitions, cuts to different places, or jumps. The background environment must remain 100% constant, identical, and physically stable across all frames]. [PROP PERSISTENCE: any handheld items, microphones, pointers, or props must remain physically stable, solid, and constant across frames, with absolutely no morphing, flickering, or sudden disappearance]. [AUDIENCE DEMOGRAPHIC: if any audience, crowd, listeners, or background people are visible, they must all strictly have authentic local Indonesian and Southeast Asian facial features, matching warm skin tones, and realistic ethnic representation, with absolutely no Caucasian, Western, or Middle Eastern faces in the crowd]. [LIP SYNC AND AUDIO ALIGNMENT: The actor is ${actionText} The actor's lip movements and mouth shapes must be perfectly synchronized and start instantly with the spoken words of the dialogue below, with absolutely no delay, silent intro, or background voiceover feeling at the beginning of the clip]. Extreme hyper-realistic 8k photography details, documentary style cinematic lighting, shallow depth of field, natural real-life texture.`,
                     voice: generatedDialogues[idx]
                 });
             }
@@ -1188,8 +1234,23 @@
                 age = document.getElementById('vidAgeCustom').value;
             }
             
-            const location = document.getElementById('vidLocation').value;
-            const outfit = document.getElementById('vidOutfit').value;
+            // NEW FEATURE: Resolve location based on mode
+            const locationMode = document.getElementById('vidLocationMode').value;
+            let location = "";
+            if (locationMode === 'ref') {
+                location = "the exact static background environment and setting shown in the uploaded reference image (image_3dd68a.png)";
+            } else {
+                location = document.getElementById('vidLocationManual').value;
+            }
+            
+            // NEW FEATURE: Resolve outfit based on mode
+            const outfitMode = document.getElementById('vidOutfitMode').value;
+            let outfit = "";
+            if (outfitMode === 'ref') {
+                outfit = "the exact same clothing, suit, garments, and color worn by the person in the uploaded reference image (image_3dd68a.png)";
+            } else {
+                outfit = document.getElementById('vidOutfitManual').value;
+            }
 
             const cameraOpts = [
                 document.getElementById('vidCameraOpt1').value,
@@ -1245,52 +1306,54 @@
 
             // Populate accordion scenes
             const accordionContainer = document.getElementById('sceneAccordionContainer');
-            accordionContainer.innerHTML = '';
+            if (accordionContainer) {
+                accordionContainer.innerHTML = '';
 
-            scenes.forEach((scene) => {
-                const accordionItem = `
-                    <div class="border border-neutral-800/80 rounded-xl overflow-hidden bg-neutral-950/40 hover:border-neonGreen/30 transition duration-300">
-                        <button onclick="toggleAccordion('scene-${scene.number}')" class="w-full py-3.5 px-4 text-left flex items-center justify-between bg-neutral-950/80 font-bold text-xs select-none">
-                            <span class="flex items-center space-x-2">
-                                <span class="w-5 h-5 rounded bg-neonGreen/10 border border-neonGreen/30 text-neonGreen flex items-center justify-center text-[10px] font-black">${scene.number}</span>
-                                <span class="text-white">SCENE ${scene.number} - ${scene.stage}</span>
-                            </span>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neonGreen font-mono">VOICE READY</span>
-                        </button>
-                        <div id="scene-${scene.number}" class="hidden p-4 space-y-4 border-t border-neutral-900/60 bg-neutral-950/20">
-                            <div>
-                                <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider block mb-1">Kamera / Sudut Pandang</span>
-                                <p class="text-xs text-neutral-300 font-medium">${scene.camera}</p>
-                            </div>
-                            <div>
-                                <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider block mb-1">Prompt Visual AI</span>
-                                <p class="text-xs text-neutral-400 leading-relaxed font-mono bg-black/50 p-2.5 rounded border border-neutral-900">${scene.prompt}</p>
-                            </div>
-                            <div class="p-3 rounded-lg bg-neonGreen/5 border border-neonGreen/20">
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider flex items-center gap-1">
-                                        <i class="fa-solid fa-comment-dots text-neonGreen"></i> Voice Over Narasi (Naskah)
-                                    </span>
-                                    <button onclick="speakDirectly(\`${scene.voice.replace(/'/g, "\\'")}\`)" class="text-[10px] text-neonGreen hover:text-white flex items-center gap-1 font-bold"><i class="fa-solid fa-play"></i> Putar Kalimat</button>
-                                </div>
-                                <p class="text-xs text-white italic font-medium">"${scene.voice}"</p>
-                                <div class="flex justify-between items-center mt-1 text-[9px] text-neutral-500 border-t border-neutral-900/60 pt-1">
-                                    <span>Jumlah kata: ${scene.voice.split(" ").length} kata (Tone Nasihat Lembut)</span>
-                                    <span class="text-neonGreen/80 font-semibold flex items-center gap-1">
-                                        <span class="h-1.5 w-1.5 bg-neonGreen rounded-full animate-ping"></span>
-                                        Selesai 1.5s sebelum scene berakhir (Transisi Realistis)
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- Unified Copy Button for Visual Prompt & Dialogue with Built-in Buffer Instructions -->
-                            <button onclick="copySceneBoth('${scene.number}', \`${scene.prompt.replace(/`/g, "\\`").replace(/'/g, "\\'")}\`, \`${scene.voice.replace(/`/g, "\\`").replace(/'/g, "\\'")}\`)" class="w-full py-2.5 px-4 rounded-xl bg-neonGreen text-black hover:bg-white font-extrabold text-xs uppercase tracking-wider transition duration-300 flex items-center justify-center gap-2 shadow-neonGlow">
-                                <i class="fa-solid fa-copy"></i> Salin Prompt Visual & Dialog Scene ${scene.number}
+                scenes.forEach((scene) => {
+                    const accordionItem = `
+                        <div class="border border-neutral-800/80 rounded-xl overflow-hidden bg-neutral-950/40 hover:border-neonGreen/30 transition duration-300">
+                            <button onclick="toggleAccordion('scene-${scene.number}')" class="w-full py-3.5 px-4 text-left flex items-center justify-between bg-neutral-950/80 font-bold text-xs select-none">
+                                <span class="flex items-center space-x-2">
+                                    <span class="w-16 rounded bg-neonGreen/10 border border-neonGreen/30 text-neonGreen flex items-center justify-center text-[10px] py-1 font-black">Scene ${scene.number}</span>
+                                    <span class="text-white">${scene.stage}</span>
+                                </span>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neonGreen font-mono">VOICE READY</span>
                             </button>
+                            <div id="scene-${scene.number}" class="hidden p-4 space-y-4 border-t border-neutral-900/60 bg-neutral-950/20">
+                                <div>
+                                    <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider block mb-1">Kamera / Sudut Pandang</span>
+                                    <p class="text-xs text-neutral-300 font-medium">${scene.camera}</p>
+                                </div>
+                                <div>
+                                    <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider block mb-1">Prompt Visual AI</span>
+                                    <p class="text-xs text-neutral-400 leading-relaxed font-mono bg-black/50 p-2.5 rounded border border-neutral-900">${scene.prompt}</p>
+                                </div>
+                                <div class="p-3 rounded-lg bg-neonGreen/5 border border-neonGreen/20">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-[9px] text-neonGreen font-bold uppercase tracking-wider flex items-center gap-1">
+                                            <i class="fa-solid fa-comment-dots text-neonGreen"></i> Voice Over Narasi (Naskah)
+                                        </span>
+                                        <button onclick="speakDirectly(\`${scene.voice.replace(/'/g, "\\'")}\`)" class="text-[10px] text-neonGreen hover:text-white flex items-center gap-1 font-bold"><i class="fa-solid fa-play"></i> Putar Kalimat</button>
+                                    </div>
+                                    <p class="text-xs text-white italic font-medium">"${scene.voice}"</p>
+                                    <div class="flex justify-between items-center mt-1 text-[9px] text-neutral-500 border-t border-neutral-900/60 pt-1">
+                                        <span>Jumlah kata: ${scene.voice.split(" ").length} kata (Tone Nasihat Lembut)</span>
+                                        <span class="text-neonGreen/80 font-semibold flex items-center gap-1">
+                                            <span class="h-1.5 w-1.5 bg-neonGreen rounded-full animate-ping"></span>
+                                            Selesai 1.5s sebelum scene berakhir (Transisi Realistis)
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- Unified Copy Button for Visual Prompt & Dialogue with Built-in Buffer Instructions -->
+                                <button onclick="copySceneBoth('${scene.number}', \`${scene.prompt.replace(/`/g, "\\`").replace(/'/g, "\\'")}\`, \`${scene.voice.replace(/`/g, "\\`").replace(/'/g, "\\'")}\`)" class="w-full py-2.5 px-4 rounded-xl bg-neonGreen text-black hover:bg-white font-extrabold text-xs uppercase tracking-wider transition duration-300 flex items-center justify-center gap-2 shadow-neonGlow">
+                                    <i class="fa-solid fa-copy"></i> Salin Prompt Visual & Dialog Scene ${scene.number}
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                `;
-                accordionContainer.insertAdjacentHTML('beforeend', accordionItem);
-            });
+                    `;
+                    accordionContainer.insertAdjacentHTML('beforeend', accordionItem);
+                });
+            }
 
             // Automatically open scene 1
             toggleAccordion('scene-1');
@@ -1300,7 +1363,7 @@
             document.getElementById('generationStatus').className = "px-2.5 py-0.5 rounded-full bg-neonGreen/10 border border-neonGreen/40 text-neonGreen text-[10px] font-bold uppercase tracking-wider shadow-neonGlow";
             document.getElementById('generationStatus').textContent = "Siap Digunakan";
 
-            // Push to Local Storage / Project Item Memory
+            // Save to Projects History
             const projItem = {
                 id: Date.now(),
                 type: 'video',
@@ -1327,10 +1390,12 @@
 
         function toggleAccordion(id) {
             const el = document.getElementById(id);
-            if (el.classList.contains('hidden')) {
-                el.classList.remove('hidden');
-            } else {
-                el.classList.add('hidden');
+            if (el) {
+                if (el.classList.contains('hidden')) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
             }
         }
 
@@ -1503,11 +1568,14 @@
             const randomID = Math.floor(Math.random() * 100);
             const w = ratio === "9:16" ? 400 : 700;
             const h = ratio === "9:16" ? 711 : 394;
-            document.getElementById('simulatedImage').src = `https://images.unsplash.com/photo-${randomID === 0 ? '1507525428034-b723cf961d3e' : '1518495973542-4542c06a5843'}?auto=format&fit=crop&q=80&w=${w}&h=${h}`;
+            const simulatedImg = document.getElementById('simulatedImage');
+            if (simulatedImg) {
+                simulatedImg.src = `https://images.unsplash.com/photo-${randomID === 0 ? '1507525428034-b723cf961d3e' : '1518495973542-4542c06a5843'}?auto=format&fit=crop&q=80&w=${w}&h=${h}`;
 
-            document.getElementById('simulatedImage').onerror = function() {
-                this.src = `https://placehold.co/${w}x${h}/0A0A0A/39FF14?text=PREVIEW+RATIO+${ratio}`;
-            };
+                simulatedImg.onerror = function() {
+                    this.src = `https://placehold.co/${w}x${h}/0A0A0A/39FF14?text=PREVIEW+RATIO+${ratio}`;
+                };
+            }
 
             document.getElementById('imageLoadingState').classList.add('hidden');
             document.getElementById('imageOutputContainer').classList.remove('hidden');
@@ -1627,9 +1695,32 @@
                 setSelectValueOrCustom('vidGender', item.details.gender, 'vidGenderCustom', 'vidGenderCustomContainer');
                 setSelectValueOrCustom('vidAge', item.details.age, 'vidAgeCustom', 'vidAgeCustomContainer');
                 
-                // Directly set text input values for location and outfit (no longer custom dropdown select containers)
-                document.getElementById('vidLocation').value = item.details.location || '';
-                document.getElementById('vidOutfit').value = item.details.outfit || '';
+                // NEW FEATURE: Restore Location and Outfit selections securely
+                const isLocRef = item.details.location.includes("image_3dd68a.png");
+                if (isLocRef) {
+                    document.getElementById('vidLocationMode').value = 'ref';
+                    document.getElementById('vidLocationManualContainer').classList.add('hidden');
+                    document.getElementById('vidLocationManual').value = '';
+                    document.getElementById('vidLocationManual').removeAttribute('required');
+                } else {
+                    document.getElementById('vidLocationMode').value = 'manual';
+                    document.getElementById('vidLocationManualContainer').classList.remove('hidden');
+                    document.getElementById('vidLocationManual').value = item.details.location;
+                    document.getElementById('vidLocationManual').setAttribute('required', 'true');
+                }
+
+                const isOutfitRef = item.details.outfit.includes("image_3dd68a.png");
+                if (isOutfitRef) {
+                    document.getElementById('vidOutfitMode').value = 'ref';
+                    document.getElementById('vidOutfitManualContainer').classList.add('hidden');
+                    document.getElementById('vidOutfitManual').value = '';
+                    document.getElementById('vidOutfitManual').removeAttribute('required');
+                } else {
+                    document.getElementById('vidOutfitMode').value = 'manual';
+                    document.getElementById('vidOutfitManualContainer').classList.remove('hidden');
+                    document.getElementById('vidOutfitManual').value = item.details.outfit;
+                    document.getElementById('vidOutfitManual').setAttribute('required', 'true');
+                }
                 
                 const opts = item.details.cameraOpts || [
                     item.details.cameraOption || 'dynamic_cinematic',
