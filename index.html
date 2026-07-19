@@ -238,7 +238,7 @@
                                         <option value="ref">Ikuti Gambar Referensi</option>
                                     </select>
                                     <div id="vidLocationManualContainer" class="mt-2">
-                                        <input type="text" id="vidLocationManual" placeholder="Contoh: Ruangan bernuansa hangat, nyaman, beralas kayu dengan latar belakang tanaman hijau lembut..." 
+                                        <input type="text" id="vidLocationManual" placeholder="Contoh: Ruangan bernuansa hangat, nyaman, beralas kayu..." 
                                             class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-2 px-3 text-xs text-white focus:outline-none transition duration-300">
                                     </div>
                                 </div>
@@ -249,7 +249,7 @@
                                         <option value="ref">Ikuti Gambar Referensi</option>
                                     </select>
                                     <div id="vidOutfitManualContainer" class="mt-2">
-                                        <input type="text" id="vidOutfitManual" placeholder="Contoh: Hijab sederhana berwarna pastel beige yang elegan dengan busana..." 
+                                        <input type="text" id="vidOutfitManual" placeholder="Contoh: Hijab sederhana berwarna pastel beige..." 
                                             class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-2 px-3 text-xs text-white focus:outline-none transition duration-300">
                                     </div>
                                 </div>
@@ -301,12 +301,12 @@
                                     <!-- Scene 5 -->
                                     <div class="flex flex-col space-y-1 border-t border-neutral-900 pt-2">
                                         <span class="text-neonGreen text-xs font-bold">Scene 5: Penerapan Nilai & Refleksi Modern</span>
-                                        <span class="text-neutral-400 text-[10px]">Single Continuous Shot: Front Medium Close Up Inspirational (0-10s)</span>
+                                        <span class="text-neutral-400 text-[10px]">Single Continuous Shot: Front Medium Close Up (0-10s) (Berdiri: Jalan, Duduk: Anggota Tubuh Bergerak)</span>
                                     </div>
                                     <!-- Scene 6 -->
                                     <div class="flex flex-col space-y-1 border-t border-neutral-900 pt-2">
                                         <span class="text-neonGreen text-xs font-bold">Scene 6: Penutup Kehidupan</span>
-                                        <span class="text-neutral-400 text-[10px]">Shot 1: Emotional Close Up Shot (0-6s) | Shot 2: Wide Peaceful Ending Shot (6-10s)</span>
+                                        <span class="text-neutral-400 text-[10px]">Shot 1: Emotional Close Up (0-6s) | Shot 2: Wide Peaceful Ending Shot (6-10s)</span>
                                     </div>
                                 </div>
                             </div>
@@ -480,7 +480,7 @@
                                         <i class="fa-solid fa-expand"></i> Blok Semua
                                     </button>
                                 </div>
-                                <textarea id="imgPromptText" required rows="3" placeholder="Contoh: Liza Azzahra tersenyum teduh berlatar belakang ruangan kayu dengan pancaran sinar mentari keemasan..." 
+                                <textarea id="imgPromptText" required rows="3" placeholder="Contoh: Liza Azzahra tersenyum teduh berlatar belakang ruangan..." 
                                     onclick="this.select()"
                                     class="w-full bg-neutral-950/80 border border-neutral-800 focus:border-neonGreen rounded-xl py-3 px-4 text-sm text-white placeholder-neutral-600 focus:outline-none transition duration-300 resize-none"></textarea>
                             </div>
@@ -715,6 +715,65 @@
                 textarea.select();
                 textarea.setSelectionRange(0, textarea.value.length);
             }
+        }
+
+        // Contextual English Translation Helper to completely prevent Indonesian leakage
+        function translateIndoToEng(text) {
+            if (!text) return "the noble struggle of keeping faith";
+            let low = text.toLowerCase();
+            
+            // Heuristic mappings for exact historical matches
+            if (low.includes("umar") && low.includes("marah")) return "the restraint of Umar bin Khattab رضي الله عنه in controlling anger";
+            if (low.includes("bilal") && low.includes("siksa")) return "the patience of Bilal bin Rabah رضي الله عنه facing brutal torture";
+            if (low.includes("abu bakar") && low.includes("ikhlas")) return "the sincerity of Abu Bakar Ash-Shiddiq رضي الله عنه";
+            if (low.includes("mush'ab") || low.includes("mushab")) return "the devotion of Mush'ab bin Umair رضي الله عنه leaving luxury";
+            if (low.includes("khalid") && low.includes("pedang")) return "Khalid bin Walid رضي الله عنه the drawn sword of Allah";
+            if (low.includes("perempuan") || low.includes("wanita") || low.includes("kemuliaan")) return "the supreme honor and glory of righteous women in Islam";
+            
+            // Smart translation mapping for custom subjects
+            let words = text.split(/\s+/);
+            let translatedWords = words.map(w => {
+                let wl = w.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+                const dictionary = {
+                    "kejujuran": "honesty",
+                    "kesabaran": "patience",
+                    "keikhlasan": "sincerity",
+                    "keteguhan": "steadfastness",
+                    "kemuliaan": "glory",
+                    "perjuangan": "struggle",
+                    "kematian": "demise",
+                    "kehidupan": "life",
+                    "menjaga": "guarding",
+                    "amanah": "trust",
+                    "sabar": "patient",
+                    "ikhlas": "sincere",
+                    "marah": "anger",
+                    "menahan": "restraining",
+                    "menghadapi": "facing",
+                    "siksaan": "torture",
+                    "ujian": "trials",
+                    "cobaan": "tribulations",
+                    "wanita": "women",
+                    "perempuan": "women",
+                    "istri": "wife",
+                    "sahabat": "companion",
+                    "rasulullah": "the Messenger of Allah",
+                    "nabi": "the Prophet",
+                    "dunia": "the temporary world",
+                    "kemewahan": "luxury",
+                    "meninggalkan": "abandoning",
+                    "kasih": "mercy",
+                    "sayang": "compassion",
+                    "keadilan": "justice",
+                    "pemimpin": "leader"
+                };
+                return dictionary[wl] ? dictionary[wl] : w;
+            });
+            
+            return translatedWords.join(" ")
+                .replace(/\bof\s+of\b/gi, "of")
+                .replace(/\bthe\s+the\b/gi, "the")
+                .trim();
         }
 
         // Demo Database Config containing exact historical references
@@ -984,12 +1043,12 @@
                         "Mari kita latih diri menahan amarah demi rida Ilahi, berserah diri dalam ketakwaan, serta senantiasa mengikuti jalan damai para sahabat mulia Rasulullah ﷺ kini."
                     ];
                     ENGLISH_DIALOGUES = [
-                        "When anger grips your chest due to heavy disappointment, know that self-control is the truest proof of faith we must always strive for together.",
-                        "Once, Umar bin Khattab رضي الله عنه walked with a drawn sword filled with immense rage, intending to end the noble message brought by Rasulullah ﷺ.",
-                        "Let us find precious pearls and great lessons through the noble example of Umar bin Khattab رضي الله عنه in calming anger for eternal peace.",
-                        "Surah Taha verses one to two declare that Allah did not send down this Qur'an to you to cause you distress or suffering in life.",
-                        "This story teaches us to always submit to Allah's truth, quiet our heart's ego, and open our chests to accept sincere advice from fellow Muslims.",
-                        "Let us train ourselves to restrain anger for Allah's sake, submit in piety, and always follow the peaceful path taught by the noble companion."
+                        "When anger grips our chests due to severe disappointment, know that self-restraint is the truest proof of faith we must always strive for.",
+                        "In the past, Umar bin Khattab رضي الله عنه walked with a drawn sword filled with immense anger to destroy the Messenger of Allah's ﷺ mission.",
+                        "Let us find precious pearls and great lessons through the noble example of Umar bin Khattab رضي الله عنه in controlling his severe anger.",
+                        "Surah Taha verses one to two declare that Allah did not send down this Qur'an to you to cause you distress or suffering.",
+                        "This great story teaches us to always submit to the truth, quiet our heart's ego, and open our chests to accept sincere advice.",
+                        "Let us train ourselves to restrain anger for Allah's sake, submit in piety, and always follow the peaceful path of the noble companions."
                     ];
                 } else if (isBilal) {
                     PREMIUM_DIALOGUES = [
@@ -1001,7 +1060,7 @@
                         "Mari kita kokohkan kesabaran di dalam dada, berserah diri sepenuhnya kepada Allah, dan meneladani keteguhan iman luar biasa dari perjuangan generasi mulia terdahulu ini."
                     ];
                     ENGLISH_DIALOGUES = [
-                        "When your soul feels crushed by the heavy trials of the world, remember that true steadfastness of faith will guide us through this dark night.",
+                        "When your soul feels crushed by the heavy trials of this temporary world, remember that true steadfastness of faith will guide us through.",
                         "Under the scorching desert sun, Bilal bin Rabah رضي الله عنه was brutally tortured with a heavy boulder placed directly upon his deeply wounded chest.",
                         "Let us find precious pearls and great lessons through the noble example of Bilal bin Rabah رضي الله عنه in keeping faith under trials.",
                         "Surah Al-Ikhlas affirms that Allah is the One, the Eternal Refuge, and the ultimate place of hope for all creation in this temporary world.",
@@ -1100,6 +1159,7 @@
 
             // DYNAMIC INJECTION FOR BRAND NEW CUSTOM ENTRIES (Safety Fallback)
             const cleanT = title.replace(/(kisah|riwayat tentang|tentang|mengenai)/gi, "").trim() || "perjuangan hidup";
+            const cleanT_EN = translateIndoToEng(cleanT);
             const isDefaultCase = (category === 'islami' && !isUmar && !isBilal && !isAbuBakar && !isMushab && !isKhalid && !isPerempuan);
             
             if (isDefaultCase) {
@@ -1112,12 +1172,12 @@
                     adjustWordCount(`Mari kita hiasi hati kita dengan kesabaran murni, berserah diri seutuhnya kepada Allah, serta meneladani perjuangan suci ${cleanT} demi rida Ilahi.`)
                 ];
                 ENGLISH_DIALOGUES = [
-                    `When we are tired and heavily burdened by the dynamics of the world, ponder the noble story of ${cleanT} for our soul's peace.`,
-                    `History records that the exemplary attitude of chosen figures in holding firm to the faith of ${cleanT} brings deep spiritual wisdom.`,
-                    `Let us find precious pearls and great lessons through the noble example of ${cleanT} which teaches us the importance of steadfast faith.`,
-                    `Hadith narrated by Bukhari states that every sincere struggle in practicing the values of ${cleanT} brings abundant rewards and Allah's great pleasure.`,
-                    `This message of goodness reminds us to always improve our deeds and implement the noble teachings of ${cleanT} sincerely in daily life.`,
-                    `Let us adorn our hearts with pure patience, surrender entirely to Allah, and emulate the holy struggle of ${cleanT} for His pleasure.`
+                    `When we are tired and heavily burdened by the dynamics of the world, ponder the noble story of ${cleanT_EN} for our soul's peace.`,
+                    `History records that the exemplary attitude of chosen figures in holding firm to the faith of ${cleanT_EN} brings deep spiritual wisdom.`,
+                    `Let us find precious pearls and great lessons through the noble example of ${cleanT_EN} which teaches us the importance of steadfast faith.`,
+                    `Hadith narrated by Bukhari states that every sincere struggle in practicing the values of ${cleanT_EN} brings abundant rewards and Allah's great pleasure.`,
+                    `This message of goodness reminds us to always improve our deeds and implement the noble teachings of ${cleanT_EN} sincerely in daily life.`,
+                    `Let us adorn our hearts with pure patience, surrender entirely to Allah, and emulate the holy struggle of ${cleanT_EN} for His pleasure.`
                 ];
             }
 
@@ -1229,7 +1289,7 @@
                         } else if (isKhalid) {
                             scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah praised Khalid as the Sword of Allah."\n\n«خَالِدُ بْنُ الْوَلِيدِ سَيْفٌ مِنْ سُيُوفِ اللَّهِ»\nMeaning:\n"Khalid bin Walid is a sword from among the swords of Allah."\n\nSource:\nHadith narrated by Bukhari`;
                         } else {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah said that the best enjoyment of the world is a righteous woman. [pause 2 seconds] You are truly honored by Islam."\n\n«الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّALِحةُ»\nMeaning:\n"The world is enjoyment, and the best enjoyment of the world is a righteous woman."\n\nSource:\nHadith narrated by Muslim`;
+                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah said that the best enjoyment of the world is a righteous woman."\n\n«الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ Dُّنْيَا الْمَرْأَةُ الصَّالِحَةُ»\nMeaning:\n"The world is enjoyment, and the best enjoyment of the world is a righteous woman."\n\nSource:\nHadith narrated by Muslim`;
                         }
                     } else {
                         scenePrompt += `\n\n[PHILOSOPHICAL SYSTEM ATTACHMENT]\nEnglish Translation:\n"Seneca wrote that difficulty strengthens the mind just as labor trains the human body to endure storms."\n\n«Calamitas virtutis occasio est»\nMeaning:\n"Calamity is virtue's opportunity."\n\nSource:\nStoic Philosophy - Lucius Annaeus Seneca`;
@@ -1414,7 +1474,7 @@
                             `;
                             hadithBlockEN = `
                                 <div class="mt-3 p-3 bg-neutral-900 rounded-xl border border-neutral-800 text-center">
-                                    <p class="text-lg font-bold text-neutral-400 font-serif mb-1">إِنَّ أَمَنَّ النَّاسِ عَلَيَّ فِي صُحْبَتِهِ وَمَالِهِ أَبُو بَكْرٍ</p>
+                                    <p class="text-lg font-bold text-neutral-400 font-serif mb-1">إِنَّ أَمَنَّ النَّاسِ عَلَيَّ فِي صُحْبَتِهِ وَmَالِهِ أَبُو بَكْرٍ</p>
                                     <p class="text-[11px] text-neutral-400 italic">"The person who has favored me most of all with companionship and wealth is Abu Bakar."</p>
                                     <p class="text-[9px] text-neutral-500 mt-1">Source: Hadith narrated by Bukhari</p>
                                 </div>
@@ -1452,14 +1512,14 @@
                         } else {
                             hadithBlock = `
                                 <div class="mt-3 p-3 bg-neutral-900 rounded-xl border border-neutral-800 text-center">
-                                    <p class="text-lg font-bold text-neonGreen font-serif mb-1">الدُّنْيَا mَتَاعٌ، وَخَيْرُ mَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ</p>
+                                    <p class="text-lg font-bold text-neonGreen font-serif mb-1">الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ</p>
                                     <p class="text-[11px] text-neutral-300 italic">"Dunia adalah perhiasan, dan sebaik-baik perhiasan dunia adalah wanita shalihah."</p>
                                     <p class="text-[9px] text-neutral-500 mt-1">Sumber: Hadis Riwayat Muslim</p>
                                 </div>
                             `;
                             hadithBlockEN = `
                                 <div class="mt-3 p-3 bg-neutral-900 rounded-xl border border-neutral-800 text-center">
-                                    <p class="text-lg font-bold text-neutral-400 font-serif mb-1">الدُّنْيَا mَتَاعٌ، وَخَيْرُ mَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ</p>
+                                    <p class="text-lg font-bold text-neutral-400 font-serif mb-1">الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ</p>
                                     <p class="text-[11px] text-neutral-400 italic">"The world is enjoyment, and the best enjoyment of the world is a righteous woman."</p>
                                     <p class="text-[9px] text-neutral-500 mt-1">Source: Hadith narrated by Muslim</p>
                                 </div>
