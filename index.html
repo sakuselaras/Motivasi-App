@@ -379,7 +379,7 @@
                                     </div>
                                     <div>
                                         <h5 class="text-xs font-bold text-white">Voice Over Engine (Uji Suara Karakter)</h5>
-                                        <p class="text-[10px] text-neutral-400">Dengar modul suara lembut, lambat, dan penuh penghayatan khas sentuhan hati penonton.</p>
+                                        <p class="text-[10px] text-neutral-400">Dengar naskah bersuara lembut, lambat, dan penuh penghayatan khas sentuhan hati penonton.</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-2">
@@ -389,7 +389,7 @@
                                         <option value="1.0">Normal (1.0x)</option>
                                     </select>
                                     <button onclick="playAllVoiceovers()" class="px-3 py-1.5 rounded-lg bg-neonGreen text-black hover:bg-white text-xs font-bold transition-all flex items-center gap-1">
-                                        <i class="fa-solid fa-circle-play"></i> Putar Suara
+                                        <i class="fa-solid fa-circle-play"></i> Putar Suara ID
                                     </button>
                                 </div>
                             </div>
@@ -412,7 +412,6 @@
                                 </div>
                                 <div class="p-2.5 rounded bg-neutral-900/40 border border-neutral-800/60 font-mono text-xs text-neutral-300 leading-relaxed select-all" id="outActorPrompt">
                                     Loading...
-                                    <!-- Comment payload stored inside JS securely to ensure background operation -->
                                 </div>
                             </div>
 
@@ -674,12 +673,12 @@
         </button>
     </nav>
 
-    <!-- Hidden secret comments container -->
+    <!-- Hidden technical comments container (Safely hides metadata from user view) -->
     <div class="hidden" style="display: none;" id="hiddenTechnicalPayload"></div>
 
     <!-- JAVASCRIPT LOGIC CONTROLLER -->
     <script>
-        // Global storage to prevent parameter formatting break in HTML
+        // Global storage for the 6-scene configuration to avoid DOM string breakages
         window.currentGeneratedScenes = [];
         
         let dbHistory = [];
@@ -999,7 +998,7 @@
                         "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia Bilal bin Rabah رضي الله عنه dalam mempertahankan keyakinan suci di tengah ujian berat.",
                         "Surah Al-Ikhlas menegaskan bahwa Allah adalah Tuhan Yang Maha Esa dan tempat meminta segala sesuatu bagi seluruh makhluk di alam semesta yang fana ini.",
                         "Keteguhan Bilal mengajarkan kita bahwa penderitaan fisik tidak akan pernah mampu meruntuhkan jiwa yang telah dipenuhi oleh cahaya manisnya iman kepada Allah semesta alam.",
-                        "Mari kita kokohkan kesabaran di dalam dada, berserah diri sepenuhnya kepada Allah, and meneladani keteguhan iman luar biasa dari perjuangan generasi mulia terdahulu ini."
+                        "Mari kita kokohkan kesabaran di dalam dada, berserah diri sepenuhnya kepada Allah, dan meneladani keteguhan iman luar biasa dari perjuangan generasi mulia terdahulu ini."
                     ];
                     ENGLISH_DIALOGUES = [
                         "When your soul feels crushed by the heavy trials of the world, remember that true steadfastness of faith will guide us through this dark night.",
@@ -1082,7 +1081,7 @@
             } else {
                 // Kategori UMUM / FILOSOFI (All dialogues are exactly 24 words split across 6 scenes)
                 PREMIUM_DIALOGUES = [
-                    "Saat seluruh usahamu terasa sunyi dan terabaikan oleh riuh dunia, ketahuilah bahwa keheningan malam selalu menyimpan ruang aman bagi jiwamu yang lelah ini.",
+                    "Saat seluruh usahamu terasa sunyi dan terabaikan oleh riuh dunia, ketahuilah bahwa keheningan malam selalu menyimpan ruang aman bagi jiwamu yang lelah ini bersama.",
                     "Hari-harimu belakangan ini mungkin terasa terjal dan penuh kebimbangan mendalam, namun ketahuilah setiap badai pasti membawa pesan tentang ketabahan hidup yang bernilai.",
                     "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia ketabahan jiwa manusia menghadapi berbagai cobaan kehidupan yang datang menghalangi langkah kaki kita.",
                     "Filsuf klasik Seneca menyatakan bahwa kesulitan memperkuat pikiran sehat kita seperti halnya kerja keras jasmani melatih kekuatan fisik manusia bertahan menghadapi badai dunia.",
@@ -1182,16 +1181,16 @@
                     shot1: `Left Side Emotional Zoom In Shot (0-6s). Kamera diletakkan di sisi kiri depan ${actorName}, melakukan tracking zoom lembut mendekati wajahnya guna menangkap empati mendalam saat menyentuh perasaan lelah penonton.`,
                     shot2: "Front Emotional Closing Shot (6-10s). Hard Cut instan pada detik ke-6 menuju kamera depan (front-center shot) bersudut stabil, mempertahankan karakter berbicara langsung tanpa jeda visual."
                 },
-                // Scene 3 (Kamera disamakan dengan Scene 2 sesuai instruksi)
+                // Scene 3
                 {
                     shot1: `Left Side Emotional Zoom In Shot (0-6s). Kamera diletakkan di sisi kiri depan ${actorName}, melakukan tracking zoom lembut mendekati wajahnya guna menangkap empati mendalam saat menyentuh perasaan lelah penonton.`,
                     shot2: "Front Emotional Closing Shot (6-10s). Hard Cut instan pada detik ke-6 menuju kamera depan (front-center shot) bersudut stabil, mempertahankan karakter berbicara langsung tanpa jeda visual."
                 },
-                // Scene 4 (Hanya 1 Shot kamera yang sebelumnya digunakan di Scene 3, yaitu Front Spiritual Close Face)
+                // Scene 4
                 {
                     shot1: `Front Spiritual Close Face Shot (0-10s). Kamera depan stabil membingkai dada hingga kepala ${actorName}. Wajahnya memancarkan rasa khusyuk penuh takzim saat membacakan intisari kebijaksanaan luhur secara berkelanjutan tanpa cuts.`
                 },
-                // Scene 5 (Tingkatan 1 Shot Tunggal terus menerus dari detik 0-10 dengan Dynamic Posture)
+                // Scene 5
                 {
                     shot1: `Front Medium Close Up Inspirational Shot (0-10s). ${scene5PosturePrompt} Bidikan terpusat langsung dari arah depan membingkai dada hingga wajah ${actorName} secara intim, mempertahankan senyum keteduhan spiritual yang utuh dan stabil tanpa adanya pemotongan transisi sudut kamera.`
                 },
@@ -1224,13 +1223,13 @@
                         } else if (isBilal) {
                             scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"Despite brutal torture, Bilal stood firm calling out the absolute oneness of Allah: Ahad, Ahad."\n\n«اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ»\nMeaning:\n"Allah is One, Allah is the Eternal Refuge."\n\nSource:\nQur'an Surah Al-Ikhlas: 1-2`;
                         } else if (isAbuBakar) {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah said that the best friend is Abu Bakar."\n\n«إِنَّ أَمَنَّ النَّاسِ عَلَيَّ فِي صُحْبَتِهِ وَمَالِهِ أَبُو بَكْر»\nMeaning:\n"The person who has favored me most of all both with his companionship and wealth is Abu Bakar."\n\nSource:\nHadith narrated by Bukhari`;
+                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah said that the best friend is Abu Bakar."\n\n«إِنَّ أَمَنَّ النَّASِ عَلَيَّ فِي صُحْبَتِهِ وَمَالِهِ أَبُو بَكْر»\nMeaning:\n"The person who has favored me most of all both with his companionship and wealth is Abu Bakar."\n\nSource:\nHadith narrated by Bukhari`;
                         } else if (isMushab) {
                             scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"He gave up everything for his faith."\n\n«رَأَيْتُ مُصْعَبَ بْنَ عُمَيْرٍ وَمَا بِمَكَّةَ فَتًى أَنْعَمَ عِنْدَ أَبَوَيْهِ مِنْهُ»\nMeaning:\n"I saw Mush'ab bin Umair, and there was no youth in Makkah who was more pampered by his parents than him."\n\nSource:\nHadith narrated by Tirmidzi`;
                         } else if (isKhalid) {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah praised Khalid as the Sword of Allah."\n\n«خَالِدُ بْنُ الْوَلِIDِ سَيْفٌ مِنْ سُيُوفِ اللَّهِ»\nMeaning:\n"Khalid bin Walid is a sword from among the swords of Allah."\n\nSource:\nHadith narrated by Bukhari`;
+                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah praised Khalid as the Sword of Allah."\n\n«خَالِدُ بْنُ الْوَلِيدِ سَيْفٌ مِنْ سُيُوفِ اللَّهِ»\nMeaning:\n"Khalid bin Walid is a sword from among the swords of Allah."\n\nSource:\nHadith narrated by Bukhari`;
                         } else {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah said that the best enjoyment of the world is a righteous woman. [pause 2 seconds] You are truly honored by Islam."\n\n«الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ»\nMeaning:\n"The world is enjoyment, and the best enjoyment of the world is a righteous woman."\n\nSource:\nHadith narrated by Muslim`;
+                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah said that the best enjoyment of the world is a righteous woman. [pause 2 seconds] You are truly honored by Islam."\n\n«الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّALِحةُ»\nMeaning:\n"The world is enjoyment, and the best enjoyment of the world is a righteous woman."\n\nSource:\nHadith narrated by Muslim`;
                         }
                     } else {
                         scenePrompt += `\n\n[PHILOSOPHICAL SYSTEM ATTACHMENT]\nEnglish Translation:\n"Seneca wrote that difficulty strengthens the mind just as labor trains the human body to endure storms."\n\n«Calamitas virtutis occasio est»\nMeaning:\n"Calamity is virtue's opportunity."\n\nSource:\nStoic Philosophy - Lucius Annaeus Seneca`;
@@ -1400,7 +1399,7 @@
                             `;
                             hadithBlockEN = `
                                 <div class="mt-3 p-3 bg-neutral-900 rounded-xl border border-neutral-800 text-center">
-                                    <p class="text-lg font-bold text-neutral-400 font-serif mb-1">اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ</p>
+                                    <p class="text-lg font-bold text-neutral-400 font-serif mb-1">اللَّهُ أَحَدٌ، اللَّهُ الصَّMَدُ</p>
                                     <p class="text-[11px] text-neutral-400 italic">"Allah is One, Allah is the Eternal Refuge."</p>
                                     <p class="text-[9px] text-neutral-500 mt-1">Source: Qur'an Surah Al-Ikhlas: 1-2</p>
                                 </div>
@@ -1453,14 +1452,14 @@
                         } else {
                             hadithBlock = `
                                 <div class="mt-3 p-3 bg-neutral-900 rounded-xl border border-neutral-800 text-center">
-                                    <p class="text-lg font-bold text-neonGreen font-serif mb-1">الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ</p>
+                                    <p class="text-lg font-bold text-neonGreen font-serif mb-1">الدُّنْيَا mَتَاعٌ، وَخَيْرُ mَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ</p>
                                     <p class="text-[11px] text-neutral-300 italic">"Dunia adalah perhiasan, dan sebaik-baik perhiasan dunia adalah wanita shalihah."</p>
                                     <p class="text-[9px] text-neutral-500 mt-1">Sumber: Hadis Riwayat Muslim</p>
                                 </div>
                             `;
                             hadithBlockEN = `
                                 <div class="mt-3 p-3 bg-neutral-900 rounded-xl border border-neutral-800 text-center">
-                                    <p class="text-lg font-bold text-neutral-400 font-serif mb-1">الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ</p>
+                                    <p class="text-lg font-bold text-neutral-400 font-serif mb-1">الدُّنْيَا mَتَاعٌ، وَخَيْرُ mَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ</p>
                                     <p class="text-[11px] text-neutral-400 italic">"The world is enjoyment, and the best enjoyment of the world is a righteous woman."</p>
                                     <p class="text-[9px] text-neutral-500 mt-1">Source: Hadith narrated by Muslim</p>
                                 </div>
