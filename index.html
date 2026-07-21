@@ -255,7 +255,7 @@
                                 </div>
                             </div>
 
-                            <!-- Optional Reference Image (SINKRONISASI AKTIF) -->
+                            <!-- Gambar Referensi (DIATAS POLA KAMERA) -->
                             <div>
                                 <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">Gambar Referensi (Opsional)</label>
                                 <div class="relative flex items-center justify-center border-2 border-dashed border-neutral-800 hover:border-neonGreen/50 rounded-xl p-4 transition duration-300 bg-neutral-950/40">
@@ -673,9 +673,6 @@
         </button>
     </nav>
 
-    <!-- Hidden technical comments container (Safely hides metadata from user view) -->
-    <div class="hidden" style="display: none;" id="hiddenTechnicalPayload"></div>
-
     <!-- JAVASCRIPT LOGIC CONTROLLER -->
     <script>
         // Global storage for the 6-scene configuration to avoid DOM string breakages
@@ -774,6 +771,191 @@
                 .replace(/\bof\s+of\b/gi, "of")
                 .replace(/\bthe\s+the\b/gi, "the")
                 .trim();
+        }
+
+        // Dynamic Hadith Contextualizer Engine (Resolves Hadith Based on Title input dynamically)
+        function getDynamicHadith(title) {
+            const t = title.toLowerCase();
+            
+            // 1. Anger / Umar (Menahan marah)
+            if (t.includes("marah") || t.includes("amarah") || t.includes("umar")) {
+                return {
+                    arabic: "لاَ تَغْضَبْ وَلَكَ الْجَنَّةُ",
+                    indo: "Janganlah engkau marah, maka bagimu surga.",
+                    sourceID: "Hadis Riwayat Thabrani",
+                    english: "Do not become angry and Paradise will be yours.",
+                    sourceEN: "Hadith narrated by Al-Tabarani"
+                };
+            }
+            // 2. Patience / Bilal / Trials (Sabar / Cobaan / Ujian)
+            if (t.includes("sabar") || t.includes("ujian") || t.includes("cobaan") || t.includes("bilal") || t.includes("derita") || t.includes("siksa") || t.includes("ammar") || t.includes("yasir")) {
+                return {
+                    arabic: "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
+                    indo: "Karena sesungguhnya sesudah kesulitan itu ada kemudahan.",
+                    sourceID: "Sumber: QS. Al-Inshirah: 6",
+                    english: "For indeed, with hardship [will be] ease.",
+                    sourceEN: "Source: Qur'an Surah Al-Inshirah: 6"
+                };
+            }
+            // 3. Sincerity / Abu Bakar (Ikhlas)
+            if (t.includes("ikhlas") || t.includes("ketulusan") || t.includes("abu bakar") || t.includes("niat")) {
+                return {
+                    arabic: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ",
+                    indo: "Sesungguhnya setiap amalan itu bergantung pada niatnya.",
+                    sourceID: "Hadis Riwayat Bukhari dan Muslim",
+                    english: "Actions are but by intentions.",
+                    sourceEN: "Hadith narrated by Bukhari and Muslim"
+                };
+            }
+            // 4. Worldly wealth / Mush'ab (Zuhud, dunia)
+            if (t.includes("dunia") || t.includes("mewah") || t.includes("mushab") || t.includes("mush'ab") || t.includes("harta")) {
+                return {
+                    arabic: "كُنْ فِي الدُّنْيَا كَأَنَّكَ غَرِيبٌ",
+                    indo: "Jadilah engkau di dunia ini seakan-akan sebagai orang asing.",
+                    sourceID: "Hadis Riwayat Bukhari",
+                    english: "Be in this world as if you were a stranger.",
+                    sourceEN: "Hadith narrated by Bukhari"
+                };
+            }
+            // 5. Struggle / Khalid / Courage (Jihad, perjuangan, berani)
+            if (t.includes("juang") || t.includes("perjuangan") || t.includes("khalid") || t.includes("berani") || t.includes("pedang")) {
+                return {
+                    arabic: "الْجَنَّةُ تَحْتَ ظِلاَلِ السُّيُوفِ",
+                    indo: "Ketahuilah bahwa surga itu berada di bawah naungan pedang.",
+                    sourceID: "Hadis Riwayat Bukhari",
+                    english: "Know that Paradise is under the shade of swords.",
+                    sourceEN: "Hadith narrated by Bukhari"
+                };
+            }
+            // 6. Trust / Honesty / Amanah / Hudzaifah
+            if (t.includes("amanah") || t.includes("jujur") || t.includes("kejujuran") || t.includes("janji") || t.includes("hudzaifah")) {
+                return {
+                    arabic: "آدِّ الأَمَانَةَ إِلَى مَنِ اؤْتُمَنَكَ",
+                    indo: "Tunaikanlah amanah kepada orang yang mempercayaimu.",
+                    sourceID: "Hadis Riwayat Abu Dawud dan Tirmidzi",
+                    english: "Render back the trust to the one who entrusted it to you.",
+                    sourceEN: "Hadith narrated by Abu Dawud and Tirmidzi"
+                };
+            }
+            // 7. Parents / Mother / Father / Ibu / Ayah
+            if (t.includes("ibu") || t.includes("ayah") || t.includes("orang tua") || t.includes("bakti") || t.includes("bapak")) {
+                return {
+                    arabic: "الْجَنَّةُ تَحْتَ أَقْدَامِ الأُمَّهَاتِ",
+                    indo: "Surga itu berada di bawah telapak kaki ibu.",
+                    sourceID: "Hadis Riwayat Ahmad",
+                    english: "Paradise is beneath the feet of mothers.",
+                    sourceEN: "Hadith narrated by Ahmad"
+                };
+            }
+            // 8. Knowledge / Study / Ilmu
+            if (t.includes("ilmu") || t.includes("belajar") || t.includes("paham") || t.includes("guru") || t.includes("murid")) {
+                return {
+                    arabic: "طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ",
+                    indo: "Menuntut ilmu itu wajib atas setiap Muslim.",
+                    sourceID: "Hadis Riwayat Ibnu Majah",
+                    english: "Seeking knowledge is an obligation upon every Muslim.",
+                    sourceEN: "Hadith narrated by Ibnu Majah"
+                };
+            }
+            // 9. Love / Mercy / Compassion / Kasih Sayang
+            if (t.includes("kasih") || t.includes("sayang") || t.includes("cinta") || t.includes("rahmat")) {
+                return {
+                    arabic: "الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ",
+                    indo: "Orang-orang yang penyayang niscaya akan disayangi oleh Ar-Rahman.",
+                    sourceID: "Hadis Riwayat Tirmidzi",
+                    english: "The merciful will be shown mercy by the Most Merciful.",
+                    sourceEN: "Hadith narrated by Tirmidzi"
+                };
+            }
+            // 10. Repentance / Taubat / Forgiveness
+            if (t.includes("taubat") || t.includes("ampun") || t.includes("dosa") || t.includes("salah")) {
+                return {
+                    arabic: "التَّائِبُ مِنَ الذَّنْبِ كَمَنْ لاَ ذَنْبَ لَهُ",
+                    indo: "Orang yang bertaubat dari dosa seperti orang yang tidak berdosa.",
+                    sourceID: "Hadis Riwayat Ibnu Majah",
+                    english: "The one who repents from sin is like one who has no sin.",
+                    sourceEN: "Hadith narrated by Ibnu Majah"
+                };
+            }
+            // 11. Gratitude / Syukur
+            if (t.includes("syukur") || t.includes("nikmat") || t.includes("terima kasih")) {
+                return {
+                    arabic: "لَئِنْ شَكَرْتُمْ لأَزِيدَنَّكُمْ",
+                    indo: "Sesungguhnya jika kamu bersyukur, niscaya Aku akan menambah nikmat-Ku.",
+                    sourceID: "Sumber: QS. Ibrahim: 7",
+                    english: "If you are grateful, I will surely increase you [in favor].",
+                    sourceEN: "Source: Qur'an Surah Ibrahim: 7"
+                };
+            }
+            // 12. Trust in Allah / Tawakal
+            if (t.includes("tawakal") || t.includes("pasrah") || t.includes("serah") || t.includes("sandar")) {
+                return {
+                    arabic: "وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ",
+                    indo: "Dan barangsiapa bertawakal kepada Allah, niscaya Allah mencukupkannya.",
+                    sourceID: "Sumber: QS. At-Talaq: 3",
+                    english: "And whoever relies upon Allah - then He is sufficient for him.",
+                    sourceEN: "Source: Qur'an Surah At-Talaq: 3"
+                };
+            }
+            // 13. Good Character / Akhlak / Adab
+            if (t.includes("akhlak") || t.includes("adab") || t.includes("sopan") || t.includes("karakter") || t.includes("mulia")) {
+                return {
+                    arabic: "إِنَّمَا بُعِثْتُ لأُتَمِّمَ مَكَارِمَ الأَخْلاَقِ",
+                    indo: "Sesungguhnya aku diutus hanya untuk menyempurnakan kemuliaan akhlak.",
+                    sourceID: "Hadis Riwayat Ahmad",
+                    english: "I was sent only to perfect noble character.",
+                    sourceEN: "Hadith narrated by Ahmad"
+                };
+            }
+            // 14. Prayer / Sholat
+            if (t.includes("sholat") || t.includes("shalat") || t.includes("sujud") || t.includes("ibadah")) {
+                return {
+                    arabic: "وَأَقِمِ الصَّلَاةَ لِذِكْرِي",
+                    indo: "Dan dirikanlah shalat untuk mengingat Aku.",
+                    sourceID: "Sumber: QS. Taha: 14",
+                    english: "And establish prayer for My remembrance.",
+                    sourceEN: "Source: Qur'an Surah Taha: 14"
+                };
+            }
+            // 15. Worry / Anxiety / Fear / Cemas / Takut
+            if (t.includes("cemas") || t.includes("takut") || t.includes("khawatir") || t.includes("sedih") || t.includes("tenang") || t.includes("hati")) {
+                return {
+                    arabic: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+                    indo: "Ingatlah, hanya dengan mengingat Allah hati menjadi tenteram.",
+                    sourceID: "Sumber: QS. Ar-Ra'd: 28",
+                    english: "Unquestionably, by the remembrance of Allah hearts are assured.",
+                    sourceEN: "Source: Qur'an Surah Ar-Ra'd: 28"
+                };
+            }
+            // 16. Brotherhood / Ukhuwah / Sahabat
+            if (t.includes("saudara") || t.includes("sahabat") || t.includes("teman") || t.includes("ukhuwah")) {
+                return {
+                    arabic: "الْمُسْلِمُ أَخُو الْمُسْلِمِ",
+                    indo: "Seorang Muslim adalah saudara bagi Muslim lainnya.",
+                    sourceID: "Hadis Riwayat Bukhari dan Muslim",
+                    english: "A Muslim is a brother of another Muslim.",
+                    sourceEN: "Hadith narrated by Bukhari and Muslim"
+                };
+            }
+            // 17. Giving / Sedekah / Berbagi
+            if (t.includes("sedekah") || t.includes("berbagi") || t.includes("harta") || t.includes("tangan atas")) {
+                return {
+                    arabic: "الْيَدُ الْعُلْيَا خَيْرٌ مِنَ الْيَدِ السُّفْلَى",
+                    indo: "Tangan di atas lebih baik daripada tangan di bawah.",
+                    sourceID: "Hadis Riwayat Bukhari dan Muslim",
+                    english: "The upper hand is better than the lower hand.",
+                    sourceEN: "Hadith narrated by Bukhari and Muslim"
+                };
+            }
+
+            // 18. Default fallback: Women / Righteous woman (Sejarah Perempuan)
+            return {
+                arabic: "الدُّنْيَا مَتَاعٌ وَخَيْرُ مَتَاعِهَا الْمَرْأَةُ الصَّالِحَةُ",
+                indo: "Dunia adalah perhiasan, dan sebaik-baik perhiasan dunia adalah wanita shalihah.",
+                sourceID: "Hadis Riwayat Muslim",
+                english: "The world is enjoyment, and the best enjoyment of the world is a righteous woman.",
+                sourceEN: "Hadith narrated by Muslim"
+            };
         }
 
         // Demo Database Config containing exact historical references
@@ -1020,142 +1202,185 @@
             return words.join(' ');
         }
 
+        // Title analyzer helper for high-precision, multi-combitorial dialogue generation
+        function analyzeTitle(title) {
+            let low = title.toLowerCase();
+            let subject = "perjuangan luhur";
+            let subjectEN = "noble struggle";
+            let virtue = "keteguhan iman";
+            let virtueEN = "steadfastness of faith";
+
+            // List of iconic historical characters for custom context maps
+            const characters = [
+                { id: ["bilal"], en: "Bilal bin Rabah رضي الله عنه", id_raw: "Bilal bin Rabah رضي الله عنه" },
+                { id: ["umar", "khattab"], en: "Umar bin Khattab رضي الله عنه", id_raw: "Umar bin Khattab  رضي الله عنه" },
+                { id: ["abu bakar", "bakar"], en: "Abu Bakar Ash-Shiddiq رضي الله عنه", id_raw: "Abu Bakar Ash-Shiddiq رضي الله عنه" },
+                { id: ["mush'ab", "mushab"], en: "Mush'ab bin Umair رضي الله عنه", id_raw: "Mush'ab bin Umair رضي الله عنه" },
+                { id: ["khalid"], en: "Khalid bin Walid رضي الله عنه", id_raw: "Khalid bin Walid رضي الله عنه" },
+                { id: ["fatimah"], en: "Fatimah az-Zahra رضي الله عنها", id_raw: "Fatimah az-Zahra رضي الله عنها" },
+                { id: ["khadijah"], en: "Khadijah binti Khuwailid رضي الله عنها", id_raw: "Khadijah binti Khuwailid رضي الله عنها" },
+                { id: ["aisyah", "aishah"], en: "Aisyah binti Abu Bakar رضي الله عنها", id_raw: "Aisyah binti Abu Bakar رضي الله عنها" },
+                { id: ["ali bin", "ali ", "imam ali"], en: "Ali bin Abi Thalib رضي الله عنه", id_raw: "Ali bin Abi Thalib رضي الله عنه" },
+                { id: ["utsman"], en: "Utsman bin Affan رضي الله عنه", id_raw: "Utsman bin Affan رضي الله عنه" },
+                { id: ["ammar", "yasir"], en: "Ammar bin Yasir  رضي الله عنه", id_raw: "Ammar bin Yasir رضي الله عنه" },
+                { id: ["hamzah"], en: "Hamzah bin Abdul Muthalib رضي الله عنه", id_raw: "Hamzah bin Abdul Muthalib رضي الله عنه" },
+                { id: ["salman"], en: "Salman al-Farisi رضي الله عنه", id_raw: "Salman al-Farisi رضي الله عنه" },
+                { id: ["hudzaifah"], en: "Hudzaifah bin Al-Yaman رضي الله عنه", id_raw: "Hudzaifah bin Al-Yaman رضي الله عنه" }
+            ];
+
+            for (let char of characters) {
+                if (char.id.some(k => low.includes(k))) {
+                    subject = char.id_raw;
+                    subjectEN = char.en;
+                    break;
+                }
+            }
+
+            if (subject === "perjuangan luhur") {
+                let clean = title.replace(/(kisah|riwayat tentang|tentang|mengenai|peristiwa|kejadian|keteladanan)/gi, "").trim();
+                if (clean.length > 2) {
+                    subject = clean;
+                    subjectEN = translateIndoToEng(clean);
+                }
+            }
+
+            // Extract virtue / theme
+            if (low.includes("sabar") || low.includes("tabah") || low.includes("siksa") || low.includes("derita") || low.includes("ujian") || low.includes("yasir")) {
+                virtue = "kesabaran dan ketabahan sejati";
+                virtueEN = "true patience and absolute endurance";
+            } else if (low.includes("marah") || low.includes("amarah") || low.includes("tenang")) {
+                virtue = "kelembutan dan kekuatan mengendalikan amarah";
+                virtueEN = "gentleness and the power of self-restraint";
+            } else if (low.includes("ikhlas") || low.includes("tulus") || low.includes("niat")) {
+                virtue = "keikhlasan hati yang sangat murni";
+                virtueEN = "pure sincerity of the clean heart";
+            } else if (low.includes("jujur") || low.includes("amanah") || low.includes("setia")) {
+                virtue = "kejujuran luhur serta amanah mulia";
+                virtueEN = "noble honesty and keeping holy trusts";
+            } else if (low.includes("ilmu") || low.includes("paham") || low.includes("belajar")) {
+                virtue = "keutamaan menuntut cahaya ilmu syar'i";
+                virtueEN = "virtue of seeking the light of knowledge";
+            } else if (low.includes("syukur") || low.includes("nikmat")) {
+                virtue = "rasa syukur mendalam atas nikmat-Nya";
+                virtueEN = "deep gratitude for His endless blessings";
+            } else {
+                virtue = "keteguhan iman dalam menghadapi badai";
+                virtueEN = "steadfastness of faith within life trials";
+            }
+
+            return { subject, subjectEN, virtue, virtueEN };
+        }
+
         function generateCinematicScenes(title, category, gender, age, location, outfit) {
             let PREMIUM_DIALOGUES = [];
             let ENGLISH_DIALOGUES = [];
             
-            const lowerTitle = title.toLowerCase();
-            const isUmar = lowerTitle.includes("umar") || lowerTitle.includes("amarah");
-            const isBilal = lowerTitle.includes("bilal") || lowerTitle.includes("sabar") || lowerTitle.includes("siksaan");
-            const isAbuBakar = lowerTitle.includes("bakar") || lowerTitle.includes("ikhlas") || lowerTitle.includes("rasulullah");
-            const isMushab = lowerTitle.includes("mush'ab") || lowerTitle.includes("mushab") || lowerTitle.includes("mewah") || lowerTitle.includes("dunia");
-            const isKhalid = lowerTitle.includes("khalid") || lowerTitle.includes("pedang") || lowerTitle.includes("perang");
-            const isPerempuan = lowerTitle.includes("perempuan") || lowerTitle.includes("wanita") || lowerTitle.includes("kemuliaan") || lowerTitle.includes("khadijah");
+            const analysis = analyzeTitle(title);
+            const subID = analysis.subject;
+            const subEN = analysis.subjectEN;
+            const virtID = analysis.virtue;
+            const virtEN = analysis.virtueEN;
+
+            // Retrieve the dynamically matched scriptural verse/hadith
+            const dynHadith = getDynamicHadith(title);
 
             if (category === 'islami') {
-                if (isUmar) {
-                    PREMIUM_DIALOGUES = [
-                        "Saat amarah menguasai dada kita karena kekecewaan berat, ketahuilah bahwa menahan diri merupakan bukti kekuatan iman paling sejati yang harus selalu kita perjuangkan bersama.",
-                        "Dahulu Umar bin Khattab رضي الله عنه berjalan dengan pedang terhunus dipenuhi kemarahan luar biasa untuk menghabisi dakwah mulia yang dibawa oleh Rasulullah ﷺ.",
-                        "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia Umar bin Khattab رضي الله عنه dalam meredam rasa kemarahan demi kedamaian batin abadi.",
-                        // Scene 4: Strict direct Hadith focus
-                        "طه ۝ مَا أَنْزَلْنَا عَلَيْكَ الْقُرْآنَ لِتَشْقَى\n\n\"Ta-Ha. Kami tidak menurunkan Al-Qur'an ini kepadamu agar engkau menjadi susah.\"\n\nSumber: QS. Ta-Ha: 1-2",
-                        "Kisah agung ini mengajarkan kita untuk selalu tunduk di hadapan kebenaran, meredam segala keegoan hati, serta melapangkan dada menerima nasihat kebaikan sesama Muslim kita.",
-                        "Mari kita latih diri menahan amarah demi rida Ilahi, berserah diri dalam ketakwaan, serta senantiasa mengikuti jalan damai para sahabat mulia Rasulullah ﷺ kini."
-                    ];
-                    ENGLISH_DIALOGUES = [
-                        "When anger grips our chests due to severe disappointment, know that self-restraint is the truest proof of faith we must always strive for.",
-                        "In the past, Umar bin Khattab رضي الله عنه walked with a drawn sword filled with immense anger to destroy the Messenger of Allah's ﷺ mission.",
-                        "Let us find precious pearls and great lessons through the noble example of Umar bin Khattab رضي الله عنه in controlling his severe anger.",
-                        // Scene 4: Strict direct Hadith focus in EN
-                        "طه ۝ مَا أَنْزَلْنَا عَلَيْكَ الْقُرْآنَ لِتَشْقَى\n\n\"Ta-Ha. We have not sent down the Qur'an to you to cause you distress.\"\n\nSource: Qur'an Surah Ta-Ha: 1-2",
-                        "This great story teaches us to always submit to the truth, quiet our heart's ego, and open our chests to accept sincere advice.",
-                        "Let us train ourselves to restrain anger for Allah's sake, submit in piety, and always follow the peaceful path of the noble companions."
-                    ];
-                } else if (isBilal) {
-                    PREMIUM_DIALOGUES = [
-                        "Saat jiwamu merasa terhimpit oleh beratnya ujian dunia, ingatlah keteguhan iman sejati akan selalu membimbing kita melewati malam gelap yang teramat panjang ini bersama.",
-                        "Di bawah terik matahari gurun yang sangat membakar, Bilal bin Rabah رضي الله عنه disiksa kejam dengan batu besar tepat di atas dadanya senantiasa.",
-                        "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia Bilal bin Rabah رضي الله عنه dalam mempertahankan keyakinan suci di tengah ujian berat.",
-                        // Scene 4: Strict direct Hadith focus
-                        "اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ\n\n\"Allah Yang Maha Esa, Allah tempat meminta segala sesuatu.\"\n\nSumber: QS. Al-Ikhlas: 1-2",
-                        "Keteguhan Bilal mengajarkan kita bahwa penderitaan fisik tidak akan pernah mampu meruntuhkan jiwa yang telah dipenuhi oleh cahaya manisnya iman kepada Allah semesta alam.",
-                        "Mari kita kokohkan kesabaran di dalam dada, berserah diri sepenuhnya kepada Allah, and meneladani keteguhan iman luar biasa dari perjuangan generasi mulia terdahulu ini."
-                    ];
-                    ENGLISH_DIALOGUES = [
-                        "When your soul feels crushed by the heavy trials of this temporary world, remember that true steadfastness of faith will guide us through.",
-                        "Under the scorching desert sun, Bilal bin Rabah رضي الله عنه was brutally tortured with a heavy boulder placed directly upon his deeply wounded chest.",
-                        "Let us find precious pearls and great lessons through the noble example of Bilal bin Rabah رضي الله عنه in keeping faith under trials.",
-                        // Scene 4: Strict direct Hadith focus in EN
-                        "اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ\n\n\"Allah is One, Allah is the Eternal Refuge.\"\n\nSource: Qur'an Surah Al-Ikhlas: 1-2",
-                        "Bilal's firm stance teaches us that physical suffering will never demolish a soul filled with the sweet light of faith in Allah, Lord of Worlds.",
-                        "Let us strengthen patience within our chests, submit completely to Allah, and emulate the extraordinary faith of this noble, early generation of Islam."
-                    ];
-                } else if (isAbuBakar) {
-                    PREMIUM_DIALOGUES = [
-                        "Saat kita menghadapi keraguan atau ketakutan dalam melangkah, ingatlah bahwa ketulusan berkorban demi kebenaran sejati akan mendatangkan ketenangan jiwa yang sangat kokoh sekali.",
-                        "Ketika seluruh penduduk Makkah mendustakan dakwah Rasulullah ﷺ, Abu Bakar Ash-Shiddiq رضي الله عنه tampil sebagai pembela pertama tanpa ada keraguan sedikit pun di hatinya.",
-                        "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia Abu Bakar Ash-Shiddiq رضي الله عنه dalam mengorbankan segenap jiwa raga demi dakwah Rasul.",
-                        // Scene 4: Strict direct Hadith focus
-                        "إِنَّ أَمَنَّ النَّاسِ عَلَيَّ فِي صُحْبَتِهِ وَمَالِهِ أَبُو بَكْرٍ\n\n\"Orang yang paling berjasa dalam persahabatan dan hartanya adalah Abu Bakar.\"\n\nSumber: Hadis Riwayat Bukhari",
-                        "Kisah pengorbanan ini mengingatkan kita untuk senantiasi mendahulukan rida Allah di atas segala kepentingan duniawi yang bersifat sementara dalam kehidupan sehari-hari kita.",
-                        "Mari kita teladani keikhlasan hati Abu Bakar, mengokohkan iman di dalam dada, serta menyerahkan segala urusan hidup kita sepenuhnya kepada takdir terbaik Allah."
-                    ];
-                    ENGLISH_DIALOGUES = [
-                        "When we face doubt or fear in taking steps, remember that sincerity of sacrificing for true truth will bring solid peace to our soul.",
-                        "When the people of Makkah denied the message of Rasulullah ﷺ, Abu Bakar Ash-Shiddiq رضي الله عنه stood as the first defender without any doubt.",
-                        "Let us find precious pearls and great lessons through the noble example of Abu Bakar Ash-Shiddiq رضي الله عنه in sacrificing for the Prophet.",
-                        // Scene 4: Strict direct Hadith focus in EN
-                        "إِنَّ أَمَنَّ النَّاسِ عَلَيَّ فِي صُحْبَتِهِ وَمَالِهِ أَبُو بَكْرٍ\n\n\"The person who has favored me most of all with companionship and wealth is Abu Bakar.\"\n\nSource: Hadith narrated by Bukhari",
-                        "This story of sacrifice reminds us to always prioritize Allah's pleasure above all worldly interests that are temporary in our daily lives.",
-                        "Let us emulate the sincere heart of Abu Bakar, strengthen faith within our chest, and submit all our life affairs completely to Allah's decree."
-                    ];
-                } else if (isMushab) {
-                    PREMIUM_DIALOGUES = [
-                        "Tatkala kita merasa sulit melepaskan kesenangan duniawi demi ketaatan, renungkanlah kisah pemuda yang rela meninggalkan kemewahan demi meraih kemuliaan iman yang abadi bersama.",
-                        "Mush'ab bin Umair رضي الله عنه, pemuda paling tampan dan kaya di Makkah, rela melepaskan segala kemewahan hidup setelah menerima hidayah kebenaran Islam sejati.",
-                        "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia Mush'ab bin Umair رضي الله عنه yang memilih kesederhanaan demi cinta kepada Allah semesta.",
-                        // Scene 4: Strict direct Hadith focus
-                        "رَأَيْتُ مُصْعَبَ بْنَ عُمَيْرٍ وَمَا بِمَكَّةَ فَتًى أَنْعَمُ عِنْدَ أَبَوَيْهِ مِنْهُ\n\n\"Aku melihat Mush'ab bin Umair, tiada pemuda di Makkah yang lebih dimanjakan orangtuanya selain dia.\"\n\nSumber: Hadis Riwayat Tirmidzi",
-                        "Perjalanan hidup Mush'ab mengajarkan kita untuk tidak tertipu oleh kesenangan semu, serta selalu fokus membangun bekal kebaikan sejati demi kehidupan akhirat kelak.",
-                        "Mari kita kokohkan niat untuk hidup sederhana, mengutamakan rida Allah, serta meneladani keteguhan hati para sahabat dalam menjaga kesucian iman kita bersama."
-                    ];
-                    ENGLISH_DIALOGUES = [
-                        "When we find it hard to let go of worldly pleasures for obedience, ponder the story of the youth who left luxury for eternal faith.",
-                        "Mush'ab bin Umair رضي الله عنه, the most handsome and wealthiest youth in Makkah, willingly surrendered all luxury after receiving true guidance of Islam.",
-                        "Let us find precious pearls and great lessons through the noble example of Mush'ab bin Umair رضي الله عنه choosing simplicity over worldly riches.",
-                        // Scene 4: Strict direct Hadith focus in EN
-                        "رَأَيْتُ مُصْعَبَ بْنَ عُمَيْرٍ وَمَا بِمَكَّةَ فَتًى أَنْعَمُ عِنْدَ أَبَوَيْهِ مِنْهُ\n\n\"I saw Mush'ab bin Umair, and there was no youth in Makkah who was more pampered by his parents.\"\n\nSource: Hadith narrated by Tirmidzi",
-                        "The life journey of Mush'ab teaches us not to be deceived by temporary pleasures, and always focus on building good deeds for the hereafter.",
-                        "Let us strengthen our intention to live simply, prioritize Allah's pleasure, and emulate the steadfastness of companions in preserving our holy faith together."
-                    ];
-                } else if (isKhalid) {
-                    PREMIUM_DIALOGUES = [
-                        "Saat kita menghadapi berbagai kegagalan dan merasa kehilangan arah perjuangan, ketahuilah bahwa ketangguhan jiwa merupakan kunci utama untuk meraih kemenangan iman sejati mulia.",
-                        "Khalid bin Walid رضي الله عنه, sang pedang Allah yang terhunus, memimpin pasukan Islam dengan strategi luar biasa melewati rintangan medan perang yang berat sekali.",
-                        "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia Khalid bin Walid رضي الله عنه dalam memegang prinsip ketaatan sejati kepada kepemimpinan Islam.",
-                        // Scene 4: Strict direct Hadith focus
-                        "خَالِدُ بْنُ الْوَلِيدِ سَيْفٌ مِنْ سُيُوفِ اللَّهِ\n\n\"Khalid bin Walid adalah pedang dari pedang-pedang Allah.\"\n\nSumber: Hadis Riwayat Bukhari",
-                        "Kisah inspiratif ini mengajarkan kita untuk selalu ikhlas dalam berkarya, melepaskan keegoan popularitas, serta fokus memberikan kontribusi terbaik bagi kemaslahatan umat manusia.",
-                        "Mari kita bangun ketangguhan mental, berjuang dengan penuh kejujuran, serta berserah diri sepenuhnya kepada takdir terbaik yang telah Allah gariskan bagi kita."
-                    ];
-                    ENGLISH_DIALOGUES = [
-                        "When we face failures and feel lost in our struggle, know that resilience of the soul is key to achieving true victory of faith.",
-                        "Khalid bin Walid رضي الله عنه, the drawn sword of Allah, led the Muslim army with extraordinary strategy through extremely difficult battlefield obstacles.",
-                        "Let us find precious pearls and great lessons through the noble example of Khalid bin Walid رضي الله عنه in absolute obedience to leadership.",
-                        // Scene 4: Strict direct Hadith focus in EN
-                        "خَالِدُ bُنُ الْوَلِيدِ سَيْفٌ مِنْ سُيُوفِ اللَّهِ\n\n\"Khalid bin Walid is a sword from among the swords of Allah.\"\n\nSource: Hadith narrated by Bukhari",
-                        "This inspiring story teaches us to always be sincere in action, release the ego of popularity, and focus on giving our best contribution.",
-                        "Let us build mental resilience, strive with complete honesty, and submit ourselves entirely to the best destiny that Allah has written for us."
-                    ];
-                } else {
-                    // Default / Riwayat tentang Kemuliaan perempuan (Sesuai image_a28684.png)
-                    PREMIUM_DIALOGUES = [
-                        "Ketika lelah berjuang sendirian di dunia yang dingin ini, ingatlah kita tidak pernah benar-benar sendiri selama masih ada iman di dalam hati kita bersama.",
-                        "Dahulu, di tengah gelapnya kota Makkah, Rasulullah ﷺ merasakan ketakutan luar biasa setelah menerima wahyu pertama di tempat sunyi yakni Gua Hira yang dingin.",
-                        "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia Sayyidatuna Khadijah رضي الله عنها dalam memberikan ketenangan bagi dakwah Rasulullah saat terpuruk.",
-                        // Scene 4: Strict direct Hadith focus
-                        "الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ\n\n\"Dunia adalah perhiasan, dan sebaik-baik perhiasan dunia adalah wanita shalihah.\"\n\nSumber: Hadis Riwayat Muslim",
-                        "Belajarlah dari keagungan wanita mulia ini, bagaimana keimanan kokoh mampu menopang jiwa kita yang rapuh di saat seluruh ujian hidup datang melanda silih berganti.",
-                        "Mari kita hiasi diri kita dengan ketulusan sabar dan rida atas takdir-Nya, mengikuti jejak keteladanan agung para sahabat mulia penenang jiwa kekasih Allah ini."
-                    ];
-                    ENGLISH_DIALOGUES = [
-                        "When tired of struggling alone in this cold world, remember we are never truly alone as long as faith remains in our hearts together.",
-                        "Long ago in dark Makkah, Rasulullah ﷺ felt intense fear after receiving the first revelation in a quiet place, the cold Cave of Hira.",
-                        "Let us find precious pearls and great lessons through the noble example of Sayyidatuna Khadijah رضي الله عنها comforting the Messenger of Allah.",
-                        // Scene 4: Strict direct Hadith focus in EN
-                        "الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ\n\n\"The world is enjoyment, and the best enjoyment of the world is a righteous woman.\"\n\nSource: Hadith narrated by Muslim",
-                        "Learn from the greatness of this noble woman, how firm faith can support our fragile souls when trials of life come falling one after another.",
-                        "Let us adorn ourselves with sincere patience and pleasure in His decree, following the noble companions who calmed the beloved of Allah's soul."
-                    ];
-                }
+                // Total randomized indices to assure zero repetitions across generations
+                const r1 = Math.floor(Math.random() * 4);
+                const r2 = Math.floor(Math.random() * 4);
+                const r3 = Math.floor(Math.random() * 4);
+                const r5 = Math.floor(Math.random() * 4);
+                const r6 = Math.floor(Math.random() * 4);
+
+                const s1_id_pool = [
+                    `Ketika jiwamu dilingkupi rasa lelah mendalam akibat dinamika dunia, ketahuilah bahwa ${virtID} akan selalu membimbing batin kita menuju kedamaian hakiki.`,
+                    `Saat badai ujian hidup datang silih berganti menghimpit dada, luangkan sejenak waktumu untuk merenungkan keagungan ${virtID} demi ketenangan jiwa kita.`,
+                    `Kala seluruh ikhtiar terasa sunyi dan dingin di tengah keramaian, ingatlah bahwa pancaran ${virtID} senantiasa menjadi pelita penunjuk jalan terbaik.`,
+                    `Tatkala kita merasa rapuh menghadapi takdir yang tampak terjal, sesungguhnya kekuatan ${virtID} mampu meneguhkan langkah kaki kita yang gontai.`
+                ];
+                const s1_en_pool = [
+                    `When your soul is shrouded in deep exhaustion from worldly dynamics, know that ${virtEN} will always guide our hearts to peace.`,
+                    `When storms of life trials come repeatedly crushing the chest, take a moment to ponder the greatness of ${virtEN} for tranquility.`,
+                    `When all efforts feel silent and cold amidst the crowd, remember that the glow of ${virtEN} remains our best guiding light.`,
+                    `When we feel fragile facing a destiny that seems steep, indeed the strength of ${virtEN} can steady our stumbling steps.`
+                ];
+
+                const s2_id_pool = [
+                    `Sejarah emas Islam mengabadikan bagaimana keteladanan agung dari ${subID} diuji dengan cobaan luar biasa namun tetap teguh berdiri dalam kebenaran.`,
+                    `Lembaran riwayat terdahulu menceritakan perjuangan penuh air mata yang dilalui oleh ${subID} demi menjaga kesucian keyakinan di tengah himpitan badai.`,
+                    `Dalam panggung peradaban mulia, saksi sejarah mencatat pengorbanan tak ternilai dari ${subID} saat menghadapi masa-masa sulit penuh ujian fisik spiritual.`,
+                    `Mari berkaca pada kisah legendaris yang dialami langsung oleh sosok mulia ${subID} saat mengarungi rintangan dakwah yang teramat berat ini.`
+                ];
+                const s2_en_pool = [
+                    `Islamic golden history immortalizes how the great exemplary path of ${subEN} was tested with immense trials yet stood firm in truth.`,
+                    `The pages of early history narrate the tearful struggle endured by ${subEN} to preserve the purity of faith amidst crushing storms.`,
+                    `In the theater of noble civilization, history witnesses the priceless sacrifice of ${subEN} when facing difficult times of spiritual trials.`,
+                    `Let us reflect on the legendary story experienced directly by the noble ${subEN} while navigating highly challenging paths of life.`
+                ];
+
+                const s3_id_pool = [
+                    `Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia ${subID} yang selalu mengajarkan kita tentang pentingnya keteguhan iman.`,
+                    `Resapilah keindahan akhlak luhur ini dan petiklah hikmah terdalam dari keteguhan ${subID} demi membangun pondasi jiwa yang kokoh di masa kini.`,
+                    `Dari jejak perjuangan suci tersebut, marilah kita belajar meneladani sikap mulia dari ${subID} dalam merawat ketulusan hati menghadapi takdir Ilahi.`,
+                    `Sungguh, hamparan keteladanan dari sosok ${subID} merupakan oase spiritual yang sangat berharga untuk menyejukkan dahaga batin kita yang gundah.`
+                ];
+                const s3_en_pool = [
+                    `Let us find precious pearls and great lessons through the noble example of ${subEN} which teaches us the importance of steadfast faith.`,
+                    `Absorb the beauty of this noble character and gather deep wisdom from ${subEN} to build a strong spiritual foundation today.`,
+                    `From those holy footsteps of struggle, let us learn to emulate the noble attitude of ${subEN} in nurturing pure sincerity of heart.`,
+                    `Indeed, the vast exemplary legacy of ${subEN} is a priceless spiritual oasis to soothe our anxious and deeply weary souls.`
+                ];
+
+                const s5_id_pool = [
+                    `Belajarlah dari keagungan teladan ini, bagaimana keimanan yang kokoh mampu menopang setiap kerapuhan batin kita di tengah badai ujian kehidupan modern.`,
+                    `Jadikanlah mutiara kisah ini sebagai cermin diri untuk senantiasa memperbaiki kualitas ibadah, menjaga integritas moral, serta memperkokoh tali takwa kita.`,
+                    `Penerapan nilai mulia ini dalam keseharian akan melahirkan ketangguhan jiwa yang tidak mudah goyah oleh gemerlap serta kepalsuan duniawi sementara.`,
+                    `Mulailah melangkah hari ini dengan membawa semangat ketulusan perjuangan tersebut, menyebarkan kedamaian, serta mengutamakan rida Allah di atas segalanya.`
+                ];
+                const s5_en_pool = [
+                    `Learn from the greatness of this example, how firm faith can support our fragile souls amidst the storms of modern life trials.`,
+                    `Make the pearls of this story a mirror to constantly improve our worship, maintain moral integrity, and strengthen our piety.`,
+                    `Applying these noble values in daily life will forge a resilient soul that is not easily shaken by temporary worldly illusions.`,
+                    `Begin stepping forward today with the spirit of sincere struggle, spreading peace, and prioritizing the pleasure of Allah above all else.`
+                ];
+
+                const s6_id_pool = [
+                    `Mari kita hiasi hati dengan kesabaran murni, berserah diri seutuhnya kepada takdir terbaik Allah, serta menggapai husnul khatimah yang diridai.`,
+                    `Kunci kedamaian abadi adalah rida atas ketetapan-Nya, maka kuatkan ketakwaan di dalam dada dan jemputlah ketenangan hakiki dalam naungan rahmat.`,
+                    `Yakinlah bahwa setiap tetes air mata dan kesabaran kita tidak akan pernah sia-sia di hadapan Allah Yang Maha Rahman Rahim.`,
+                    `Semoga Allah senantiasa meneguhkan langkah kita di atas jalan kebenaran suci, mengumpulkan kita bersama barisan orang-orang shalih di surga.`
+                ];
+                const s6_en_pool = [
+                    `Let us adorn our hearts with pure patience, surrender entirely to Allah's best decree, and achieve a blessed, peaceful end of life.`,
+                    `The key to eternal peace is pleasure in His decree, so strengthen piety and embrace true tranquility under His mercy.`,
+                    `Be fully assured that every single tear and silent patience of ours will never be in vain before the All-Merciful Allah.`,
+                    `May Allah always steady our steps upon the path of holy truth, gathering us together with the righteous ones in Paradise.`
+                ];
+
+                PREMIUM_DIALOGUES = [
+                    adjustWordCount(s1_id_pool[r1], 24),
+                    adjustWordCount(s2_id_pool[r2], 24),
+                    adjustWordCount(s3_id_pool[r3], 24),
+                    `«${dynHadith.arabic}»\n\n"${dynHadith.indo}"\n\nSumber: ${dynHadith.sourceID}`,
+                    adjustWordCount(s5_id_pool[r5], 24),
+                    adjustWordCount(s6_id_pool[r6], 24)
+                ];
+
+                ENGLISH_DIALOGUES = [
+                    s1_en_pool[r1],
+                    s2_en_pool[r2],
+                    s3_en_pool[r3],
+                    `«${dynHadith.arabic}»\n\n"${dynHadith.english}"\n\nSource: ${dynHadith.sourceEN}`,
+                    s5_en_pool[r5],
+                    s6_en_pool[r6]
+                ];
             } else {
-                // Kategori UMUM / FILOSOFI (All dialogues are exactly 24 words split across 6 scenes except Scene 4 direct Latin Quote)
+                // KATEGORI UMUM / FILOSOFI (All dialogues are exactly 24 words split across 6 scenes except Scene 4 direct Latin Quote)
                 PREMIUM_DIALOGUES = [
                     "Saat seluruh usahamu terasa sunyi dan terabaikan oleh riuh dunia, ketahuilah bahwa keheningan malam selalu menyimpan ruang aman bagi jiwamu yang lelah ini bersama.",
                     "Hari-harimu belakangan ini mungkin terasa terjal dan penuh kebimbangan mendalam, namun ketahuilah setiap badai pasti membawa pesan tentang ketabahan hidup yang bernilai.",
                     "Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia ketabahan jiwa manusia menghadapi berbagai cobaan kehidupan yang datang menghalangi langkah kaki kita.",
-                    // Scene 4: Strict direct Philosophy focus
+                    // Scene 4 focuses strictly on direct latin quote and source
                     "Calamitas virtutis occasio est\n\n\"Kesulitan adalah kesempatan bagi kebajikan untuk bersinar.\"\n\nSumber: Filsafat Stoa - Seneca",
                     "Mulailah melangkah hari ini dengan memilah hal-hal yang berada dalam kendalimu dan melepaskan apa yang tidak dapat kamu ubah dengan ketenangan jiwa murni.",
                     "Yakinlah bahwa setiap pergolakan batin adalah proses pendewasaan diri yang sangat berharga untuk membangun struktur jiwa manusia yang kokoh dan penuh kebijaksanaan."
@@ -1164,36 +1389,10 @@
                     "When all your efforts feel silent and ignored by the loud world, know that the stillness of night always keeps a safe space for your tired soul.",
                     "Your days lately might feel steep and filled with deep uncertainty, but know that every storm brings a valuable message about enduring life's trials.",
                     "Let us find precious pearls and great lessons through the noble example of human resilience in navigating severe storms that challenge our path.",
-                    // Scene 4: Strict direct Philosophy focus in EN
+                    // Scene 4 focuses strictly on direct latin quote and source in English
                     "Calamitas virtutis occasio est\n\n\"Calamity is virtue's opportunity.\"\n\nSource: Stoic Philosophy - Seneca",
                     "Begin stepping forward today by separating things within your control and letting go of what you cannot change with pure tranquility of the soul.",
                     "Be assured that every inner struggle is a highly valuable self-growth process to build a strong human soul structure full of timeless wisdom."
-                ];
-            }
-
-            // DYNAMIC INJECTION FOR BRAND NEW CUSTOM ENTRIES (Safety Fallback)
-            const cleanT = title.replace(/(kisah|riwayat tentang|tentang|mengenai)/gi, "").trim() || "perjuangan hidup";
-            const cleanT_EN = translateIndoToEng(cleanT);
-            const isDefaultCase = (category === 'islami' && !isUmar && !isBilal && !isAbuBakar && !isMushab && !isKhalid && !isPerempuan);
-            
-            if (isDefaultCase) {
-                PREMIUM_DIALOGUES = [
-                    adjustWordCount(`Saat kita dirundung rasa lelah serta berat menghadapi dinamika dunia, renungkanlah kisah keteladanan agung sejati tentang ${cleanT} demi kedamaian jiwa kita bersama.`),
-                    adjustWordCount(`Sejarah mencatatkan bahwa keteladanan tokoh pilihan dalam memegang teguh prinsip keimanan terhadap peristiwa ${cleanT} senantiasa membawa hikmah mendalam bagi spiritual kita.`),
-                    adjustWordCount(`Mari kita temukan mutiara berharga dan pelajaran agung melalui teladan mulia ${cleanT} yang selalu mengajarkan kita tentang pentingnya keteguhan iman yang abadi.`),
-                    // Scene 4 fallback: Direct Hadith layout
-                    "الدُّنْيَا مَتَاعٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ\n\n\"Dunia adalah perhiasan, dan sebaik-baik perhiasan dunia adalah wanita shalihah.\"\n\nSumber: Hadis Riwayat Muslim",
-                    adjustWordCount(`Pesan kebaikan ini mengingatkan kita untuk senantiasa memperbaiki amal ibadah serta mengimplementasikan ajaran luhur ${cleanT} secara ikhlas di kehidupan nyata sehari-hari.`),
-                    adjustWordCount(`Mari kita hiasi hati kita dengan kesabaran murni, berserah diri seutuhnya kepada Allah, serta meneladani perjuangan suci ${cleanT} demi rida Ilahi.`)
-                ];
-                ENGLISH_DIALOGUES = [
-                    `When we are tired and heavily burdened by the dynamics of the world, ponder the noble story of ${cleanT_EN} for our soul's peace.`,
-                    `History records that the exemplary attitude of chosen figures in holding firm to the faith of ${cleanT_EN} brings deep spiritual wisdom.`,
-                    `Let us find precious pearls and great lessons through the noble example of ${cleanT_EN} which teaches us the importance of steadfast faith.`,
-                    // Scene 4 fallback: Direct Hadith layout in EN
-                    "الدُّنْيَا مَتَاعٌ، وَخَيْرُ mَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ\n\n\"The world is enjoyment, and the best enjoyment of the world is a righteous woman.\"\n\nSource: Hadith narrated by Muslim",
-                    `This message of goodness reminds us to always improve our deeds and implement the noble teachings of ${cleanT_EN} sincerely in daily life.`,
-                    `Let us adorn our hearts with pure patience, surrender entirely to Allah, and emulate the holy struggle of ${cleanT_EN} for His pleasure.`
                 ];
             }
 
@@ -1294,19 +1493,7 @@
                 // Append specific authentic source details on Scene 4 (idx === 3)
                 if (idx === 3) {
                     if (category === 'islami') {
-                        if (isUmar) {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"Surah Taha recitation melted Umar's hard heart, guiding him to Islam with true softness of faith."\n\n«طه ۝ مَا أَنْ...»\nMeaning:\n"Ta-Ha. We have not sent down the Qur'an to you to cause you distress."\n\nSource:\nQur'an Surah Ta-Ha: 1-2`;
-                        } else if (isBilal) {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"Despite brutal torture, Bilal stood firm calling out the absolute oneness of Allah: Ahad, Ahad."\n\n«اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ»\nMeaning:\n"Allah is One, Allah is the Eternal Refuge."\n\nSource:\nQur'an Surah Al-Ikhlas: 1-2`;
-                        } else if (isAbuBakar) {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah said that the best friend is Abu Bakar."\n\n«إِنَّ أَمَنَّ النَّاسِ عَلَيَّ فِي صُحْبَتِهِ وَمَالِهِ أَبُو بَكْر»\nMeaning:\n"The person who has favored me most of all both with his companionship and wealth is Abu Bakar."\n\nSource:\nHadith narrated by Bukhari`;
-                        } else if (isMushab) {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"He gave up everything for his faith."\n\n«رَأَيْتُ مُصْعَبَ بْنَ عُمَيْرٍ وَمَا بِمَكَّةَ فَتًى أَنْعَمَ عِنْدَ أَبَوَيْهِ مِنْهُ»\nMeaning:\n"I saw Mush'ab bin Umair, and there was no youth in Makkah who was more pampered by his parents than him."\n\nSource:\nHadith narrated by Tirmidzi`;
-                        } else if (isKhalid) {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah praised Khalid as the Sword of Allah."\n\n«خَالِدُ بْنُ الْوَلِيدِ سَيْفٌ مِنْ سُيُوفِ اللَّهِ»\nMeaning:\n"Khalid bin Walid is a sword from among the swords of Allah."\n\nSource:\nHadith narrated by Bukhari`;
-                        } else {
-                            scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The Messenger of Allah said that the best enjoyment of the world is a righteous woman."\n\n«الدُّنْيَا مَتَACٌ، وَخَيْرُ مَتَاعِ الدُّنْيَا الْمَرْأَةُ الصَّالِحَةُ»\nMeaning:\n"The world is enjoyment, and the best enjoyment of the world is a righteous woman."\n\nSource:\nHadith narrated by Muslim`;
-                        }
+                        scenePrompt += `\n\n[HADITH SYSTEM ATTACHMENT]\nEnglish Translation:\n"The dynamic scriptural engine has contextualized this verse based on the chosen title: ${translateIndoToEng(title) || 'wisdom'}"\n\n«${dynHadith.arabic}»\nMeaning:\n"${dynHadith.english}"\n\nSource:\n${dynHadith.sourceEN}`;
                     } else {
                         scenePrompt += `\n\n[PHILOSOPHICAL SYSTEM ATTACHMENT]\nEnglish Translation:\n"Seneca wrote that difficulty strengthens the mind just as labor trains the human body to endure storms."\n\n«Calamitas virtutis occasio est»\nMeaning:\n"Calamity is virtue's opportunity."\n\nSource:\nStoic Philosophy - Lucius Annaeus Seneca`;
                     }
@@ -2013,3 +2200,5 @@
     </script>
 </body>
 </html>
+```
+eof
